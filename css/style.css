@@ -1,4 +1,75 @@
+@charset "UTF-8";
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
+}
+
 .popup
 {
 	width: 200px;
+}
+
+.grid
+{
+	width: 80%;
+	display: inline-block;
+	font-size: 0px;
+}
+
+.grid__row
+{
+	line-height: 0px;
+	font-size: 0px;
+}
+
+.grid__head
+{
+	line-height: 30px;
+	font-size: 20px;
+}
+
+.grid__cell
+{
+	text-align: center;
+	display: inline-block;
+	border: 1px solid black;
+	min-height: 20px;
+	box-sizing: border-box;
+}
+
+.grid__def
+{	
+	font-size: 12px;
+}
+
+.width-5
+{
+	width: 16%;
+}
+
+.width-6
+{
+	width: 14%;
+}
+
+.width-7
+{
+	width: 12%;
+}
+
+.controls
+{
+	border-left: 1px solid black;
+	display: inline-block;
+}
+
+a
+{
+	cursor: pointer;
 }

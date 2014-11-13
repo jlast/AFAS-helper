@@ -15,4 +15,8 @@
     "page": "background.html",
     "persistent": true
   },
+  "content_scripts": [ {
+    "js": [ "/js/libraries/angular.min.js", "/js/app.js"],
+    "matches": [ "http://*/*", "https://*/*"]
+  }
 }
