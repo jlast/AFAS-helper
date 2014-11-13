@@ -1,0 +1,53 @@
+/*! blocss-island v1.0.0 | MIT License | github.com/Blocss */
+
+/*----------------------------------------------------------------------------*\
+    $ISLAND
+    Simple, boxed off content
+    As per: csswizardry.com/2011/10/the-island-object
+\*----------------------------------------------------------------------------*/
+
+/*  Variables
+\*----------------------------------------------------------------------------*/
+
+// Module can be disabled by switching `$use-island` to `false`
+$use-island:                        true                            !default;
+
+
+
+/*  Core island component
+\*----------------------------------------------------------------------------*/
+
+@if $use-island == true {
+/**
+ * Simple, boxed off content
+ *
+ * Extends `%module` in `generic/_shared.scss`
+ * Extends `.cf` in `generic/_clearfix.scss`
+ *
+ * Sample usage:
+ *
+<div class="island">
+    I am boxed off.
+</div>
+ */
+.continent,
+.island,
+.islet {
+    @extend %module;
+    @extend .cf;
+    display: block;
+}
+
+.continent {
+    @include rem(padding, $space*2);
+}
+
+.island {
+    @include rem(padding, $space);
+}
+
+/* Just like `.island`, only smaller. */
+.islet {
+    @include rem(padding, $space/2);
+}
+}

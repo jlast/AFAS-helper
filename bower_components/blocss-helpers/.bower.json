@@ -1,0 +1,15 @@
+{
+  "name": "blocss-helpers",
+  "version": "1.0.1",
+  "main": "_helpers.scss",
+  "homepage": "https://github.com/Blocss/helpers",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "ad50cb36b223fe2635faaee289cf342ddc7a78fe"
+  },
+  "_source": "git://github.com/Blocss/helpers.git",
+  "_target": "~1.0",
+  "_originalSource": "blocss-helpers"
+}

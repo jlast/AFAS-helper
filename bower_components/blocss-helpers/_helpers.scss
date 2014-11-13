@@ -1,0 +1,204 @@
+@charset "UTF-8";
+/*! blocss-helpers v1.0.1 | MIT License | github.com/Blocss */
+
+/*----------------------------------------------------------------------------*\
+    $HELPERS
+    A series of helper classes to use arbitrarily. Only use a helper class if an
+    element/component doesn’t already have a class to which you could apply this
+    styling, e.g. if you need to float `.nav` left then add `float:left;`
+    to that ruleset as opposed to adding the `.float--left` class to the markup.
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Define which namespaced breakpoints you would like to generate for the
+ * `.visuallyhidden` class. This is handy if you only need visuallyhidden on,
+ * say, palm, or you only need a new unit breakpoint at mobile sizes. It allows
+ * you to only compile as much CSS as you need. All are empty by
+ * default, but you can add breakpoints at will.
+ *
+ * $breakpoint-has-x:       ('palm', 'desk');
+ *
+ * Note: the name of the breakpoint must exist in the list of `$breakpoints`
+ *       in the Blocss base repository
+ */
+$breakpoint-has-visuallyhidden:     ()                      !default;
+
+
+
+/*  Structural
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Display helpers
+ */
+.display--block {
+    display: block !important;
+}
+.display--inline-block {
+    display: inline-block !important;
+}
+.display--inline {
+    display: inline !important;
+}
+
+
+/**
+ * Vertical rhythm helpers
+ *
+ * ^deprecated: `.flatten`
+ */
+.flatten,
+.sign--flat {
+    margin-bottom: 0 !important;
+}
+/* half margin-bottom */
+.sign--half {
+    @include rem(margin-bottom, $space-half);
+}
+/* margin-bottom */
+.sign {
+    @include rem(margin-bottom, $space);
+}
+/* doubled up margin-bottom */
+.sign--large {
+    @include rem(margin-bottom, $space*2);
+}
+
+
+/**
+ * Add/remove floats
+ */
+.float--right {
+    float: right !important;
+}
+.float--left {
+    float: left !important;
+}
+.float--none {
+    float: none !important;
+}
+
+
+
+/*  Textual
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Text alignment
+ */
+.text--left {
+    text-align: left !important;
+}
+.text--center {
+    text-align: center !important;
+}
+.text--right {
+    text-align: right !important;
+}
+
+
+/**
+ * Font weight
+ *
+ * ^deprecated: `.weight--x`
+ */
+.text--light,
+.weight--light {
+    font-weight: 300 !important;
+}
+.text--normal,
+.weight--normal {
+    font-weight: 400 !important;
+}
+.text--semibold,
+.weight--semibold {
+    font-weight: 600 !important;
+}
+
+
+/**
+ * Capitals/lowercase
+ *
+ * ^deprecated: non prefixed with `text--`
+ */
+.text--caps,
+.caps {
+    text-transform: uppercase !important;
+}
+.text--lowercase,
+.lowercase {
+    text-transform: lowercase !important;
+}
+.text--firstcap,
+.firstcap {
+    text-transform: capitalize !important;
+}
+
+
+/**
+ * Line height helpers
+ */
+.line--flat {
+    line-height: 1;
+}
+.line--small {
+    line-height: $line-height-ratio/1.2;
+}
+.line--normalis {
+    line-height: $line-height-ratio;
+}
+.line--large {
+    line-height: $line-height-ratio*1.16666667;
+}
+
+
+
+/*  Misc
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Hide from screanreaders & browsers
+ */
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+
+/**
+ * Hide visually and from screenreaders, but maintain layout
+ */
+.invisible {
+    visibility: hidden;
+}
+
+
+/**
+ * Hide only visually, but have it available for screenreaders
+ * as per: h5bp.com/v
+ */
+@mixin visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden {
+    @include visuallyhidden;
+}
+
+/**
+ * Visuallyhidden based on breakpoint
+ */
+@each $state in $breakpoint-has-visuallyhidden {
+    @include media-query(#{$state}) {
+        .visuallyhidden--#{$state} {
+            @include visuallyhidden;
+        }
+    }
+}

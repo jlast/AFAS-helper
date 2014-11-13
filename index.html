@@ -14,9 +14,10 @@
 				</div>
 			</div>
 			<div class="grid__row" ng-repeat="i in getNumber(amount) track by $index">
-				<div class="grid__cell grid__def" ng-class="'width-' + daysvisible()" >
-					{{$index}}
-				</div><div class="grid__cell grid__def" ng-class="'width-' + daysvisible()" ng-repeat="day in days" ng-show="day.visible">
+				<div class="grid__cell grid__def" ng-class="['width-' + daysvisible(), inrange($index)]" ng-class="{inrange : $index >= workhourmin && $index <= workhourmax}" >
+					{{timestamp($index)}}
+				</div>
+				<div class="grid__cell grid__def" ng-class="['width-' + daysvisible(), inrange($parent.$index), getAppointment($index, $parent.$index), getDragAppointment($index, $parent.$index)]" ng-repeat="day in days" ng-show="day.visible" ng-mousedown="mousedown($index, $parent.$index)" ng-mousemove="mousemove($index, $parent.$index)" ng-mouseup="mouseup($index, $parent.$index)">
 					
 				</div>
 			</div>
@@ -24,6 +25,7 @@
 		<div class="controls">
 			<a ng-click="showweekends()">{{weekendtext}}</a>
 		</div>
+		{{appointments}}
 		<script src="js/libraries/angular.min.js"></script>
 		<script src="js/app.js"></script>
 	</body>

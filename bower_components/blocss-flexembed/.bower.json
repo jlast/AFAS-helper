@@ -1,0 +1,15 @@
+{
+  "name": "blocss-flexembed",
+  "version": "1.0.0",
+  "main": "_flexembed.scss",
+  "homepage": "https://github.com/Blocss/flexembed",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "d93a59366c2706d8fc98e3f9b7c3e4e74ba4c458"
+  },
+  "_source": "git://github.com/Blocss/flexembed.git",
+  "_target": "~1.0",
+  "_originalSource": "blocss-flexembed"
+}

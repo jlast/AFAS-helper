@@ -1,0 +1,34 @@
+{
+  "name": "blocss",
+  "version": "5.0.6",
+  "author": "Bram Smulders",
+  "main": "_blocss.scss",
+  "dependencies": {
+    "blocss-buttons": "~1.0",
+    "blocss-navigation": "~1.0",
+    "blocss-grid": "~1.0",
+    "blocss-arrange": "~1.0",
+    "blocss-media": "~1.0",
+    "blocss-island": "~1.0",
+    "blocss-flexembed": "~1.0",
+    "blocss-column": "~1.0",
+    "blocss-dimensions": "~1.0",
+    "blocss-helpers": "~1.0"
+  },
+  "ignore": [
+    ".*",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md"
+  ],
+  "homepage": "https://github.com/Blocss/blocss",
+  "_release": "5.0.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v5.0.6",
+    "commit": "eea1111aea7a1cc7abbb1306402a85e13bca18af"
+  },
+  "_source": "git://github.com/Blocss/blocss.git",
+  "_target": "~5.0.6",
+  "_originalSource": "blocss",
+  "_direct": true
+}

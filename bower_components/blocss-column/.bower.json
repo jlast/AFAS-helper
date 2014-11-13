@@ -1,0 +1,15 @@
+{
+  "name": "blocss-column",
+  "version": "1.0.0",
+  "main": "_column.scss",
+  "homepage": "https://github.com/Blocss/column",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "7c39efbea3c925c999f752707771143acfe7c923"
+  },
+  "_source": "git://github.com/Blocss/column.git",
+  "_target": "~1.0",
+  "_originalSource": "blocss-column"
+}

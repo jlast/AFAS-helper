@@ -1,0 +1,114 @@
+@charset "UTF-8";
+@import "../bower_components/blocss/defaults";
+@import "../bower_components/blocss/blocss";
+@import "../bower_components/blocss-dimensions/dimensions";
+@import "../bower_components/blocss-grid/grid";
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
+}
+
+.popup
+{
+	width: 200px;
+}
+
+.grid
+{
+	width: 80%;
+	display: inline-block;
+	font-size: 0px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.grid__row
+{
+	line-height: 0px;
+	font-size: 0px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.grid__head
+{
+	line-height: 30px;
+	font-size: 20px;
+}
+
+.grid__cell
+{
+	text-align: center;
+	display: inline-block;
+	border: 1px solid black;
+	min-height: 20px;
+	box-sizing: border-box;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.grid__def
+{	
+	font-size: 12px;
+}
+
+.inrange
+{
+	background-color: lightgrey;
+}
+
+.appointment
+{
+	background-color: red;
+}
+
+.dragappointment
+{
+	background-color: blue;
+}
+
+.width-5
+{
+	width: 16%;
+}
+
+.width-6
+{
+	width: 14%;
+}
+
+.width-7
+{
+	width: 12%;
+}
+
+.controls
+{
+	display: inline-block;
+}
+
+a
+{
+	cursor: pointer;
+}

@@ -1,0 +1,94 @@
+/*! blocss-column v1.0.0 | MIT License | github.com/Blocss */
+
+/*----------------------------------------------------------------------------*\
+    COLUMN
+    This component divides text into columns according to the css3 spec.
+\*----------------------------------------------------------------------------*/
+
+/*  Variables
+\*----------------------------------------------------------------------------*/
+
+// Module can be disabled by switching `$use-column` to `false`
+$use-column:                        true                            !default;
+
+/**
+ * Define which namespaced breakpoints you would like to generate columns
+ *
+ * $breakpoint-has-x:       ('palm', 'desk');
+ *
+ * Note: the name of the breakpoint must exist in the list of `$breakpoints`
+ *       in the Blocss base repository
+ */
+$breakpoint-has-columns:            ()                              !default;
+
+
+
+/*  Mixins
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Modifyers: number of columns, with optional modifyer appendix
+ */
+@mixin columns($modifier: '') {
+    .column--1#{$modifier} {
+        @include prefixer(column-count, 1, webkit moz spec);
+    }
+    .column--2#{$modifier} {
+        @include prefixer(column-count, 2, webkit moz spec);
+    }
+    .column--3#{$modifier} {
+        @include prefixer(column-count, 3, webkit moz spec);
+    }
+    .column--4#{$modifier} {
+        @include prefixer(column-count, 4, webkit moz spec);
+    }
+}
+
+
+
+/*  Core column componet
+\*----------------------------------------------------------------------------*/
+
+@if $use-column == true {
+/**
+ * Here we can set elements in column of text using CSS3, e.g.:
+ *
+<p class="column  column--X  column--X--palm[colums--wide|column--small]">...</p>
+ *
+ */
+.column {
+    @include rem(column-gap, $space, webkit moz spec);
+}
+
+
+/**
+ * Modifyers: Gutter width
+ */
+.column--wide {
+    @include rem(column-gap, $space*2, webkit moz spec);
+}
+.column--narrow {
+    @include rem(column-gap, $space-half, webkit moz spec);
+}
+
+
+/**
+ * Modifyer: number of columns
+ */
+@include columns();
+
+
+
+/*  Responsive
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Modifyers: responsive column counts
+ */
+@each $name in $breakpoint-has-columns {
+    @include media-query($name) {
+        @include columns('--#{$name}');
+    }
+}
+
+}

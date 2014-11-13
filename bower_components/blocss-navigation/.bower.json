@@ -1,0 +1,15 @@
+{
+  "name": "blocss-navigation",
+  "version": "1.0.1",
+  "main": "_navigation.scss",
+  "homepage": "https://github.com/Blocss/navigation",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "0f6dc50550a73bfb1621e1138b86d1d68fbc9b38"
+  },
+  "_source": "git://github.com/Blocss/navigation.git",
+  "_target": "~1.0",
+  "_originalSource": "blocss-navigation"
+}

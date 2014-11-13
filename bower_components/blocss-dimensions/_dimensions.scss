@@ -1,0 +1,225 @@
+/*! blocss-dimensions v1.0.1 | MIT License | github.com/Blocss */
+
+/*----------------------------------------------------------------------------*\
+    $DIMENSIONS
+    Sizes in human readable format. These are used in conjunction with other
+    objects and abstractions found in blocss, most commonly the grid system
+    and the arrange module.
+\*----------------------------------------------------------------------------*/
+
+/*  Variables
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Flags to enable or disable dimension traits
+ */
+$use-units:                 true                            !default;
+$use-push:                  true                            !default;
+$use-pull:                  true                            !default;
+
+/**
+ * Divisions, makes it easy to create several proportional
+ * dimensions (e.g., both a 2-part and a 12-part grid).
+ *
+ * For example, `2 4 6 12` will let you use the unit-1-2, unit-2-4,
+ * unit-3-6, and unit-6-12 classes to specify that an element should
+ * take up 50% of its container.
+ */
+$divisions:                 12                              !default;
+
+/**
+ * Define which namespaced breakpoints you would like to generate for each
+ * of the dimensions. This is handy if you only need push on, say,
+ * desk, or you only need a new unit breakpoint at mobile sizes. It allows
+ * you to only compile as much CSS as you need. All are empty by
+ * default, but you can add breakpoints at will.
+ *
+ * $breakpoint-has-x:       ('palm', 'desk');
+ *
+ * Note: the name of the breakpoint must exist in the list of `$breakpoints`
+ *       in the Blocss base repository
+ */
+$breakpoint-has-units:      ()                              !default;
+$breakpoint-has-push:       ()                              !default;
+$breakpoint-has-pull:       ()                              !default;
+
+/**
+ * You can rename the dimension prefixes to your liking
+ */
+$name-units:                u                               !default;
+$name-push:                 push                            !default;
+$name-pull:                 pull                            !default;
+
+
+
+/*  Mixins & functions
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Find the greatest common factor of two integers
+ */
+@function gcf($a, $b) {
+    @if $b == 0 { @return $a; }
+    @else { @return gcf($b, $a % $b); }
+}
+
+
+/**
+ * Check if a list contains a value
+ */
+@function contains($list, $value) {
+    @if type-of($list) == list { @return not not index($list, $value); }
+    @else { @return $list == $value; }
+}
+
+/**
+ * Fluid units
+ * USAGE: provide a space-separated list of integers, each of which
+ * represents the number of parts that make up a unit component.
+ * Optionally provide a modifier suffix that can be used to adjust
+ * grids in different contexts (e.g. viewport dimensions).
+ */
+@mixin dimensions-build($units, $prefix: $name-units, $modifier: '') {
+
+    /**
+     * Proportional units
+     * Specify the proportional width of an object.
+     * Primarily for, but not limited to, use with `.grid__cell` components.
+     * Intentional redundancy build into each set of unit classes.
+     */
+    @each $n in $units {
+        /* Avoid creating rules like '.unit-12-12 {}'' */
+        $x: $n - 1;
+
+        @for $i from 1 through $x {
+            /* Initialize variables */
+            $i-r: ();
+            $n-r: ();
+
+            /* Find the greatest common factor */
+            $g: gcf($i, $n);
+
+            @if $g > 1 {
+                /* Reduced value of $i */
+                $i-r: $i/$g;
+                /* Reduced value of $n */
+                $n-r: $n/$g;
+            }
+
+            /**
+             * Check if the reduced value of $n was also supplied in the
+             * list of units to be built
+             */
+            $canreduce: contains($units, $n-r);
+
+            /**
+             * Create units based on fractions
+             */
+            .#{$prefix}-#{$i}-#{$n}#{$modifier} {
+                /**
+                 * If this unit can be reduced then extend the previous rule
+                 */
+                @if $i-r and $canreduce {
+                    @extend .#{$prefix}-#{$i-r}-#{$n-r}#{$modifier};
+                }
+                /**
+                 * Otherwise create a new % width
+                 */
+                @else {
+                    @if $prefix == $name-units {
+                        width: percentage($i / $n);
+                    } @else if $prefix == $name-push {
+                        left: percentage($i / $n);
+                    } @else if $prefix == $name-pull {
+                        right: percentage($i / $n);
+                    }
+                }
+            }
+
+        }
+    }
+
+
+    /**
+     * Reset dimensions
+     */
+    @if $prefix == $name-units {
+        .#{$prefix}-1-1#{$modifier} {
+            width: 100%;
+        }
+        .#{$prefix}-auto#{$modifier} {
+            width: auto;
+        }
+    } @else if $prefix == $name-push {
+        .#{$prefix}-0-0#{$modifier} {
+            left: 0;
+        }
+    } @else if $prefix == $name-pull {
+        .#{$prefix}-0-0#{$modifier} {
+            right: 0;
+        }
+    }
+}
+
+
+
+/*  Dimensions core
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Setup generic widths
+ */
+@if $use-units == true {
+    @include dimensions-build($divisions);
+}
+
+
+/**
+  * Setup generic push
+  */
+@if $use-push == true {
+    [class*="#{$name-push}-"] {
+        position:relative;
+    }
+    @include dimensions-build($divisions, $name-push);
+}
+
+
+/**
+  * Setup generic pull
+  */
+@if $use-pull == true {
+    [class*="#{$name-pull}-"] {
+        position:relative;
+    }
+    @include dimensions-build($divisions, $name-pull);
+}
+
+
+
+/*  Responsive
+\*----------------------------------------------------------------------------*/
+
+@if $use-units == true {
+    @each $name in $breakpoint-has-units {
+        @include media-query($name) {
+           @include dimensions-build($divisions, $name-units, '--#{$name}');
+        }
+    }
+}
+
+@if $use-push == true {
+    @each $name in $breakpoint-has-push {
+        @include media-query($name) {
+           @include dimensions-build($divisions, $name-push, '--#{$name}');
+        }
+    }
+}
+
+@if $use-pull == true {
+    @each $name in $breakpoint-has-pull {
+        @include media-query($name) {
+           @include dimensions-build($divisions, $name-pull, '--#{$name}');
+        }
+    }
+}

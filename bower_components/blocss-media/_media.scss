@@ -1,0 +1,142 @@
+/*! blocss-media v1.0.3 | MIT License | github.com/Blocss */
+
+/*----------------------------------------------------------------------------*\
+    $MEDIA
+    Place any image- and text-like content side-by-side
+    As per: stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code
+\*----------------------------------------------------------------------------*/
+
+/**
+ * Example usage:
+ *
+<div class="media">
+    <div class="media__img  [media__img--rev]">
+        <img src="img.png" alt="">
+    </div>
+    <div class="media__body">
+        Bram Smulders @bramsmulders
+        …
+    </div>
+</div>
+ */
+
+/*  Variables
+\*----------------------------------------------------------------------------*/
+
+// Module can be disabled by switching `$use-media` to `false`
+$use-media:                     true                                !default;
+
+/**
+ * Enable/disable modifiers
+ */
+$enable-media-rev:              true                                !default;
+$enable-media-narrow:           true                                !default;
+$enable-media-wide:             true                                !default;
+$enable-media-flush:            true                                !default;
+
+
+
+/*  Core media component
+\*----------------------------------------------------------------------------*/
+
+@if $use-media == true {
+
+.media {
+    @extend .cf;
+    display: block;
+}
+    /**
+     * Image location left
+     */
+    .media__img {
+        @include rem(margin-right, $space);
+        float: left;
+    }
+
+    /**
+     * Content body
+     */
+    .media__body {
+        @extend %module;
+        overflow: hidden;
+    }
+
+
+
+/*  Modifiers
+\*----------------------------------------------------------------------------*/
+
+@if $enable-media-rev == true {
+
+    /**
+     * Reversed image location (right instead of left)
+     */
+    .media__img--rev {
+        @include rem(margin-left, $space);
+        float: right;
+        margin-right: 0;
+    }
+        .media__img,
+        .media__img--rev {
+            img {
+                display:block;
+            }
+        }
+
+}
+
+
+@if $enable-media-wide == true {
+
+    /**
+     * Modifier: widens the gutter between `.media__img` & `.media__body`
+     */
+    .media--wide {
+        .media__img {
+            @include rem(margin-right, $space*2);
+        }
+        .media__img--rev {
+            @include rem(margin-left, $space*2);
+        }
+    }
+
+}
+
+
+@if $enable-media-narrow == true {
+
+    /**
+     * Modifier: narrows the gutter between `.media__img` & `.media__body`
+     */
+    .media--narrow {
+        .media__img {
+            @include rem(margin-right, $space-half);
+        }
+        .media__img--rev {
+            @include rem(margin-left, $space-half);
+        }
+    }
+
+}
+
+
+@if $enable-media-flush == true {
+
+    /**
+     * Modifier: removes gutter between `.media__img` & `.media__body`
+     * Tags: ^deprecated
+     * `.media--gutterless` modifier is deprecated and will be removed in v1.1.0
+     */
+    .media--flush,
+    .media--gutterless {
+        .media__img {
+            margin-right: 0;
+        }
+        .media__img--rev {
+            margin-left: 0;
+        }
+    }
+
+}
+
+}

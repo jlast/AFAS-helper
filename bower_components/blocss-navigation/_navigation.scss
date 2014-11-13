@@ -1,0 +1,133 @@
+@charset "UTF-8";
+/*! blocss-navigation v1.0.1 | MIT License | github.com/Blocss */
+
+/*----------------------------------------------------------------------------*\
+    $NAVIGATION
+    Navigation abstractions, common navigation structures.
+\*----------------------------------------------------------------------------*/
+
+/*  Variables
+\*----------------------------------------------------------------------------*/
+
+// Module can be disabled by switching `$use-navigation` to `false`
+$use-navigation:            true                            !default;
+
+
+
+/*  Core navigation component
+\*----------------------------------------------------------------------------*/
+
+@if $use-navigation == true {
+
+/**
+ * When used on an `ol` or `ul`, this class throws the list
+ * into horizontal mode
+ *
+ * Sample markup:
+<ul class="nav">
+    <li><a>Home</a></li>
+</ul>
+ */
+.nav {
+    @extend .cf;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    > li {
+
+        &,
+        > a {
+            display:inline-block;
+        }
+    }
+}
+
+
+/**
+ * Modifyer: Stacked nav
+ * `.nav--stacked` extends `.nav` and renders the list into vertical mode
+ *
+ * Sample markup:
+<ul class="nav  nav--stacked">
+    <li><a>Home</a></li>
+</ul>
+ */
+.nav--stacked {
+    > li {
+        display: list-item;
+
+        > a {
+            display: block;
+        }
+    }
+}
+
+
+/**
+ * Modifyer: Banner nav
+ * `.nav--banner` extends `.nav` and centers the list
+ *
+ * Sample markup:
+<ul class="nav  nav--banner">
+    <li><a>Home</a></li>
+</ul>
+ */
+.nav--banner {
+    text-align: center;
+}
+
+
+/**
+ * Modifyer: Breadcrumb nav
+ * `.nav--breadcrumb` extends `.nav` and centers the list
+ *
+ * Sample markup:
+<ol class="nav  [nav--breadcrumb|nav--breadcrumb-path]">
+    <li [data-breadcrumb="|"]><a href="#">Home</a></li>
+</ol>
+ */
+.nav--breadcrumb > li + li:before {
+    content: "» ";
+}
+.nav--breadcrumb-path > li + li:before {
+    content: "/ ";
+}
+.nav--breadcrumb > li + li[data-breadcrumb]:before {
+    content: attr(data-breadcrumb)" ";
+}
+
+
+/**
+ * Modifyer: Paginator nav
+ * `.nav--pagination` extends `.nav`
+ *
+ * Sample markup:
+<ol class="nav  nav--pagination">
+    <li class="nav--pagination__first">First</li>
+    <li><a href="">1</a></li>
+    <li><a href="">2</a></li>
+    <li><a href="">3</a></li>
+    <li class="nav--pagination__last"><a href="">Last</a></li>
+</ol>
+ */
+.nav--pagination {
+    text-align: center;
+
+    > li {
+        @include rem(padding, $space-half);
+
+        > a {
+            @include rem(padding, $space-half);
+            @include rem(margin, -$space-half);
+        }
+    }
+}
+    .nav--pagination__first a:before {
+        content: "« ";
+    }
+    .nav--pagination__last a:after {
+        content: " »";
+    }
+
+}

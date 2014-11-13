@@ -1,0 +1,15 @@
+{
+  "name": "blocss-buttons",
+  "version": "1.0.0",
+  "main": "_buttons.scss",
+  "homepage": "https://github.com/Blocss/buttons",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "35c9f8fec4dbc288710d48a16b4fbec8e7b4d876"
+  },
+  "_source": "git://github.com/Blocss/buttons.git",
+  "_target": "~1.0",
+  "_originalSource": "blocss-buttons"
+}
