@@ -6,18 +6,21 @@
   "version": "1.0",
 
   "permissions": [
-	"storage"
+	"storage",
+	"tabs", "http://*/*", "https://*/*"
   ],
   "browser_action": {
-    "default_icon": "afwastool.ico",
+    "default_icon": "afwastool.png",
     "default_popup": "popup.html"
   },
   "background": {
     "page": "/weekcalendar.html",
     "persistent": true
   },
-  "content_scripts": [ {
-    "js": [ "/js/libraries/angular.min.js", "/js/app.js", "/js/calendar-presets.js"],
+  "content_scripts": [ 
+	{
+    "js": ["/js/libs/jquery-1.4.4.min.js", "/js/jquery.weekcalendar.js", "/js/popup.js"],
     "matches": [ "http://*/*", "https://*/*"]
-  }
+	}
+   ]
 }

@@ -229,13 +229,50 @@ function removePreset(index)
 	updatePresetTable();
 }
 
-function finalizeCreateEvent($event)
+function finalizeCreateEvent(calEvent, $event, serialize)
 {
 	var description = $("#createDateDialog .beschrijving").val();
 	var project = $("#createDateDialog .project").val();
 	var article = $("#createDateDialog .article").val();
+	if(description == "" && project == "" && article == "")
+	{	
+		if(typeof calEvent.description != "undefined")
+		{
+			description = calEvent.description;
+		}
+		if(typeof calEvent.project != "undefined")
+		{
+			project = calEvent.project;
+		}
+		if(typeof calEvent.article != "undefined")
+		{
+			article = calEvent.article;
+		}
+	}
+	
+	$("#createDateDialog .beschrijving").removeClass("invalid");
+	$("#createDateDialog .project").removeClass("invalid");
+	$("#createDateDialog .article").removeClass("invalid");
+	
+	if(description == "" || project == "" || article == "")
+	{	
+		if(description == "")
+		{
+			$("#createDateDialog .beschrijving").addClass("invalid");
+		}
+		if(project == "")
+		{
+			$("#createDateDialog .project").addClass("invalid");
+		}
+		if(article == "")
+		{
+			$("#createDateDialog .article").addClass("invalid");
+		}
+		return false;
+	}
 	
 	$event.find(".wc-title").text(description);
+	$event.find(".wc-content").remove();
 	var content = $("<div class='wc-content' />");
 	content.html("project: <span class='wc-project'>" + project + "</span><br/>article: <span class='wc-article'>" + article + "</span>");
 	content.insertAfter($event.find(".wc-title"));
@@ -243,8 +280,12 @@ function finalizeCreateEvent($event)
 	$("#createDateDialog .beschrijving").val("");
 	$("#createDateDialog .project").val("");
 	$("#createDateDialog .article").val("");
+	if(serialize)
+	{
+		SerializeEvents();
+	}
 	
-	SerializeEvents();
+	return true;
 }
 
 function finalizeEditEvent($event)
@@ -253,6 +294,27 @@ function finalizeEditEvent($event)
 	var project = $("#editDateDialog .project").val();
 	var article = $("#editDateDialog .article").val();
 	
+	$("#editDateDialog .beschrijving").removeClass("invalid");
+	$("#editDateDialog .project").removeClass("invalid");
+	$("#editDateDialog .article").removeClass("invalid");
+	
+	if(description == "" || project == "" || article == "")
+	{	
+		if(description == "")
+		{
+			$("#editDateDialog .beschrijving").addClass("invalid");
+		}
+		if(project == "")
+		{
+			$("#editDateDialog .project").addClass("invalid");
+		}
+		if(article == "")
+		{
+			$("#editDateDialog .article").addClass("invalid");
+		}
+		return false;
+	}
+		
 	$event.find(".wc-title").text(description);
 	var content = $("<div class='wc-content' />");
 	content.html("project: <span class='wc-project'>" + project + "</span><br/>article: <span class='wc-article'>" + article + "</span>");
@@ -260,6 +322,8 @@ function finalizeEditEvent($event)
 	content.insertAfter($event.find(".wc-title"));
 	
 	SerializeEvents();
+	
+	return true;
 }
 
 function IsJsonString(str) {
@@ -274,11 +338,14 @@ function IsJsonString(str) {
 function deleteEvent($event)
 {
 	$event.remove();
+	SerializeEvents();
 }
 
 function initCalendar(){
 	
 	$('#calendar').weekCalendar({
+	  firstDayOfWeek: 1,
+	  data: DeserializeEvents(),
 	  timeslotsPerHour: 2,
 	  timeslotHeigh: 30,
 	  hourLine: true,
@@ -290,6 +357,9 @@ function initCalendar(){
 		  $event.css('backgroundColor', '#aaa');
 		  $event.find('.time').css({'backgroundColor': '#999', 'border':'1px solid #888'});
 		}
+		$event.data('start', calEvent.start);
+		$event.data('end', calEvent.end);
+		finalizeCreateEvent(calEvent, $event, false);
 	  },
 	  eventNew: function(calEvent, $event) {
 		if($( "#createDateDialog" ).is(':data(uiDialog)'))
@@ -301,6 +371,7 @@ function initCalendar(){
 		else
 		{
 			$( "#createDateDialog" ).dialog({
+				modal: true,
 				width: 500,
 				resizable: false,
 				open: function(event, ui) {
@@ -309,6 +380,7 @@ function initCalendar(){
 						deleteEvent($event);
 						$("#createDateDialog").dialog( "close" );
 					})
+					$(this).find(".beschrijving").focus();
 				},
 				buttons: [
 					{
@@ -323,22 +395,19 @@ function initCalendar(){
 						text: "Create",
 						click: function()
 						{
-							finalizeCreateEvent($event);
-							$( this ).dialog( "close" );
+							if(finalizeCreateEvent(calEvent, $event, true))
+							{
+								$( this ).dialog( "close" );
+							}
 						}
 					}
 				]
 			});
 		}
 	  },
-	  eventDrop: function(calEvent, $event) {
-		displayMessage('<strong>Moved Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-	  },
-	  eventResize: function(calEvent, $event) {
-		displayMessage('<strong>Resized Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-	  },
 	  eventClick: function(calEvent, $event) {
 		$( "#editDateDialog" ).dialog({
+			modal: true,
 			width: 500,
 			resizable: false,
 			open: function(event, ui){
@@ -348,6 +417,7 @@ function initCalendar(){
 				$("#editDateDialog .beschrijving").val(description);
 				$("#editDateDialog .project").val(project);
 				$("#editDateDialog .article").val(article);
+				$(this).find(".beschrijving").focus();
 			},
 			buttons: [
 				{
@@ -361,8 +431,10 @@ function initCalendar(){
 					text: "Edit",
 					click: function()
 					{
-						finalizeEditEvent($event);
-						$( this ).dialog( "close" );
+						if(finalizeEditEvent($event))
+						{
+							$( this ).dialog( "close" );
+						}
 					}
 				},
 				{
@@ -376,25 +448,54 @@ function initCalendar(){
 			]
 		});
 	  },
-	  eventMouseover: function(calEvent, $event) {
-		displayMessage('<strong>Mouseover Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-	  },
-	  eventMouseout: function(calEvent, $event) {
-		displayMessage('<strong>Mouseout Event</strong><br/>Start: ' + calEvent.start + '<br/>End: ' + calEvent.end);
-	  },
-	  noEvents: function() {
-		displayMessage('There are no events for this week');
-	  }
   });
+}
 
-	function displayMessage(message) {
-	  $('#message').html(message).fadeIn();
+function DeserializeEvents()
+{
+	var events = [];
+	if(typeof(localStorage["events"]) !== "undefined" && IsJsonString(localStorage["events"]))
+	{
+		var eventsJSONDestringed = JSON.parse(localStorage["events"]);
+		if(typeof(eventsJSONDestringed) === "object")
+		{
+			events = eventsJSONDestringed;
+		}
 	}
-
-	$('<div id="message" class="ui-corner-all"></div>').prependTo($('body'));
+	
+	var data = [];
+	
+	for(var i = 0; i < events.length; i++)
+	{
+		var event = events[i];
+		var dataobject = {};
+		if(typeof event.start != "undefined" && typeof event.end != "undefined")
+		{
+			dataobject.id = i;
+			dataobject.start = event.start;
+			dataobject.end = event.end;
+			dataobject.title = event.description;
+			dataobject.project = event.project;
+			dataobject.article = event.article;
+			data.push(dataobject);
+		}
+	}
+	return data;
 }
 
 function SerializeEvents()
 {
-	
+	var $events = $('.wc-cal-event');
+	var events = [];
+	$events.each(function(){
+		var event = {};
+		var $day = $(this).closest('.wc-day-column');
+		event.start = $(this).data("start");
+		event.end = $(this).data("end");
+		event.description = $(this).find('.wc-title').text();
+		event.project = $(this).find('.wc-project').text();
+		event.article = $(this).find('.wc-article').text();
+		events.push(event);
+	});
+	localStorage["events"] = JSON.stringify(events);
 }

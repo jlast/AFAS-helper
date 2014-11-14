@@ -43,3 +43,11 @@ border: 1px solid #dda;
 {
 	display: inline-block;
 }
+
+input.invalid, select.invalid
+{
+	outline-color: red;
+	outline-offset: -2px;
+	outline-style: auto;
+	outline-width: 5px;
+}
