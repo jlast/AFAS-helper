@@ -1,17 +1,18 @@
 @charset "UTF-8";
-@import "../bower_components/blocss/defaults";
-@import "../bower_components/blocss/blocss";
-@import "../bower_components/blocss-dimensions/dimensions";
-@import "../bower_components/blocss-grid/grid";
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
-.ng-cloak, .x-ng-cloak,
-.ng-hide {
-  display: none !important;
+.hidden
+{
+	display: none;
 }
 
-ng\:form {
-  display: block;
+body {
+font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+margin: 0;
+}
+
+h1 {
+margin: 0 0 1em;
+padding: 0.5em;
 }
 
 .popup
@@ -19,96 +20,26 @@ ng\:form {
 	width: 200px;
 }
 
-.grid
-{
-	width: 80%;
-	display: inline-block;
-	font-size: 0px;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
-	user-select: none;
+p.description {
+font-size: 0.8em;
+padding: 1em;
+position: absolute;
+top: 3.2em;
+margin-right: 400px;
 }
 
-.grid__row
-{
-	line-height: 0px;
-	font-size: 0px;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
-	user-select: none;
+#message {
+font-size: 0.7em;
+position: absolute;
+top: 1em;
+right: 1em;
+width: 350px;
+display: none;
+padding: 1em;
+background: #ffc;
+border: 1px solid #dda;
 }
-
-.grid__head
-{
-	line-height: 30px;
-	font-size: 20px;
-}
-
-.grid__cell
-{
-	text-align: center;
-	display: inline-block;
-	border: 1px solid black;
-	min-height: 20px;
-	box-sizing: border-box;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
-	user-select: none;
-}
-
-.grid__def
-{	
-	font-size: 12px;
-}
-
-.inrange
-{
-	background-color: lightgrey;
-}
-
-.appointment
-{
-	background-color: red;
-}
-
-.dragappointment
-{
-	background-color: blue;
-}
-
-.width-5
-{
-	width: 16%;
-}
-
-.width-6
-{
-	width: 14%;
-}
-
-.width-7
-{
-	width: 12%;
-}
-
-.controls
+.column
 {
 	display: inline-block;
-}
-
-a
-{
-	cursor: pointer;
 }

@@ -6,17 +6,18 @@
   "version": "1.0",
 
   "permissions": [
+	"storage"
   ],
   "browser_action": {
     "default_icon": "afwastool.ico",
     "default_popup": "popup.html"
   },
   "background": {
-    "page": "background.html",
+    "page": "/weekcalendar.html",
     "persistent": true
   },
   "content_scripts": [ {
-    "js": [ "/js/libraries/angular.min.js", "/js/app.js"],
+    "js": [ "/js/libraries/angular.min.js", "/js/app.js", "/js/calendar-presets.js"],
     "matches": [ "http://*/*", "https://*/*"]
   }
 }
