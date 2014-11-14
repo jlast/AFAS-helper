@@ -234,6 +234,23 @@ function finalizeCreateEvent(calEvent, $event, serialize)
 	var description = $("#createDateDialog .beschrijving").val();
 	var project = $("#createDateDialog .project").val();
 	var article = $("#createDateDialog .article").val();
+	
+	var fromtime = $("#createDateDialog .fromtime").val();
+	var totime = $("#createDateDialog .totime").val();
+	
+	var fromMatch = fromtime.match(timeregex);
+	var toMatch = totime.match(timeregex);
+	if(fromMatch != null)
+	{
+		var hourfrom = parseInt(fromMatch[1]);
+		var minutefrom = parseInt(fromMatch[2]);
+	}
+	if(toMatch != null)
+	{
+		var hourto = parseInt(toMatch[1]);
+		var minuteto = parseInt(toMatch[2]);
+	}
+	
 	if(description == "" && project == "" && article == "")
 	{	
 		if(typeof calEvent.description != "undefined")
@@ -253,8 +270,10 @@ function finalizeCreateEvent(calEvent, $event, serialize)
 	$("#createDateDialog .beschrijving").removeClass("invalid");
 	$("#createDateDialog .project").removeClass("invalid");
 	$("#createDateDialog .article").removeClass("invalid");
+	$("#createDateDialog .fromtime").removeClass("invalid");
+	$("#createDateDialog .totime").removeClass("invalid");
 	
-	if(description == "" || project == "" || article == "")
+	if(serialize && (description == "" || project == "" || article == "" || fromtime == "" || totime == "" || fromMatch.length == 0 || toMatch.length == 0 || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
 	{	
 		if(description == "")
 		{
@@ -268,8 +287,21 @@ function finalizeCreateEvent(calEvent, $event, serialize)
 		{
 			$("#createDateDialog .article").addClass("invalid");
 		}
+		if(fromtime == "" || fromMatch.length == 0 || (toMatch.length > 0 && hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
+		{
+			$("#createDateDialog .fromtime").addClass("invalid");
+		}
+		if(totime == "" || toMatch.length == 0 || (fromMatch.length > 0 && hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
+		{
+			$("#createDateDialog .totime").addClass("invalid");
+		}
 		return false;
 	}
+	
+	$event.data('start', calEvent.start);
+	$event.data('end', calEvent.end);
+	calEvent.article = article;
+	calEvent.project = project;
 	
 	$event.find(".wc-title").text(description);
 	$event.find(".wc-content").remove();
@@ -288,17 +320,37 @@ function finalizeCreateEvent(calEvent, $event, serialize)
 	return true;
 }
 
-function finalizeEditEvent($event)
+var timeregex = /(^[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]$)/i
+
+function finalizeEditEvent(calEvent, $event)
 {
 	var description = $("#editDateDialog .beschrijving").val();
 	var project = $("#editDateDialog .project").val();
 	var article = $("#editDateDialog .article").val();
 	
+	var fromtime = $("#editDateDialog .fromtime").val();
+	var totime = $("#editDateDialog .totime").val();
+	
+	var fromMatch = fromtime.match(timeregex);
+	var toMatch = totime.match(timeregex);
+	if(fromMatch != null)
+	{
+		var hourfrom = parseInt(fromMatch[1]);
+		var minutefrom = parseInt(fromMatch[2]);
+	}
+	if(toMatch != null)
+	{
+		var hourto = parseInt(toMatch[1]);
+		var minuteto = parseInt(toMatch[2]);
+	}
+	
 	$("#editDateDialog .beschrijving").removeClass("invalid");
 	$("#editDateDialog .project").removeClass("invalid");
 	$("#editDateDialog .article").removeClass("invalid");
+	$("#editDateDialog .fromtime").removeClass("invalid");
+	$("#editDateDialog .totime").removeClass("invalid");
 	
-	if(description == "" || project == "" || article == "")
+	if(description == "" || project == "" || article == "" || fromtime == "" || totime == "" || fromMatch.length == 0 || toMatch.length == 0 || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto)
 	{	
 		if(description == "")
 		{
@@ -312,8 +364,31 @@ function finalizeEditEvent($event)
 		{
 			$("#editDateDialog .article").addClass("invalid");
 		}
+		if(fromtime == "" || fromMatch.length == 0 || (toMatch.length > 0 && hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
+		{
+			$("#editDateDialog .fromtime").addClass("invalid");
+		}
+		if(totime == "" || toMatch.length == 0 || (fromMatch.length > 0 && hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
+		{
+			$("#editDateDialog .totime").addClass("invalid");
+		}
 		return false;
 	}
+	
+	var startdate = new Date(Date.parse(calEvent.start));
+	startdate.setHours(hourfrom);
+	startdate.setMinutes(minutefrom);
+	var enddate = new Date(Date.parse(calEvent.end));
+	enddate.setHours(hourto);
+	enddate.setMinutes(minuteto);
+	
+	calEvent.start = startdate;
+	calEvent.end = enddate;
+	calEvent.article = article;
+	calEvent.project = project;
+	
+	$event.data('start', calEvent.start);
+	$event.data('end', calEvent.end);
 		
 	$event.find(".wc-title").text(description);
 	var content = $("<div class='wc-content' />");
@@ -380,6 +455,13 @@ function initCalendar(){
 						deleteEvent($event);
 						$("#createDateDialog").dialog( "close" );
 					})
+					
+					var date = new Date(Date.parse(calEvent.start));
+					var enddate = new Date(Date.parse(calEvent.end));
+					
+					$("#createDateDialog .fromtime").val(date.getHours() + ":" + ("0" + date.getMinutes()).slice(-2));
+					$("#createDateDialog .totime").val(enddate.getHours() + ":" + ("0" + enddate.getMinutes()).slice(-2));
+					
 					$(this).find(".beschrijving").focus();
 				},
 				buttons: [
@@ -418,6 +500,12 @@ function initCalendar(){
 				$("#editDateDialog .project").val(project);
 				$("#editDateDialog .article").val(article);
 				$(this).find(".beschrijving").focus();
+					
+				var date = new Date(Date.parse(calEvent.start));
+				var enddate = new Date(Date.parse(calEvent.end));
+				
+				$("#editDateDialog .fromtime").val(date.getHours() + ":" + ("0" + date.getMinutes()).slice(-2));
+				$("#editDateDialog .totime").val(enddate.getHours() + ":" + ("0" + enddate.getMinutes()).slice(-2));
 			},
 			buttons: [
 				{
@@ -431,7 +519,7 @@ function initCalendar(){
 					text: "Edit",
 					click: function()
 					{
-						if(finalizeEditEvent($event))
+						if(finalizeEditEvent(calEvent, $event))
 						{
 							$( this ).dialog( "close" );
 						}
