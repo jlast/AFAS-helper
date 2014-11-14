@@ -41,7 +41,9 @@ border: 1px solid #dda;
 }
 .column
 {
-	display: inline-block;
+	display: block;
+	float: left;
+	margin-right: 50px;
 }
 
 input.invalid, select.invalid
@@ -50,4 +52,15 @@ input.invalid, select.invalid
 	outline-offset: -2px;
 	outline-style: auto;
 	outline-width: 5px;
+}
+
+table{
+	margin-top: 20px;
+}
+
+th, td{
+	font-size: 12px !important; 
+}
+.ui-tabs, .ui-tabs-panel{
+	border-bottom-width: 0px !important;
 }
