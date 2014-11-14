@@ -177,9 +177,10 @@ function initPresetCreate()
 function updatePresetTable()
 {
 	$("#presets tr").has("td").remove();
-	for(var i = 0; i < presets.length; i++)
+	$(".presets input").remove();
+	for(var p = 0; p < presets.length; p++)
 	{
-		var preset = presets[i];
+		var preset = presets[p];
 		var presetname = $("<td>" + preset.Name + "</td>");
 		var project = "";
 		for(var i = 0; i < projecten.length; i++)
