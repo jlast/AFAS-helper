@@ -1,8 +1,53 @@
 @charset "UTF-8";
 
+$maxitems : 12;
+
+@for $denominator from 1 through $maxitems {
+	@for $numerator from 1 through $denominator {
+		#{".grid-" + $numerator + "-" + $denominator}
+		{
+			width: percentage($numerator / $denominator);
+		}
+	}
+}
+
+.configuration, .dialog 
+{
+	div, input, select{
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box; 
+	}
+	div{
+		display: inline-block;
+		color: #555555;
+	}
+	table{
+		margin-top: 20px;
+		color: #555555;
+	}
+	input, select{
+		width: 100%;
+		&.presetbutton{
+			width: auto;
+		}
+	}
+	div.container{
+		padding-top: 15px;
+	}
+}
+.ui-dialog .dialog{
+	padding: 6.5px 5px 13px 4px;
+	overflow: visible;
+}
+
+div{
+	width: 100%;
+}
+
 .hidden
 {
-	display: none;
+	display: none !important;
 }
 
 body {
@@ -39,11 +84,28 @@ padding: 1em;
 background: #ffc;
 border: 1px solid #dda;
 }
+.remove-fontsize
+{
+	font-size: 0;
+}
+.set-fontsize
+{
+	font-size: 12px;
+}
 .column
 {
-	display: block;
-	float: left;
-	margin-right: 50px;
+	min-width: 400px;
+	vertical-align: top;
+	padding: 12px;
+	
+	.column__content{
+		border-radius: 8px;
+		padding: 12px;
+		background-color: #eee;
+	}
+	.cell{
+		margin-bottom: 5px;
+	}
 }
 
 input.invalid, select.invalid
@@ -53,14 +115,31 @@ input.invalid, select.invalid
 	outline-style: auto;
 	outline-width: 5px;
 }
-
-table{
-	margin-top: 20px;
+select.ui-widget.ui-dropdown
+{
+	background : white;
+	padding: .4em 1em;
 }
-
 th, td{
+	text-align: left;
 	font-size: 12px !important; 
+}
+table{
+	margin-bottom: 0;
 }
 .ui-tabs, .ui-tabs-panel{
 	border-bottom-width: 0px !important;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+	text-align: right;
+}
+.ui-dialog .ui-dialog-buttonpane {
+	padding: 0;
+}
+#tabs>div{
+	padding-top: 0;
+}
+.wc-toolbar .wc-nav, .wc-time-header-cell, .ui-dialog .ui-dialog-titlebar
+{
+	width: auto;
 }

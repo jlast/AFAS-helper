@@ -1,589 +1,352 @@
-var year = new Date().getFullYear();
-var month = new Date().getMonth();
-var day = new Date().getDate();
-
-var projecten = [];
-if(typeof(localStorage["projecten"]) !== "undefined" && IsJsonString(localStorage["projecten"]))
-{
-	var projectenJSONDestringed = JSON.parse(localStorage["projecten"]);
-	if(typeof(projectenJSONDestringed) === "object")
-	{
-		projecten = projectenJSONDestringed;
-	}
-}
-var articles = [];
-if(typeof(localStorage["articles"]) !== "undefined" && IsJsonString(localStorage["articles"]))
-{
-	var articlesJSONDestringed = JSON.parse(localStorage["articles"]);
-	if(typeof(articlesJSONDestringed) === "object")
-	{
-		articles = articlesJSONDestringed;
-	}
-}
-var presets = [];
-if(typeof(localStorage["presets"]) !== "undefined" && IsJsonString(localStorage["presets"]))
-{
-	var presetsJSONDestringed = JSON.parse(localStorage["presets"]);
-	if(typeof(presetsJSONDestringed) === "object")
-	{
-		presets = presetsJSONDestringed;
-	}
-}
-
-$(document).ready(function() {
-	$( "#tabs" ).tabs();
-	initCalendar();
-	initConfigureTools();
-});
-
-function initConfigureTools()
-{
-	initProjectCreate();
-	initArticleCreate();
-	initPresetCreate();
-}
-
-function initProjectCreate()
-{
-	updateProjectTable();
-	$('#ProjectCreate').click(function(){
-		var Projectcode = $('#ProjectCode').val();
-		var ProjectDescription = $('#ProjectDescription').val();
-		if(Projectcode != "" && ProjectDescription != "")
-		{
-			var project = {Projectcode: Projectcode, ProjectDescription: ProjectDescription}
-			projecten.push(project);
-			localStorage["projecten"] = JSON.stringify(projecten);
-			updateProjectTable();
-		}
-		$('#ProjectCode').val("");
-		$('#ProjectDescription').val("");
-	});
-}
-
-function updateProjectTable()
-{
-	updateDropdowns();
-	$("#projects tr").has("td").remove();
-	for(var i = 0; i < projecten.length; i++)
-	{
-		var project = projecten[i];
-		var projectcode = $("<td>" + project.Projectcode + "</td>");
-		var projectdescription = $("<td>" + project.ProjectDescription + "</td>");
-		var projectdeleterow = $("<td><a class='js--removeproject' href='#' data-id='" + i + "' >x</a></td>");
-		var row = $("<tr></tr>").append(projectcode).append(projectdescription).append(projectdeleterow)
-		$("#projects").append(row);
-	}
-	$(".js--removeproject").click(function(){
-		removeProject($(this).data('id'));
-	});
-}
-
-function removeProject(index)
-{
-	projecten.splice(index, 1);
-	localStorage["projecten"] = JSON.stringify(projecten);
-	updateProjectTable();
-}
-
-function initArticleCreate()
-{
-	updateArticleTable();
-	$('#ArticleCreate').click(function(){
-		var Article = $('#Article').val();
-		var ArticleDescription = $('#Articledescription').val();
-		if(Article != "" && ArticleDescription != "")
-		{
-			var article = {Article: Article, ArticleDescription: ArticleDescription}
-			articles.push(article);
-			localStorage["articles"] = JSON.stringify(articles);
-			updateArticleTable();
-		}
-		$('#Article').val("");
-		$('#Articledescription').val("");
-	});
-}
-
-function updateArticleTable()
-{
-	updateDropdowns();
-	$("#articles tr").has("td").remove();
-	for(var i = 0; i < articles.length; i++)
-	{
-		var article = articles[i];
-		var articlecode = $("<td>" + article.Article + "</td>");
-		var articledescription = $("<td>" + article.ArticleDescription + "</td>");
-		var articledeleterow = $("<td><a class='js--removearticle' href='#' data-id='" + i + "' >x</a></td>");
-		var row = $("<tr></tr>").append(articlecode).append(articledescription).append(articledeleterow)
-		$("#articles").append(row);
-	}
-	$(".js--removearticle").click(function(){
-		removeArticle($(this).data('id'));
-	});
-}
-
-function removeArticle(index)
-{
-	articles.splice(index, 1);
-	localStorage["articles"] = JSON.stringify(articles);
-	updateArticleTable();
-}
-
-function updateDropdowns()
-{
-	$("#presetprojectselect option:gt(0)").remove();
-	$("#presetarticleselect option:gt(0)").remove();
-	$("#createDateDialog .project option:gt(0)").remove();
-	$("#createDateDialog .article option:gt(0)").remove();
-	$("#editDateDialog .project option:gt(0)").remove();
-	$("#editDateDialog .article option:gt(0)").remove();
-	for(var i = 0; i < projecten.length; i++)
-	{	
-		var project = projecten[i];
-		var option = "<option value='" + project.Projectcode + "'>" + project.ProjectDescription + "</option>";
-		$("#presetprojectselect").append(option);
-		$("#createDateDialog .project").append(option);
-		$("#editDateDialog .project").append(option);
-	}
-	for(var i = 0; i < articles.length; i++)
-	{	
-		var article = articles[i];
-		var option = "<option value='" + article.Article + "'>" + article.ArticleDescription + "</option>";
-		$("#presetarticleselect").append(option);
-		$("#createDateDialog .article").append(option);
-		$("#editDateDialog .article").append(option);
-	}
-}
-
-function initPresetCreate()
-{
-	updatePresetTable();
-	$('#presetCreate').click(function(){
-		var presetproject = $('#presetprojectselect').val();
-		var presetarticle = $('#presetarticleselect').val();
-		var presetname = $('#presetname').val();
-		if(presetproject != "" && presetarticle != "")
-		{
-			var preset = {Name: presetname, Project: presetproject, Article: presetarticle}
-			presets.push(preset);
-			localStorage["presets"] = JSON.stringify(presets);
-			updatePresetTable();
-		}
-		$('#presetproject').val("");
-		$('#presetarticle').val("");
-	});
-}
-
-function updatePresetTable()
-{
-	$("#presets tr").has("td").remove();
-	$(".presets input").remove();
-	for(var p = 0; p < presets.length; p++)
-	{
-		var preset = presets[p];
-		var presetname = $("<td>" + preset.Name + "</td>");
-		var project = "";
-		for(var i = 0; i < projecten.length; i++)
-		{
-			if(projecten[i].Projectcode == preset.Project)
-			{
-				project = projecten[i].ProjectDescription;
-			}
-		}
-		var articlename = "";
-		for(var i = 0; i < articles.length; i++)
-		{
-			if(articles[i].Article == preset.Article)
-			{
-				articlename = articles[i].ArticleDescription;
-			}
-		}
-		var projectcode = $("<td>" + preset.Project + "</td>");
-		var projectdescription = $("<td>" + project + "</td>");
-		var article = $("<td>" + preset.Article + "</td>");
-		var articleDescription = $("<td>" + articlename + "</td>");
-		var presetdeleterow = $("<td><a class='js--removepreset' href='#' data-id='" + i + "' >x</a></td>");
-		var row = $("<tr></tr>").append(presetname).append(projectcode).append(projectdescription).append(article).append(articleDescription).append(presetdeleterow)
-		$("#presets").append(row);
-		
-		$("#createDateDialog .presets, #editDateDialog .presets").each(function(){
-			var pr = preset;
-			var presetButton = $('<input type="button" value="' + pr.Name + '">')
-			$(this).append(presetButton);
-			presetButton.click(function(){
-				var pre = pr;
-				$(this).closest(".js--dialog").find(".project").val(pr.Project);
-				$(this).closest(".js--dialog").find(".article").val(pr.Article);
-			});
-		});
-	}
-	$(".js--removepreset").click(function(){
-		removePreset($(this).data('id'));
-	});
-}
-
-function removePreset(index)
-{
-	presets.splice(index, 1);
-	localStorage["presets"] = JSON.stringify(presets);
-	updatePresetTable();
-}
-
-function finalizeCreateEvent(calEvent, $event, serialize)
-{
-	var description = $("#createDateDialog .beschrijving").val();
-	var project = $("#createDateDialog .project").val();
-	var article = $("#createDateDialog .article").val();
-	
-	var fromtime = $("#createDateDialog .fromtime").val();
-	var totime = $("#createDateDialog .totime").val();
-	
-	var fromMatch = fromtime.match(timeregex);
-	var toMatch = totime.match(timeregex);
-	if(fromMatch != null)
-	{
-		var hourfrom = parseInt(fromMatch[1]);
-		var minutefrom = parseInt(fromMatch[2]);
-	}
-	if(toMatch != null)
-	{
-		var hourto = parseInt(toMatch[1]);
-		var minuteto = parseInt(toMatch[2]);
-	}
-	
-	if(description == "" && project == "" && article == "")
-	{	
-		if(typeof calEvent.description != "undefined")
-		{
-			description = calEvent.description;
-		}
-		if(typeof calEvent.project != "undefined")
-		{
-			project = calEvent.project;
-		}
-		if(typeof calEvent.article != "undefined")
-		{
-			article = calEvent.article;
-		}
-	}
-	
-	$("#createDateDialog .beschrijving").removeClass("invalid");
-	$("#createDateDialog .project").removeClass("invalid");
-	$("#createDateDialog .article").removeClass("invalid");
-	$("#createDateDialog .fromtime").removeClass("invalid");
-	$("#createDateDialog .totime").removeClass("invalid");
-	
-	if(serialize && (description == "" || project == "" || article == "" || fromtime == "" || totime == "" || fromMatch.length == 0 || toMatch.length == 0 || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
-	{	
-		if(description == "")
-		{
-			$("#createDateDialog .beschrijving").addClass("invalid");
-		}
-		if(project == "")
-		{
-			$("#createDateDialog .project").addClass("invalid");
-		}
-		if(article == "")
-		{
-			$("#createDateDialog .article").addClass("invalid");
-		}
-		if(fromtime == "" || fromMatch.length == 0 || (toMatch.length > 0 && hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
-		{
-			$("#createDateDialog .fromtime").addClass("invalid");
-		}
-		if(totime == "" || toMatch.length == 0 || (fromMatch.length > 0 && hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
-		{
-			$("#createDateDialog .totime").addClass("invalid");
-		}
-		return false;
-	}
-	
-	$event.data('start', calEvent.start);
-	$event.data('end', calEvent.end);
-	calEvent.article = article;
-	calEvent.project = project;
-	
-	$event.find(".wc-title").text(description);
-	$event.find(".wc-content").remove();
-	var content = $("<div class='wc-content' />");
-	content.html("project: <span class='wc-project'>" + project + "</span><br/>article: <span class='wc-article'>" + article + "</span>");
-	content.insertAfter($event.find(".wc-title"));
-	
-	$("#createDateDialog .beschrijving").val("");
-	$("#createDateDialog .project").val("");
-	$("#createDateDialog .article").val("");
-	if(serialize)
-	{
-		SerializeEvents();
-	}
-	
-	return true;
-}
-
-var timeregex = /(^[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]$)/i
-
-function finalizeEditEvent(calEvent, $event)
-{
-	var description = $("#editDateDialog .beschrijving").val();
-	var project = $("#editDateDialog .project").val();
-	var article = $("#editDateDialog .article").val();
-	
-	var fromtime = $("#editDateDialog .fromtime").val();
-	var totime = $("#editDateDialog .totime").val();
-	
-	var fromMatch = fromtime.match(timeregex);
-	var toMatch = totime.match(timeregex);
-	if(fromMatch != null)
-	{
-		var hourfrom = parseInt(fromMatch[1]);
-		var minutefrom = parseInt(fromMatch[2]);
-	}
-	if(toMatch != null)
-	{
-		var hourto = parseInt(toMatch[1]);
-		var minuteto = parseInt(toMatch[2]);
-	}
-	
-	$("#editDateDialog .beschrijving").removeClass("invalid");
-	$("#editDateDialog .project").removeClass("invalid");
-	$("#editDateDialog .article").removeClass("invalid");
-	$("#editDateDialog .fromtime").removeClass("invalid");
-	$("#editDateDialog .totime").removeClass("invalid");
-	
-	if(description == "" || project == "" || article == "" || fromtime == "" || totime == "" || fromMatch.length == 0 || toMatch.length == 0 || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto)
-	{	
-		if(description == "")
-		{
-			$("#editDateDialog .beschrijving").addClass("invalid");
-		}
-		if(project == "")
-		{
-			$("#editDateDialog .project").addClass("invalid");
-		}
-		if(article == "")
-		{
-			$("#editDateDialog .article").addClass("invalid");
-		}
-		if(fromtime == "" || fromMatch.length == 0 || (toMatch.length > 0 && hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
-		{
-			$("#editDateDialog .fromtime").addClass("invalid");
-		}
-		if(totime == "" || toMatch.length == 0 || (fromMatch.length > 0 && hourfrom * 60 + minutefrom >= hourto * 60 + minuteto))
-		{
-			$("#editDateDialog .totime").addClass("invalid");
-		}
-		return false;
-	}
-	
-	var startdate = new Date(Date.parse(calEvent.start));
-	startdate.setHours(hourfrom);
-	startdate.setMinutes(minutefrom);
-	var enddate = new Date(Date.parse(calEvent.end));
-	enddate.setHours(hourto);
-	enddate.setMinutes(minuteto);
-	
-	calEvent.start = startdate;
-	calEvent.end = enddate;
-	calEvent.article = article;
-	calEvent.project = project;
-	
-	$event.data('start', calEvent.start);
-	$event.data('end', calEvent.end);
-		
-	$event.find(".wc-title").text(description);
-	var content = $("<div class='wc-content' />");
-	content.html("project: <span class='wc-project'>" + project + "</span><br/>article: <span class='wc-article'>" + article + "</span>");
-	$event.find(".wc-content").remove();
-	content.insertAfter($event.find(".wc-title"));
-	
-	SerializeEvents();
-	
-	return true;
-}
-
-function IsJsonString(str) {
-    try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
-
-function deleteEvent($event)
-{
-	$event.remove();
-	SerializeEvents();
-}
-
-function initCalendar(){
-	
-	$('#calendar').weekCalendar({
-	  firstDayOfWeek: 1,
-	  data: DeserializeEvents(),
-	  timeslotsPerHour: 2,
-	  timeslotHeigh: 30,
-	  hourLine: true,
-	  height: function($calendar) {
-		return $(window).height() - $('h1').outerHeight(true);
-	  },
-	  eventRender : function(calEvent, $event) {
-		if (calEvent.end.getTime() < new Date().getTime()) {
-		  $event.css('backgroundColor', '#aaa');
-		  $event.find('.time').css({'backgroundColor': '#999', 'border':'1px solid #888'});
-		}
-		$event.data('start', calEvent.start);
-		$event.data('end', calEvent.end);
-		finalizeCreateEvent(calEvent, $event, false);
-	  },
-	  eventNew: function(calEvent, $event) {
-		if($( "#createDateDialog" ).is(':data(uiDialog)'))
-		{
-			$( "#createDateDialog" ).dialog("open");
-			$( "#createDateDialog" ).dialog("open", function(){
-			});
-		}
-		else
-		{
-			$( "#createDateDialog" ).dialog({
-				modal: true,
-				width: 500,
-				resizable: false,
-				open: function(event, ui) {
-					$(this).parent().find('.ui-dialog-titlebar-close').unbind('click');
-					$(this).parent().find('.ui-dialog-titlebar-close').bind('click', function(e) {
-						deleteEvent($event);
-						$("#createDateDialog").dialog( "close" );
-					})
-					
-					var date = new Date(Date.parse(calEvent.start));
-					var enddate = new Date(Date.parse(calEvent.end));
-					
-					$("#createDateDialog .fromtime").val(date.getHours() + ":" + ("0" + date.getMinutes()).slice(-2));
-					$("#createDateDialog .totime").val(enddate.getHours() + ":" + ("0" + enddate.getMinutes()).slice(-2));
-					
-					$(this).find(".beschrijving").focus();
-				},
-				buttons: [
-					{
-						text: "Cancel",
-						click: function()
-						{
-							deleteEvent($event);
-							$( this ).dialog( "close" );
-						}
-					},
-					{
-						text: "Create",
-						click: function()
-						{
-							if(finalizeCreateEvent(calEvent, $event, true))
-							{
-								$( this ).dialog( "close" );
-							}
-						}
-					}
-				]
-			});
-		}
-	  },
-	  eventClick: function(calEvent, $event) {
-		$( "#editDateDialog" ).dialog({
+var Calendar = {
+	TimeRegex : /(^[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]$)/i,
+	TimeSlotHeight: 20,
+	HourString: "[timefrom] to [timeto]",
+	Init : function(){
+		var self = this;
+		self.InitDialogs();
+		self.InitWeekCalendar();
+	},
+	InitDialogs : function(){
+		$( '.js--dialog' ).dialog({
 			modal: true,
 			width: 500,
 			resizable: false,
-			open: function(event, ui){
-				var description = $event.find('.wc-title').text();
-				var project = $event.find('.wc-project').text();
-				var article = $event.find('.wc-article').text();
-				$("#editDateDialog .beschrijving").val(description);
-				$("#editDateDialog .project").val(project);
-				$("#editDateDialog .article").val(article);
-				$(this).find(".beschrijving").focus();
-					
-				var date = new Date(Date.parse(calEvent.start));
-				var enddate = new Date(Date.parse(calEvent.end));
+			autoOpen: false
+		});
+	},
+	InitWeekCalendar : function(){
+		var self = this;
+		$('.calendar').weekCalendar({
+		  firstDayOfWeek: 1,
+		  data: self.DeserializeEvents(),
+		  timeslotsPerHour: 2,
+		  timeslotHeigh: 30,
+		  hourLine: true,
+		  height: function($calendar) {
+			return $(window).height() - 180;
+		  },
+		  eventRender : function(calEvent, $event) {
+			if (calEvent.end.getTime() < new Date().getTime()) {
+			  $event.css('backgroundColor', '#aaa');
+			  $event.find('.time').css({'backgroundColor': '#999', 'border':'1px solid #888'});
+			}
+			$event.data('start', calEvent.start);
+			$event.data('end', calEvent.end);
+			$(this).find('.beschrijving').focus();
+			self.FinalizeEvent($(this), calEvent, $event, false);
+		  },
+		  eventNew: function(calEvent, $event) {
+			/*if($( '#createDateDialog' ).is(':data(uiDialog)'))
+			{
+				$( '#createDateDialog' ).dialog('open');
+				$( '#createDateDialog' ).dialog('open', function(){
+				});
+			}
+			else
+			{
+			}*/
+			self.NewEvent(calEvent, $event);
+		  },
+		  eventClick: function(calEvent, $event) {
+			self.EditEvent(calEvent, $event);
+		  },
+		});
+	},
+	NewEvent : function(calEvent, $event){
+		var self = this;
+		$( '#createDateDialog' ).dialog({
+			open: function(event, ui) {
+				$(this).parent().find('.ui-dialog-titlebar-close').unbind('click');
+				$(this).parent().find('.ui-dialog-titlebar-close').bind('click', function(e) {
+					self.DeleteEvent($event);
+					$('#createDateDialog').dialog( 'close' );
+				})
 				
-				$("#editDateDialog .fromtime").val(date.getHours() + ":" + ("0" + date.getMinutes()).slice(-2));
-				$("#editDateDialog .totime").val(enddate.getHours() + ":" + ("0" + enddate.getMinutes()).slice(-2));
+				self.SetTime(calEvent);
+				self.SetStyling($(this));
+				self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
+				self.AddButtonIcon($(this).parent(), 'Create', 'ui-icon-plus');
 			},
-			buttons: [
-				{
-					text: "Cancel",
-					click: function()
-					{
-						$( this ).dialog( "close" );
+			buttons: [{
+					text: 'Cancel',
+					click: function(){
+						self.DeleteEvent($event);
+						$( this ).dialog( 'close' );
 					}
 				},
 				{
-					text: "Edit",
-					click: function()
-					{
-						if(finalizeEditEvent(calEvent, $event))
-						{
-							$( this ).dialog( "close" );
+					text: 'Create',
+					click: function(){
+						if(self.FinalizeEvent($(this), calEvent, $event, true)){
+							$( this ).dialog( 'close' );
 						}
-					}
-				},
-				{
-					text: "Remove",
-					click: function()
-					{
-						deleteEvent($event);
-						$( this ).dialog( "close" );
 					}
 				}
 			]
 		});
-	  },
-  });
-}
-
-function DeserializeEvents()
-{
-	var events = [];
-	if(typeof(localStorage["events"]) !== "undefined" && IsJsonString(localStorage["events"]))
+		$( '#createDateDialog' ).dialog("open");
+	},
+	AddButtonIcon : function($dialog, text, icon)
 	{
-		var eventsJSONDestringed = JSON.parse(localStorage["events"]);
-		if(typeof(eventsJSONDestringed) === "object")
-		{
-			events = eventsJSONDestringed;
+	    $dialog.find('.ui-dialog-buttonpane').
+			find('button:contains("' + text + '")').button({
+			icons: {
+				primary: icon
+			}
+		});
+	},
+	EditEvent : function(calEvent, $event){
+		var self = this;
+		$( '#editDateDialog' ).dialog({
+			open: function(event, ui){
+				var description = $event.find('.wc-title').text();
+				var project = $event.find('.wc-project').text();
+				var article = $event.find('.wc-article').text();
+				$('#editDateDialog .js--beschrijving').val(description);
+				$('#editDateDialog .js--projectselect').val(project);
+				$('#editDateDialog .js--articleselect').val(article);
+				$(this).find('.js--beschrijving').focus();
+				
+				self.SetTime(calEvent);
+				self.SetStyling($(this));
+				self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
+				self.AddButtonIcon($(this).parent(), 'Edit', 'ui-icon-gear');
+				self.AddButtonIcon($(this).parent(), 'Remove', 'ui-icon-close');
+			},
+			buttons: [
+				{
+					text: 'Cancel',
+					click: function()
+					{
+						$( this ).dialog( 'close' );
+					}
+				},
+				{
+					text: 'Edit',
+					click: function()
+					{
+						if(self.FinalizeEvent($(this), calEvent, $event, true))
+						{
+							$( this ).dialog( 'close' );
+						}
+					}
+				},
+				{
+					text: 'Remove',
+					click: function()
+					{
+						self.DeleteEvent($event);
+						$( this ).dialog( 'close' );
+					}
+				}
+			]
+		});
+		$( '#editDateDialog' ).dialog("open");
+	},
+	SetStyling : function($dialog){
+		$dialog.find('input[type=button], a, button' ).button();
+		$dialog.find('input:text, input:password')
+		  .button()
+		  .css({
+				  'font' : 'inherit',
+				 'color' : 'inherit',
+			'text-align' : 'left',
+			   'outline' : 'none',
+				'cursor' : 'text',
+			'background' : 'white'
+		  });
+	},
+	SetTime : function(calEvent){	
+		var self = this;
+		var date = new Date(Date.parse(calEvent.start));
+		var enddate = new Date(Date.parse(calEvent.end));
+		
+		$('.js--fromtime').val(date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2));
+		$('.js--totime').val(enddate.getHours() + ':' + ('0' + enddate.getMinutes()).slice(-2));
+	},
+	FinalizeEvent : function($dialog, calEvent, $event, serialize){
+		var self = this;
+		var description = $dialog.find('.js--beschrijving').val();
+		var project = $dialog.find('.js--projectselect').val();
+		var article = $dialog.find('.js--articleselect').val();
+		
+		var fromtime = $dialog.find('.js--fromtime').val();
+		var totime = $dialog.find('.js--totime').val();
+				
+		if(typeof description == 'undefined' && typeof project == 'undefined' && typeof article == 'undefined' && typeof fromtime == 'undefined' && typeof totime == 'undefined')
+		{	
+			if(typeof calEvent.description != 'undefined'){
+				description = calEvent.description;
+			}
+			if(typeof calEvent.project != 'undefined'){
+				project = calEvent.project;
+			}
+			if(typeof calEvent.article != 'undefined'){
+				article = calEvent.article;
+			}
+			if(typeof calEvent.start != 'undefined'){
+				fromtime = calEvent.start.getHours() + ':' + ('0' + calEvent.start.getMinutes()).slice(-2);
+			}
+			if(typeof calEvent.end != 'undefined'){
+				totime = calEvent.end.getHours() + ':' + ('0' + calEvent.end.getMinutes()).slice(-2);
+			}
 		}
-	}
+		
+		var valid = self.ValidateEvent($dialog, description, project, article, fromtime, totime);
+		if(!valid){
+			return false;
+		}
+		
+		var hourfrom = self.GetHours(fromtime);
+		var minutefrom = self.GetMinutes(fromtime);
+		var hourto = self.GetHours(totime);
+		var minuteto = self.GetMinutes(totime);
 	
-	var data = [];
-	
-	for(var i = 0; i < events.length; i++)
+		var startdate = new Date(Date.parse(calEvent.start));
+		startdate.setHours(hourfrom);
+		startdate.setMinutes(minutefrom);
+		var enddate = new Date(Date.parse(calEvent.end));
+		enddate.setHours(hourto);
+		enddate.setMinutes(minuteto);
+		
+		calEvent.start = startdate;
+		calEvent.end = enddate;
+		calEvent.article = article;
+		calEvent.project = project;
+		
+		$event.css('top', (hourfrom * 2 + minutefrom / 30) * self.TimeSlotHeight);
+		$event.css('height', ((hourto * 2 + minuteto / 30) - (hourfrom * 2 + minutefrom / 30)) * self.TimeSlotHeight);
+		
+		//update the string
+		var hourstring = self.HourString;
+		hourstring = hourstring.replace("[timefrom]", formatDate(calEvent.start, 'h:i a'));
+		hourstring = hourstring.replace("[timeto]", formatDate(calEvent.end, 'h:i a'));
+		$event.find('.wc-time').text(hourstring);
+		
+		$event.data('start', calEvent.start);
+		$event.data('end', calEvent.end);
+		
+		$event.find('.wc-title').text(description);
+		$event.find('.wc-content').remove();
+		var content = $('<div class="wc-content" />');
+		content.html('project: <span class="wc-project">' + project + '</span><br/>article: <span class="wc-article">' + article + '</span>');
+		content.insertAfter($event.find('.wc-title'));
+		
+		$dialog.find('.beschrijving').val('');
+		$dialog.find('.project').val('');
+		$dialog.find('.article').val('');
+		if(serialize){
+			self.SerializeEvents();
+		}
+		
+		return true;
+	},
+	ValidateEvent : function($dialog, description, project, article, fromtime, totime){
+		var self = this;
+		var invalidclass = 'invalid';
+		var valid = true;
+		
+		$dialog.find('.js--input').removeClass(invalidclass);
+		
+		var hourfrom = self.GetHours(fromtime);
+		var minutefrom = self.GetMinutes(fromtime);
+		var hourto = self.GetHours(totime);
+		var minuteto = self.GetMinutes(totime);
+		
+		if(description == ''){
+			$dialog.find('.js--beschrijving').addClass(invalidclass);
+			valid = false;
+		}
+		if(project == ''){
+			$dialog.find('.js--projectselect').addClass(invalidclass);
+			valid = false;
+		}
+		if(article == ''){
+			$dialog.find('.js--articleselect').addClass(invalidclass);
+			valid = false;
+		}
+		if(hourfrom === '' || minutefrom === '' || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto){
+			$dialog.find('.js--fromtime').addClass(invalidclass);
+			valid = false;
+		}
+		if(hourto === '' || minuteto === '' || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto){
+			$dialog.find('.js--totime').addClass(invalidclass);
+			valid = false;
+		}
+		return valid;
+	},
+	GetHours : function(hourminute){
+		var self = this;
+		var match = hourminute.match(self.TimeRegex);
+		if(match != null && match.length > 2){
+			return parseInt(match[1]);
+		}
+		return "";
+	},
+	GetMinutes : function(hourminute){
+		var self = this;
+		var match = hourminute.match(self.TimeRegex);
+		if(match != null && match.length > 2){
+			return parseInt(match[2]);
+		}
+		return "";
+	},
+	DeleteEvent : function($event){
+		var self = this;
+		$event.remove();
+		self.SerializeEvents();
+	},
+	DeserializeEvents : function(){
+		var events = [];
+		if(typeof(localStorage['events']) !== 'undefined' && IsJsonString(localStorage['events']))
+		{
+			var eventsJSONDestringed = JSON.parse(localStorage['events']);
+			if(typeof(eventsJSONDestringed) === 'object')
+			{
+				events = eventsJSONDestringed;
+			}
+		}
+		
+		var data = [];
+		
+		for(var i = 0; i < events.length; i++)
+		{
+			var event = events[i];
+			var dataobject = {};
+			if(typeof event.start != 'undefined' && typeof event.end != 'undefined')
+			{
+				dataobject.id = i;
+				dataobject.start = event.start;
+				dataobject.end = event.end;
+				dataobject.title = event.description;
+				dataobject.project = event.project;
+				dataobject.article = event.article;
+				data.push(dataobject);
+			}
+		}
+		return data;
+	},
+	SerializeEvents : function()
 	{
-		var event = events[i];
-		var dataobject = {};
-		if(typeof event.start != "undefined" && typeof event.end != "undefined")
-		{
-			dataobject.id = i;
-			dataobject.start = event.start;
-			dataobject.end = event.end;
-			dataobject.title = event.description;
-			dataobject.project = event.project;
-			dataobject.article = event.article;
-			data.push(dataobject);
-		}
+		var $events = $('.wc-cal-event');
+		var events = [];
+		$events.each(function(){
+			var event = {};
+			var $day = $(this).closest('.wc-day-column');
+			event.start = $(this).data('start');
+			event.end = $(this).data('end');
+			event.description = $(this).find('.wc-title').text();
+			event.project = $(this).find('.wc-project').text();
+			event.article = $(this).find('.wc-article').text();
+			events.push(event);
+		});
+		localStorage['events'] = JSON.stringify(events);
 	}
-	return data;
-}
+};
 
-function SerializeEvents()
-{
-	var $events = $('.wc-cal-event');
-	var events = [];
-	$events.each(function(){
-		var event = {};
-		var $day = $(this).closest('.wc-day-column');
-		event.start = $(this).data("start");
-		event.end = $(this).data("end");
-		event.description = $(this).find('.wc-title').text();
-		event.project = $(this).find('.wc-project').text();
-		event.article = $(this).find('.wc-article').text();
-		events.push(event);
-	});
-	localStorage["events"] = JSON.stringify(events);
-}
+
+
+
+
+
