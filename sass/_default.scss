@@ -1,0 +1,93 @@
+$maxitems : 12;
+
+@for $denominator from 1 through $maxitems {
+	@for $numerator from 1 through $denominator {
+		#{".grid-" + $numerator + "-" + $denominator}
+		{
+			width: percentage($numerator / $denominator);
+		}
+	}
+}
+
+body {
+	margin: 0;
+}
+h1 {
+	margin: 0 0 1em;
+	padding: 0.5em;
+	color: #555555;
+}
+div, input, select{
+	width: 100%;
+}
+table{
+	margin-bottom: 0;
+}
+th, td{
+	text-align: left;
+	font-size: 12px !important; 
+}
+
+.hidden
+{
+	display: none !important;
+}
+
+
+.remove-fontsize
+{
+	font-size: 0;
+}
+.set-fontsize
+{
+	font-size: 12px;
+}
+
+.configuration, .dialog 
+{
+	div, input, select{
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box; 
+	}
+	div{
+		display: inline-block;
+		color: #555555;
+	}
+	table{
+		margin-top: 20px;
+		color: #555555;
+	}
+	div.container{
+		padding-top: 15px;
+	}
+}
+
+.column
+{
+	min-width: 400px;
+	vertical-align: top;
+	padding: 12px;
+	
+	.column__content{
+		border-radius: 8px;
+		padding: 12px;
+		background-color: #eee;
+	}
+	.column__cell{
+		margin-bottom: 5px;
+	}
+}
+
+input.invalid, select.invalid
+{
+	outline-color: red;
+	outline-offset: -2px;
+	outline-style: auto;
+	outline-width: 5px;
+}
+select.ui-widget.ui-dropdown
+{
+	background : white;
+	padding: .4em 1em;
+}

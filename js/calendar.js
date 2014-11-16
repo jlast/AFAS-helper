@@ -1,43 +1,46 @@
 var Calendar = {
-	TimeRegex : /(^[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]$)/i,
-	TimeSlotHeight: 20,
-	HourString: "[timefrom] to [timeto]",
-	Init : function(){
-		var self = this;
-		self.InitDialogs();
-		self.InitWeekCalendar();
-	},
-	InitDialogs : function(){
-		$( '.js--dialog' ).dialog({
-			modal: true,
-			width: 500,
-			resizable: false,
-			autoOpen: false
-		});
-	},
-	InitWeekCalendar : function(){
-		var self = this;
-		$('.calendar').weekCalendar({
-		  firstDayOfWeek: 1,
-		  data: self.DeserializeEvents(),
-		  timeslotsPerHour: 2,
-		  timeslotHeigh: 30,
-		  hourLine: true,
-		  height: function($calendar) {
-			return $(window).height() - 180;
-		  },
-		  eventRender : function(calEvent, $event) {
-			if (calEvent.end.getTime() < new Date().getTime()) {
-			  $event.css('backgroundColor', '#aaa');
-			  $event.find('.time').css({'backgroundColor': '#999', 'border':'1px solid #888'});
-			}
-			$event.data('start', calEvent.start);
-			$event.data('end', calEvent.end);
-			$(this).find('.beschrijving').focus();
-			self.FinalizeEvent($(this), calEvent, $event, false);
-		  },
-		  eventNew: function(calEvent, $event) {
-			/*if($( '#createDateDialog' ).is(':data(uiDialog)'))
+    TimeRegex: /(^[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]$)/i,
+    TimeSlotHeight: 20,
+    HourString: "[timefrom] to [timeto]",
+    Init: function() {
+        var self = this;
+        self.InitDialogs();
+        self.InitWeekCalendar();
+    },
+    InitDialogs: function() {
+        $('.js--dialog').dialog({
+            modal: true,
+            width: 500,
+            resizable: false,
+            autoOpen: false
+        });
+    },
+    InitWeekCalendar: function() {
+        var self = this;
+        $('.calendar').weekCalendar({
+            firstDayOfWeek: 1,
+            data: self.DeserializeEvents(),
+            timeslotsPerHour: 2,
+            timeslotHeigh: 30,
+            hourLine: true,
+            height: function($calendar) {
+                return $(window).height() - 113;
+            },
+            eventRender: function(calEvent, $event) {
+                if (calEvent.end.getTime() < new Date().getTime()) {
+                    $event.css('backgroundColor', '#aaa');
+                    $event.find('.time').css({
+                        'backgroundColor': '#999',
+                        'border': '1px solid #888'
+                    });
+                }
+                $event.data('start', calEvent.start);
+                $event.data('end', calEvent.end);
+                $(this).find('.beschrijving').focus();
+                self.FinalizeEvent($(this), calEvent, $event, false);
+            },
+            eventNew: function(calEvent, $event) {
+                /*if($( '#createDateDialog' ).is(':data(uiDialog)'))
 			{
 				$( '#createDateDialog' ).dialog('open');
 				$( '#createDateDialog' ).dialog('open', function(){
@@ -46,307 +49,284 @@ var Calendar = {
 			else
 			{
 			}*/
-			self.NewEvent(calEvent, $event);
-		  },
-		  eventClick: function(calEvent, $event) {
-			self.EditEvent(calEvent, $event);
-		  },
-		});
-	},
-	NewEvent : function(calEvent, $event){
-		var self = this;
-		$( '#createDateDialog' ).dialog({
-			open: function(event, ui) {
-				$(this).parent().find('.ui-dialog-titlebar-close').unbind('click');
-				$(this).parent().find('.ui-dialog-titlebar-close').bind('click', function(e) {
-					self.DeleteEvent($event);
-					$('#createDateDialog').dialog( 'close' );
-				})
-				
-				self.SetTime(calEvent);
-				self.SetStyling($(this));
-				self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
-				self.AddButtonIcon($(this).parent(), 'Create', 'ui-icon-plus');
-			},
-			buttons: [{
-					text: 'Cancel',
-					click: function(){
-						self.DeleteEvent($event);
-						$( this ).dialog( 'close' );
-					}
-				},
-				{
-					text: 'Create',
-					click: function(){
-						if(self.FinalizeEvent($(this), calEvent, $event, true)){
-							$( this ).dialog( 'close' );
-						}
-					}
-				}
-			]
-		});
-		$( '#createDateDialog' ).dialog("open");
-	},
-	AddButtonIcon : function($dialog, text, icon)
-	{
-	    $dialog.find('.ui-dialog-buttonpane').
-			find('button:contains("' + text + '")').button({
-			icons: {
-				primary: icon
-			}
-		});
-	},
-	EditEvent : function(calEvent, $event){
-		var self = this;
-		$( '#editDateDialog' ).dialog({
-			open: function(event, ui){
-				var description = $event.find('.wc-title').text();
-				var project = $event.find('.wc-project').text();
-				var article = $event.find('.wc-article').text();
-				$('#editDateDialog .js--beschrijving').val(description);
-				$('#editDateDialog .js--projectselect').val(project);
-				$('#editDateDialog .js--articleselect').val(article);
-				$(this).find('.js--beschrijving').focus();
-				
-				self.SetTime(calEvent);
-				self.SetStyling($(this));
-				self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
-				self.AddButtonIcon($(this).parent(), 'Edit', 'ui-icon-gear');
-				self.AddButtonIcon($(this).parent(), 'Remove', 'ui-icon-close');
-			},
-			buttons: [
-				{
-					text: 'Cancel',
-					click: function()
-					{
-						$( this ).dialog( 'close' );
-					}
-				},
-				{
-					text: 'Edit',
-					click: function()
-					{
-						if(self.FinalizeEvent($(this), calEvent, $event, true))
-						{
-							$( this ).dialog( 'close' );
-						}
-					}
-				},
-				{
-					text: 'Remove',
-					click: function()
-					{
-						self.DeleteEvent($event);
-						$( this ).dialog( 'close' );
-					}
-				}
-			]
-		});
-		$( '#editDateDialog' ).dialog("open");
-	},
-	SetStyling : function($dialog){
-		$dialog.find('input[type=button], a, button' ).button();
-		$dialog.find('input:text, input:password')
-		  .button()
-		  .css({
-				  'font' : 'inherit',
-				 'color' : 'inherit',
-			'text-align' : 'left',
-			   'outline' : 'none',
-				'cursor' : 'text',
-			'background' : 'white'
-		  });
-	},
-	SetTime : function(calEvent){	
-		var self = this;
-		var date = new Date(Date.parse(calEvent.start));
-		var enddate = new Date(Date.parse(calEvent.end));
-		
-		$('.js--fromtime').val(date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2));
-		$('.js--totime').val(enddate.getHours() + ':' + ('0' + enddate.getMinutes()).slice(-2));
-	},
-	FinalizeEvent : function($dialog, calEvent, $event, serialize){
-		var self = this;
-		var description = $dialog.find('.js--beschrijving').val();
-		var project = $dialog.find('.js--projectselect').val();
-		var article = $dialog.find('.js--articleselect').val();
-		
-		var fromtime = $dialog.find('.js--fromtime').val();
-		var totime = $dialog.find('.js--totime').val();
-				
-		if(typeof description == 'undefined' && typeof project == 'undefined' && typeof article == 'undefined' && typeof fromtime == 'undefined' && typeof totime == 'undefined')
-		{	
-			if(typeof calEvent.description != 'undefined'){
-				description = calEvent.description;
-			}
-			if(typeof calEvent.project != 'undefined'){
-				project = calEvent.project;
-			}
-			if(typeof calEvent.article != 'undefined'){
-				article = calEvent.article;
-			}
-			if(typeof calEvent.start != 'undefined'){
-				fromtime = calEvent.start.getHours() + ':' + ('0' + calEvent.start.getMinutes()).slice(-2);
-			}
-			if(typeof calEvent.end != 'undefined'){
-				totime = calEvent.end.getHours() + ':' + ('0' + calEvent.end.getMinutes()).slice(-2);
-			}
-		}
-		
-		var valid = self.ValidateEvent($dialog, description, project, article, fromtime, totime);
-		if(!valid){
-			return false;
-		}
-		
-		var hourfrom = self.GetHours(fromtime);
-		var minutefrom = self.GetMinutes(fromtime);
-		var hourto = self.GetHours(totime);
-		var minuteto = self.GetMinutes(totime);
-	
-		var startdate = new Date(Date.parse(calEvent.start));
-		startdate.setHours(hourfrom);
-		startdate.setMinutes(minutefrom);
-		var enddate = new Date(Date.parse(calEvent.end));
-		enddate.setHours(hourto);
-		enddate.setMinutes(minuteto);
-		
-		calEvent.start = startdate;
-		calEvent.end = enddate;
-		calEvent.article = article;
-		calEvent.project = project;
-		
-		$event.css('top', (hourfrom * 2 + minutefrom / 30) * self.TimeSlotHeight);
-		$event.css('height', ((hourto * 2 + minuteto / 30) - (hourfrom * 2 + minutefrom / 30)) * self.TimeSlotHeight);
-		
-		//update the string
-		var hourstring = self.HourString;
-		hourstring = hourstring.replace("[timefrom]", formatDate(calEvent.start, 'h:i a'));
-		hourstring = hourstring.replace("[timeto]", formatDate(calEvent.end, 'h:i a'));
-		$event.find('.wc-time').text(hourstring);
-		
-		$event.data('start', calEvent.start);
-		$event.data('end', calEvent.end);
-		
-		$event.find('.wc-title').text(description);
-		$event.find('.wc-content').remove();
-		var content = $('<div class="wc-content" />');
-		content.html('project: <span class="wc-project">' + project + '</span><br/>article: <span class="wc-article">' + article + '</span>');
-		content.insertAfter($event.find('.wc-title'));
-		
-		$dialog.find('.beschrijving').val('');
-		$dialog.find('.project').val('');
-		$dialog.find('.article').val('');
-		if(serialize){
-			self.SerializeEvents();
-		}
-		
-		return true;
-	},
-	ValidateEvent : function($dialog, description, project, article, fromtime, totime){
-		var self = this;
-		var invalidclass = 'invalid';
-		var valid = true;
-		
-		$dialog.find('.js--input').removeClass(invalidclass);
-		
-		var hourfrom = self.GetHours(fromtime);
-		var minutefrom = self.GetMinutes(fromtime);
-		var hourto = self.GetHours(totime);
-		var minuteto = self.GetMinutes(totime);
-		
-		if(description == ''){
-			$dialog.find('.js--beschrijving').addClass(invalidclass);
-			valid = false;
-		}
-		if(project == ''){
-			$dialog.find('.js--projectselect').addClass(invalidclass);
-			valid = false;
-		}
-		if(article == ''){
-			$dialog.find('.js--articleselect').addClass(invalidclass);
-			valid = false;
-		}
-		if(hourfrom === '' || minutefrom === '' || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto){
-			$dialog.find('.js--fromtime').addClass(invalidclass);
-			valid = false;
-		}
-		if(hourto === '' || minuteto === '' || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto){
-			$dialog.find('.js--totime').addClass(invalidclass);
-			valid = false;
-		}
-		return valid;
-	},
-	GetHours : function(hourminute){
-		var self = this;
-		var match = hourminute.match(self.TimeRegex);
-		if(match != null && match.length > 2){
-			return parseInt(match[1]);
-		}
-		return "";
-	},
-	GetMinutes : function(hourminute){
-		var self = this;
-		var match = hourminute.match(self.TimeRegex);
-		if(match != null && match.length > 2){
-			return parseInt(match[2]);
-		}
-		return "";
-	},
-	DeleteEvent : function($event){
-		var self = this;
-		$event.remove();
-		self.SerializeEvents();
-	},
-	DeserializeEvents : function(){
-		var events = [];
-		if(typeof(localStorage['events']) !== 'undefined' && IsJsonString(localStorage['events']))
-		{
-			var eventsJSONDestringed = JSON.parse(localStorage['events']);
-			if(typeof(eventsJSONDestringed) === 'object')
-			{
-				events = eventsJSONDestringed;
-			}
-		}
-		
-		var data = [];
-		
-		for(var i = 0; i < events.length; i++)
-		{
-			var event = events[i];
-			var dataobject = {};
-			if(typeof event.start != 'undefined' && typeof event.end != 'undefined')
-			{
-				dataobject.id = i;
-				dataobject.start = event.start;
-				dataobject.end = event.end;
-				dataobject.title = event.description;
-				dataobject.project = event.project;
-				dataobject.article = event.article;
-				data.push(dataobject);
-			}
-		}
-		return data;
-	},
-	SerializeEvents : function()
-	{
-		var $events = $('.wc-cal-event');
-		var events = [];
-		$events.each(function(){
-			var event = {};
-			var $day = $(this).closest('.wc-day-column');
-			event.start = $(this).data('start');
-			event.end = $(this).data('end');
-			event.description = $(this).find('.wc-title').text();
-			event.project = $(this).find('.wc-project').text();
-			event.article = $(this).find('.wc-article').text();
-			events.push(event);
-		});
-		localStorage['events'] = JSON.stringify(events);
-	}
+                self.NewEvent(calEvent, $event);
+            },
+            eventClick: function(calEvent, $event) {
+                self.EditEvent(calEvent, $event);
+            },
+        });
+    },
+    NewEvent: function(calEvent, $event) {
+        var self = this;
+        $('#createDateDialog').dialog({
+            open: function(event, ui) {
+                $(this).parent().find('.ui-dialog-titlebar-close').unbind('click');
+                $(this).parent().find('.ui-dialog-titlebar-close').bind('click', function(e) {
+                    self.DeleteEvent($event);
+                    $('#createDateDialog').dialog('close');
+                })
+
+                self.SetTime(calEvent);
+                self.SetStyling($(this));
+                self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
+                self.AddButtonIcon($(this).parent(), 'Create', 'ui-icon-plus');
+            },
+            buttons: [{
+                text: 'Cancel',
+                click: function() {
+                    self.DeleteEvent($event);
+                    $(this).dialog('close');
+                }
+            }, {
+                text: 'Create',
+                click: function() {
+                    if (self.FinalizeEvent($(this), calEvent, $event, true)) {
+                        $(this).dialog('close');
+                    }
+                }
+            }]
+        });
+        $('#createDateDialog').dialog("open");
+    },
+    AddButtonIcon: function($dialog, text, icon) {
+        $dialog.find('.ui-dialog-buttonpane').
+        find('button:contains("' + text + '")').button({
+            icons: {
+                primary: icon
+            }
+        });
+    },
+    EditEvent: function(calEvent, $event) {
+        var self = this;
+        $('#editDateDialog').dialog({
+            open: function(event, ui) {
+                var description = $event.find('.wc-title').text();
+                var project = $event.find('.wc-project').text();
+                var article = $event.find('.wc-article').text();
+                $('#editDateDialog .js--beschrijving').val(description);
+                $('#editDateDialog .js--projectselect').val(project);
+                $('#editDateDialog .js--articleselect').val(article);
+                $(this).find('.js--beschrijving').focus();
+
+                self.SetTime(calEvent);
+                self.SetStyling($(this));
+                self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
+                self.AddButtonIcon($(this).parent(), 'Edit', 'ui-icon-gear');
+                self.AddButtonIcon($(this).parent(), 'Remove', 'ui-icon-close');
+            },
+            buttons: [{
+                text: 'Cancel',
+                click: function() {
+                    $(this).dialog('close');
+                }
+            }, {
+                text: 'Edit',
+                click: function() {
+                    if (self.FinalizeEvent($(this), calEvent, $event, true)) {
+                        $(this).dialog('close');
+                    }
+                }
+            }, {
+                text: 'Remove',
+                click: function() {
+                    self.DeleteEvent($event);
+                    $(this).dialog('close');
+                }
+            }]
+        });
+        $('#editDateDialog').dialog("open");
+    },
+    SetStyling: function($dialog) {
+        $dialog.find('input[type=button], a, button').button();
+        $dialog.find('input:text, input:password')
+            .button()
+            .css({
+                'font': 'inherit',
+                'color': 'inherit',
+                'text-align': 'left',
+                'outline': 'none',
+                'cursor': 'text',
+                'background': 'white'
+            });
+    },
+    SetTime: function(calEvent) {
+        var self = this;
+        var date = new Date(Date.parse(calEvent.start));
+        var enddate = new Date(Date.parse(calEvent.end));
+
+        $('.js--fromtime').val(date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2));
+        $('.js--totime').val(enddate.getHours() + ':' + ('0' + enddate.getMinutes()).slice(-2));
+    },
+    FinalizeEvent: function($dialog, calEvent, $event, serialize) {
+        var self = this;
+        var description = $dialog.find('.js--beschrijving').val();
+        var project = $dialog.find('.js--projectselect').val();
+        var article = $dialog.find('.js--articleselect').val();
+
+        var fromtime = $dialog.find('.js--fromtime').val();
+        var totime = $dialog.find('.js--totime').val();
+
+        if (typeof description == 'undefined' && typeof project == 'undefined' && typeof article == 'undefined' && typeof fromtime == 'undefined' && typeof totime == 'undefined') {
+            if (typeof calEvent.description != 'undefined') {
+                description = calEvent.description;
+            }
+            if (typeof calEvent.project != 'undefined') {
+                project = calEvent.project;
+            }
+            if (typeof calEvent.article != 'undefined') {
+                article = calEvent.article;
+            }
+            if (typeof calEvent.start != 'undefined') {
+                fromtime = calEvent.start.getHours() + ':' + ('0' + calEvent.start.getMinutes()).slice(-2);
+            }
+            if (typeof calEvent.end != 'undefined') {
+                totime = calEvent.end.getHours() + ':' + ('0' + calEvent.end.getMinutes()).slice(-2);
+            }
+        }
+
+        var valid = self.ValidateEvent($dialog, description, project, article, fromtime, totime);
+        if (!valid) {
+            return false;
+        }
+
+        var hourfrom = self.GetHours(fromtime);
+        var minutefrom = self.GetMinutes(fromtime);
+        var hourto = self.GetHours(totime);
+        var minuteto = self.GetMinutes(totime);
+
+        var startdate = new Date(Date.parse(calEvent.start));
+        startdate.setHours(hourfrom);
+        startdate.setMinutes(minutefrom);
+        var enddate = new Date(Date.parse(calEvent.end));
+        enddate.setHours(hourto);
+        enddate.setMinutes(minuteto);
+
+        calEvent.start = startdate;
+        calEvent.end = enddate;
+        calEvent.article = article;
+        calEvent.project = project;
+
+        $event.css('top', (hourfrom * 2 + minutefrom / 30) * self.TimeSlotHeight);
+        $event.css('height', ((hourto * 2 + minuteto / 30) - (hourfrom * 2 + minutefrom / 30)) * self.TimeSlotHeight);
+
+        //update the string
+        var hourstring = self.HourString;
+        hourstring = hourstring.replace("[timefrom]", formatDate(calEvent.start, 'h:i a'));
+        hourstring = hourstring.replace("[timeto]", formatDate(calEvent.end, 'h:i a'));
+        $event.find('.wc-time').text(hourstring);
+
+        $event.data('start', calEvent.start);
+        $event.data('end', calEvent.end);
+
+        $event.find('.wc-title').text(description);
+        $event.find('.wc-content').remove();
+        var content = $('<div class="wc-content" />');
+        content.html('project: <span class="wc-project">' + project + '</span><br/>article: <span class="wc-article">' + article + '</span>');
+        content.insertAfter($event.find('.wc-title'));
+
+        $dialog.find('.beschrijving').val('');
+        $dialog.find('.project').val('');
+        $dialog.find('.article').val('');
+        if (serialize) {
+            self.SerializeEvents();
+        }
+
+        return true;
+    },
+    ValidateEvent: function($dialog, description, project, article, fromtime, totime) {
+        var self = this;
+        var invalidclass = 'invalid';
+        var valid = true;
+
+        $dialog.find('.js--input').removeClass(invalidclass);
+
+        var hourfrom = self.GetHours(fromtime);
+        var minutefrom = self.GetMinutes(fromtime);
+        var hourto = self.GetHours(totime);
+        var minuteto = self.GetMinutes(totime);
+
+        if (description == '') {
+            $dialog.find('.js--beschrijving').addClass(invalidclass);
+            valid = false;
+        }
+        if (project == '') {
+            $dialog.find('.js--projectselect').addClass(invalidclass);
+            valid = false;
+        }
+        if (article == '') {
+            $dialog.find('.js--articleselect').addClass(invalidclass);
+            valid = false;
+        }
+        if (hourfrom === '' || minutefrom === '' || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto) {
+            $dialog.find('.js--fromtime').addClass(invalidclass);
+            valid = false;
+        }
+        if (hourto === '' || minuteto === '' || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto) {
+            $dialog.find('.js--totime').addClass(invalidclass);
+            valid = false;
+        }
+        return valid;
+    },
+    GetHours: function(hourminute) {
+        var self = this;
+        var match = hourminute.match(self.TimeRegex);
+        if (match != null && match.length > 2) {
+            return parseInt(match[1]);
+        }
+        return "";
+    },
+    GetMinutes: function(hourminute) {
+        var self = this;
+        var match = hourminute.match(self.TimeRegex);
+        if (match != null && match.length > 2) {
+            return parseInt(match[2]);
+        }
+        return "";
+    },
+    DeleteEvent: function($event) {
+        var self = this;
+        $event.remove();
+        self.SerializeEvents();
+    },
+    DeserializeEvents: function() {
+        var events = [];
+        if (typeof(localStorage['events']) !== 'undefined' && IsJsonString(localStorage['events'])) {
+            var eventsJSONDestringed = JSON.parse(localStorage['events']);
+            if (typeof(eventsJSONDestringed) === 'object') {
+                events = eventsJSONDestringed;
+            }
+        }
+
+        var data = [];
+
+        for (var i = 0; i < events.length; i++) {
+            var event = events[i];
+            var dataobject = {};
+            if (typeof event.start != 'undefined' && typeof event.end != 'undefined') {
+                dataobject.id = i;
+                dataobject.start = event.start;
+                dataobject.end = event.end;
+                dataobject.title = event.description;
+                dataobject.project = event.project;
+                dataobject.article = event.article;
+                data.push(dataobject);
+            }
+        }
+        return data;
+    },
+    SerializeEvents: function() {
+        var $events = $('.wc-cal-event');
+        var events = [];
+        $events.each(function() {
+            var event = {};
+            var $day = $(this).closest('.wc-day-column');
+            event.start = $(this).data('start');
+            event.end = $(this).data('end');
+            event.description = $(this).find('.wc-title').text();
+            event.project = $(this).find('.wc-project').text();
+            event.article = $(this).find('.wc-article').text();
+            events.push(event);
+        });
+        localStorage['events'] = JSON.stringify(events);
+    }
 };
-
-
-
-
-
-

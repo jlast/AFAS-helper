@@ -1,0 +1,15 @@
+.ui-dialog .dialog{
+	padding: 6.5px 5px 13px 4px;
+	overflow: visible;
+}
+
+input.presetbutton{
+	width: auto;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	padding: 0;
+	.ui-dialog-buttonset {
+		text-align: right;
+	}
+}

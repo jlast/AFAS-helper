@@ -14,12 +14,27 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "page": "/weekcalendar.html",
+    "page": "/index.html",
     "persistent": true
   },
   "content_scripts": [ 
 	{
-    "js": ["/js/libs/jquery-1.4.4.min.js", "/js/jquery.weekcalendar.js", "/js/popup.js"],
+    "js": [
+		"/js/libs/date.js", 
+		"/js/libs/jquery-1.4.4.min.js", 
+		"/js/libs/jquery-ui-1.8.11.custom.min.js", 
+		"/js/jquery.weekcalendar.js", 
+		"/js/calendar.js",
+		"/js/configuration.js",
+		"/js/functions.js",
+		"/js/init.js",
+		"/js/scripts.js"
+	],
+	"css": [
+	    "/js/libs/jquery-ui-1.8.1.custom.css", 
+	    "/js/jquery.weekcalendar.css", 
+	    "/js/style.css", 
+	],
     "matches": [ "http://*/*", "https://*/*"]
 	}
    ]

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	Configuration.Init();
-	$( '#tabs' ).tabs();
-	Calendar.Init();
+    Configuration.Init();
+    $('.js--tabs').tabs();
+    Calendar.Init();
 });

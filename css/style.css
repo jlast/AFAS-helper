@@ -232,6 +232,33 @@
 .grid-12-12 {
   width: 100%; }
 
+body {
+  margin: 0; }
+
+h1 {
+  margin: 0 0 1em;
+  padding: 0.5em;
+  color: #555555; }
+
+div, input, select {
+  width: 100%; }
+
+table {
+  margin-bottom: 0; }
+
+th, td {
+  text-align: left;
+  font-size: 12px !important; }
+
+.hidden {
+  display: none !important; }
+
+.remove-fontsize {
+  font-size: 0; }
+
+.set-fontsize {
+  font-size: 12px; }
+
 .configuration div, .configuration input, .configuration select, .dialog div, .dialog input, .dialog select {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -242,57 +269,8 @@
 .configuration table, .dialog table {
   margin-top: 20px;
   color: #555555; }
-.configuration input, .configuration select, .dialog input, .dialog select {
-  width: 100%; }
-  .configuration input.presetbutton, .configuration select.presetbutton, .dialog input.presetbutton, .dialog select.presetbutton {
-    width: auto; }
 .configuration div.container, .dialog div.container {
   padding-top: 15px; }
-
-.ui-dialog .dialog {
-  padding: 6.5px 5px 13px 4px;
-  overflow: visible; }
-
-div {
-  width: 100%; }
-
-.hidden {
-  display: none !important; }
-
-body {
-  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-  margin: 0; }
-
-h1 {
-  margin: 0 0 1em;
-  padding: 0.5em; }
-
-.popup {
-  width: 200px; }
-
-p.description {
-  font-size: 0.8em;
-  padding: 1em;
-  position: absolute;
-  top: 3.2em;
-  margin-right: 400px; }
-
-#message {
-  font-size: 0.7em;
-  position: absolute;
-  top: 1em;
-  right: 1em;
-  width: 350px;
-  display: none;
-  padding: 1em;
-  background: #ffc;
-  border: 1px solid #dda; }
-
-.remove-fontsize {
-  font-size: 0; }
-
-.set-fontsize {
-  font-size: 12px; }
 
 .column {
   min-width: 400px;
@@ -302,7 +280,7 @@ p.description {
     border-radius: 8px;
     padding: 12px;
     background-color: #eee; }
-  .column .cell {
+  .column .column__cell {
     margin-bottom: 5px; }
 
 input.invalid, select.invalid {
@@ -315,26 +293,29 @@ select.ui-widget.ui-dropdown {
   background: white;
   padding: .4em 1em; }
 
-th, td {
-  text-align: left;
-  font-size: 12px !important; }
-
-table {
-  margin-bottom: 0; }
-
 .ui-tabs, .ui-tabs-panel {
-  border-bottom-width: 0px !important; }
+  border-width: 0px !important;
+  padding: 0px; }
 
-.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-  text-align: right; }
+.ui-tabs > div {
+  padding-top: 0; }
+
+.wc-toolbar .wc-nav, .wc-time-header-cell, .ui-dialog .ui-dialog-titlebar, .ui-widget-header {
+  width: auto; }
+
+.ui-dialog .dialog {
+  padding: 6.5px 5px 13px 4px;
+  overflow: visible; }
+
+input.presetbutton {
+  width: auto; }
 
 .ui-dialog .ui-dialog-buttonpane {
   padding: 0; }
+  .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    text-align: right; }
 
-#tabs > div {
-  padding-top: 0; }
-
-.wc-toolbar .wc-nav, .wc-time-header-cell, .ui-dialog .ui-dialog-titlebar {
-  width: auto; }
+.popup {
+  width: 200px; }
 
 /*# sourceMappingURL=style.css.map */
