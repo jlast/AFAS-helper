@@ -1,4 +1,35 @@
 .popup
 {
-	width: 200px;
+	height: 80px;
+	width: 215px;
+	padding: 10px;
+	body{
+		height: 80px;
+		width: 215px;
+	}
+	input{
+		width: auto;
+	}
+	ul {
+		-webkit-margin-before: 0;
+		-webkit-margin-after: 0;
+		-webkit-margin-start: 0;
+		-webkit-margin-end: 0;
+		-webkit-padding-start: 0;
+	}
+	li {
+		padding: 0 0 0 5px;
+		text-indent: 16px !important;
+		overflow: visible !important;
+	}
+	a {
+		text-decoration: none;
+		color: #555555;
+		&:hover, &:active{
+			color: #999999;
+			.ui-icon{
+				background-image: url(lib/images/ui-icons_888888_256x240.png);
+			}
+		}
+	}
 }

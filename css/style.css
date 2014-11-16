@@ -240,6 +240,9 @@ h1 {
   padding: 0.5em;
   color: #555555; }
 
+h2 {
+  margin-top: 0; }
+
 div, input, select {
   width: 100%; }
 
@@ -259,17 +262,20 @@ th, td {
 .set-fontsize {
   font-size: 12px; }
 
-.configuration div, .configuration input, .configuration select, .dialog div, .dialog input, .dialog select {
+.align > div {
+  vertical-align: top; }
+
+.configuration div, .configuration input, .configuration select, .dialog div, .dialog input, .dialog select, .popup div, .popup input, .popup select {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
-.configuration div, .dialog div {
+.configuration div, .dialog div, .popup div {
   display: inline-block;
   color: #555555; }
-.configuration table, .dialog table {
+.configuration table, .dialog table, .popup table {
   margin-top: 20px;
   color: #555555; }
-.configuration div.container, .dialog div.container {
+.configuration div.container, .dialog div.container, .popup div.container {
   padding-top: 15px; }
 
 .column {
@@ -300,7 +306,7 @@ select.ui-widget.ui-dropdown {
 .ui-tabs > div {
   padding-top: 0; }
 
-.wc-toolbar .wc-nav, .wc-time-header-cell, .ui-dialog .ui-dialog-titlebar, .ui-widget-header {
+.wc-toolbar .wc-nav, .wc-time-header-cell, .ui-dialog .ui-dialog-titlebar, .ui-widget-header, .autowidth {
   width: auto; }
 
 .ui-dialog .dialog {
@@ -316,6 +322,30 @@ input.presetbutton {
     text-align: right; }
 
 .popup {
-  width: 200px; }
+  height: 80px;
+  width: 215px;
+  padding: 10px; }
+  .popup body {
+    height: 80px;
+    width: 215px; }
+  .popup input {
+    width: auto; }
+  .popup ul {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    -webkit-padding-start: 0; }
+  .popup li {
+    padding: 0 0 0 5px;
+    text-indent: 16px !important;
+    overflow: visible !important; }
+  .popup a {
+    text-decoration: none;
+    color: #555555; }
+    .popup a:hover, .popup a:active {
+      color: #999999; }
+      .popup a:hover .ui-icon, .popup a:active .ui-icon {
+        background-image: url(lib/images/ui-icons_888888_256x240.png); }
 
 /*# sourceMappingURL=style.css.map */

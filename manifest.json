@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Afwastool",
-  "description": "This extension allows hours to be written easy.",
+  "name": "AFAS helper",
+  "description": "This extension allows hours to be written easy in Colours' AFAS.",
   "version": "1.0",
 
   "permissions": [
@@ -10,7 +10,7 @@
 	"tabs", "http://*/*", "https://*/*"
   ],
   "browser_action": {
-    "default_icon": "afwastool.png",
+    "default_icon": "afas-helper.png",
     "default_popup": "popup.html"
   },
   "background": {
@@ -19,23 +19,23 @@
   },
   "content_scripts": [ 
 	{
-    "js": [
-		"/js/libs/date.js", 
-		"/js/libs/jquery-1.4.4.min.js", 
-		"/js/libs/jquery-ui-1.8.11.custom.min.js", 
-		"/js/jquery.weekcalendar.js", 
-		"/js/calendar.js",
-		"/js/configuration.js",
-		"/js/functions.js",
-		"/js/init.js",
-		"/js/scripts.js"
-	],
-	"css": [
-	    "/js/libs/jquery-ui-1.8.1.custom.css", 
-	    "/js/jquery.weekcalendar.css", 
-	    "/js/style.css", 
-	],
-    "matches": [ "http://*/*", "https://*/*"]
+		"js": [
+			"/js/libs/date.js", 
+			"/js/libs/jquery-1.4.4.min.js", 
+			"/js/libs/jquery-ui-1.8.11.custom.min.js", 
+			"/js/jquery.weekcalendar.js", 
+			"/js/calendar.js",
+			"/js/configuration.js",
+			"/js/functions.js",
+			"/js/init.js"
+			//"/js/scripts.js"
+		],
+		"css": [
+			"/css/lib/jquery-ui-1.8.11.custom.css", 
+			"/css/jquery.weekcalendar.css", 
+			"/css/style.css"
+		],
+		"matches": [ "http://*/*", "https://*/*"]
 	}
    ]
 }

@@ -1,8 +1,9 @@
-if (typeof $ != "undefined") {
+if (typeof $ != 'undefined') {
     $(document).ready(function() {
-        $("#import").click(function() {
-            exportEvents();
-        });
+        $('#import').click(function(event) {
+			event.preventDefault();
+			exportEvents();
+		});
     });
 }
 
