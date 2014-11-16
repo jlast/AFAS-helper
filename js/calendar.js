@@ -2,6 +2,8 @@ var Calendar = {
     TimeRegex: /(^[0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]$)/i,
     TimeSlotHeight: 20,
     HourString: "[timefrom] to [timeto]",
+	Events: [],
+	Id: 0,
     Init: function() {
         var self = this;
         self.InitDialogs();
@@ -59,10 +61,13 @@ var Calendar = {
             open: function(event, ui) {
                 $(this).parent().find('.ui-dialog-titlebar-close').unbind('click');
                 $(this).parent().find('.ui-dialog-titlebar-close').bind('click', function(e) {
-                    self.DeleteEvent($event);
+                    self.DeleteEvent(calEvent, $event);
                     $('#createDateDialog').dialog('close');
                 })
-
+				$(this).find('.js--beschrijving').val('');
+				$(this).find('.js--projectselect').val('');
+				$(this).find('.js--articleselect').val('');
+				
                 self.SetTime(calEvent);
                 self.SetStyling($(this));
                 self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
@@ -71,12 +76,13 @@ var Calendar = {
             buttons: [{
                 text: 'Cancel',
                 click: function() {
-                    self.DeleteEvent($event);
+                    self.DeleteEvent(calEvent, $event);
                     $(this).dialog('close');
                 }
             }, {
                 text: 'Create',
                 click: function() {
+					self.AssignId(calEvent);
                     if (self.FinalizeEvent($(this), calEvent, $event, true)) {
                         $(this).dialog('close');
                     }
@@ -85,6 +91,11 @@ var Calendar = {
         });
         $('#createDateDialog').dialog("open");
     },
+	AssignId : function(calEvent){
+        var self = this;
+		calEvent.id = self.Id;
+		self.Id++;
+	},
     AddButtonIcon: function($dialog, text, icon) {
         $dialog.find('.ui-dialog-buttonpane').
         find('button:contains("' + text + '")').button({
@@ -126,7 +137,7 @@ var Calendar = {
             }, {
                 text: 'Remove',
                 click: function() {
-                    self.DeleteEvent($event);
+                    self.DeleteEvent(calEvent, $event);
                     $(this).dialog('close');
                 }
             }]
@@ -283,12 +294,14 @@ var Calendar = {
         }
         return "";
     },
-    DeleteEvent: function($event) {
+    DeleteEvent: function(calEvent, $event) {
         var self = this;
-        $event.remove();
+		$('.calendar').weekCalendar('removeEvent', calEvent.id);
+        //$event.remove();
         self.SerializeEvents();
     },
     DeserializeEvents: function() {
+		var self = this;
         var events = [];
         if (typeof(localStorage['events']) !== 'undefined' && IsJsonString(localStorage['events'])) {
             var eventsJSONDestringed = JSON.parse(localStorage['events']);
@@ -303,7 +316,7 @@ var Calendar = {
             var event = events[i];
             var dataobject = {};
             if (typeof event.start != 'undefined' && typeof event.end != 'undefined') {
-                dataobject.id = i;
+                self.AssignId(dataobject);
                 dataobject.start = event.start;
                 dataobject.end = event.end;
                 dataobject.title = event.description;
@@ -315,8 +328,21 @@ var Calendar = {
         return data;
     },
     SerializeEvents: function() {
+		var self = this;
         var $events = $('.wc-cal-event');
-        var events = [];
+        var events = self.DeserializeEvents();
+		var startdate = $('.calendar').data('startDate');
+		//sustain data not in this week.
+		var shownweek = startdate.getWeekNumber();
+		events = $.grep(events, function(el, i){
+			var arr = el.start.split(/-|T|:/i);
+			var date = new Date(arr[0], arr[1] -1, arr[2], arr[3], arr[4]);
+			if(shownweek == date.getWeekNumber())
+			{
+				return false;
+			}
+			return true;
+		});
         $events.each(function() {
             var event = {};
             var $day = $(this).closest('.wc-day-column');

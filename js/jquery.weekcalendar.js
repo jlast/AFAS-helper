@@ -399,6 +399,13 @@
                 return false;
             }
           });
+		  var dataobject = self.options.data;
+		  for(var i = dataobject.length - 1; i >= 0 ; i--){
+			if(dataobject[i].id === eventId)
+			{
+			  RemoveByIndex(self.options.data, i);
+			}
+		  }
 
           //this could be more efficient rather than running on all days regardless...
           self.element.find('.wc-day-column-inner').each(function() {
@@ -1142,6 +1149,7 @@
                 } else {
                   self._adjustOverlappingEvents($weekDay);
                 }
+				self.options.data.push(newCalEvent);
 
                 var proceed = self._trigger('beforeEventNew', event, {
                   'calEvent': newCalEvent,
