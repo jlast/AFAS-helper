@@ -1,7 +1,9 @@
 @charset "UTF-8";
-@import "default";
-@import "tabs";
-@import "calendar";
-@import "dialogs";
-@import "configuration";
-@import "popup";
+.ah__root{
+	@import "default";
+	@import "tabs";
+	@import "calendar";
+	@import "dialogs";
+	@import "configuration";
+	@import "popup";
+}

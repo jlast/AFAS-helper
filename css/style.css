@@ -1,351 +1,257 @@
-.grid-1-1 {
+.ah__root .grid-1-1 {
   width: 100%; }
-
-.grid-1-2 {
+.ah__root .grid-1-2 {
   width: 50%; }
-
-.grid-2-2 {
+.ah__root .grid-2-2 {
   width: 100%; }
-
-.grid-1-3 {
+.ah__root .grid-1-3 {
   width: 33.33333333%; }
-
-.grid-2-3 {
+.ah__root .grid-2-3 {
   width: 66.66666667%; }
-
-.grid-3-3 {
+.ah__root .grid-3-3 {
   width: 100%; }
-
-.grid-1-4 {
+.ah__root .grid-1-4 {
   width: 25%; }
-
-.grid-2-4 {
+.ah__root .grid-2-4 {
   width: 50%; }
-
-.grid-3-4 {
+.ah__root .grid-3-4 {
   width: 75%; }
-
-.grid-4-4 {
+.ah__root .grid-4-4 {
   width: 100%; }
-
-.grid-1-5 {
+.ah__root .grid-1-5 {
   width: 20%; }
-
-.grid-2-5 {
+.ah__root .grid-2-5 {
   width: 40%; }
-
-.grid-3-5 {
+.ah__root .grid-3-5 {
   width: 60%; }
-
-.grid-4-5 {
+.ah__root .grid-4-5 {
   width: 80%; }
-
-.grid-5-5 {
+.ah__root .grid-5-5 {
   width: 100%; }
-
-.grid-1-6 {
+.ah__root .grid-1-6 {
   width: 16.66666667%; }
-
-.grid-2-6 {
+.ah__root .grid-2-6 {
   width: 33.33333333%; }
-
-.grid-3-6 {
+.ah__root .grid-3-6 {
   width: 50%; }
-
-.grid-4-6 {
+.ah__root .grid-4-6 {
   width: 66.66666667%; }
-
-.grid-5-6 {
+.ah__root .grid-5-6 {
   width: 83.33333333%; }
-
-.grid-6-6 {
+.ah__root .grid-6-6 {
   width: 100%; }
-
-.grid-1-7 {
+.ah__root .grid-1-7 {
   width: 14.28571429%; }
-
-.grid-2-7 {
+.ah__root .grid-2-7 {
   width: 28.57142857%; }
-
-.grid-3-7 {
+.ah__root .grid-3-7 {
   width: 42.85714286%; }
-
-.grid-4-7 {
+.ah__root .grid-4-7 {
   width: 57.14285714%; }
-
-.grid-5-7 {
+.ah__root .grid-5-7 {
   width: 71.42857143%; }
-
-.grid-6-7 {
+.ah__root .grid-6-7 {
   width: 85.71428571%; }
-
-.grid-7-7 {
+.ah__root .grid-7-7 {
   width: 100%; }
-
-.grid-1-8 {
+.ah__root .grid-1-8 {
   width: 12.5%; }
-
-.grid-2-8 {
+.ah__root .grid-2-8 {
   width: 25%; }
-
-.grid-3-8 {
+.ah__root .grid-3-8 {
   width: 37.5%; }
-
-.grid-4-8 {
+.ah__root .grid-4-8 {
   width: 50%; }
-
-.grid-5-8 {
+.ah__root .grid-5-8 {
   width: 62.5%; }
-
-.grid-6-8 {
+.ah__root .grid-6-8 {
   width: 75%; }
-
-.grid-7-8 {
+.ah__root .grid-7-8 {
   width: 87.5%; }
-
-.grid-8-8 {
+.ah__root .grid-8-8 {
   width: 100%; }
-
-.grid-1-9 {
+.ah__root .grid-1-9 {
   width: 11.11111111%; }
-
-.grid-2-9 {
+.ah__root .grid-2-9 {
   width: 22.22222222%; }
-
-.grid-3-9 {
+.ah__root .grid-3-9 {
   width: 33.33333333%; }
-
-.grid-4-9 {
+.ah__root .grid-4-9 {
   width: 44.44444444%; }
-
-.grid-5-9 {
+.ah__root .grid-5-9 {
   width: 55.55555556%; }
-
-.grid-6-9 {
+.ah__root .grid-6-9 {
   width: 66.66666667%; }
-
-.grid-7-9 {
+.ah__root .grid-7-9 {
   width: 77.77777778%; }
-
-.grid-8-9 {
+.ah__root .grid-8-9 {
   width: 88.88888889%; }
-
-.grid-9-9 {
+.ah__root .grid-9-9 {
   width: 100%; }
-
-.grid-1-10 {
+.ah__root .grid-1-10 {
   width: 10%; }
-
-.grid-2-10 {
+.ah__root .grid-2-10 {
   width: 20%; }
-
-.grid-3-10 {
+.ah__root .grid-3-10 {
   width: 30%; }
-
-.grid-4-10 {
+.ah__root .grid-4-10 {
   width: 40%; }
-
-.grid-5-10 {
+.ah__root .grid-5-10 {
   width: 50%; }
-
-.grid-6-10 {
+.ah__root .grid-6-10 {
   width: 60%; }
-
-.grid-7-10 {
+.ah__root .grid-7-10 {
   width: 70%; }
-
-.grid-8-10 {
+.ah__root .grid-8-10 {
   width: 80%; }
-
-.grid-9-10 {
+.ah__root .grid-9-10 {
   width: 90%; }
-
-.grid-10-10 {
+.ah__root .grid-10-10 {
   width: 100%; }
-
-.grid-1-11 {
+.ah__root .grid-1-11 {
   width: 9.09090909%; }
-
-.grid-2-11 {
+.ah__root .grid-2-11 {
   width: 18.18181818%; }
-
-.grid-3-11 {
+.ah__root .grid-3-11 {
   width: 27.27272727%; }
-
-.grid-4-11 {
+.ah__root .grid-4-11 {
   width: 36.36363636%; }
-
-.grid-5-11 {
+.ah__root .grid-5-11 {
   width: 45.45454545%; }
-
-.grid-6-11 {
+.ah__root .grid-6-11 {
   width: 54.54545455%; }
-
-.grid-7-11 {
+.ah__root .grid-7-11 {
   width: 63.63636364%; }
-
-.grid-8-11 {
+.ah__root .grid-8-11 {
   width: 72.72727273%; }
-
-.grid-9-11 {
+.ah__root .grid-9-11 {
   width: 81.81818182%; }
-
-.grid-10-11 {
+.ah__root .grid-10-11 {
   width: 90.90909091%; }
-
-.grid-11-11 {
+.ah__root .grid-11-11 {
   width: 100%; }
-
-.grid-1-12 {
+.ah__root .grid-1-12 {
   width: 8.33333333%; }
-
-.grid-2-12 {
+.ah__root .grid-2-12 {
   width: 16.66666667%; }
-
-.grid-3-12 {
+.ah__root .grid-3-12 {
   width: 25%; }
-
-.grid-4-12 {
+.ah__root .grid-4-12 {
   width: 33.33333333%; }
-
-.grid-5-12 {
+.ah__root .grid-5-12 {
   width: 41.66666667%; }
-
-.grid-6-12 {
+.ah__root .grid-6-12 {
   width: 50%; }
-
-.grid-7-12 {
+.ah__root .grid-7-12 {
   width: 58.33333333%; }
-
-.grid-8-12 {
+.ah__root .grid-8-12 {
   width: 66.66666667%; }
-
-.grid-9-12 {
+.ah__root .grid-9-12 {
   width: 75%; }
-
-.grid-10-12 {
+.ah__root .grid-10-12 {
   width: 83.33333333%; }
-
-.grid-11-12 {
+.ah__root .grid-11-12 {
   width: 91.66666667%; }
-
-.grid-12-12 {
+.ah__root .grid-12-12 {
   width: 100%; }
-
-body {
+.ah__root body {
   margin: 0; }
-
-h1 {
+.ah__root h1 {
   margin: 0 0 1em;
   padding: 0.5em;
   color: #555555; }
-
-h2 {
+.ah__root h2 {
   margin-top: 0; }
-
-div, input, select {
+.ah__root div, .ah__root input, .ah__root select {
   width: 100%; }
-
-table {
+.ah__root table {
   margin-bottom: 0; }
-
-th, td {
+.ah__root th, .ah__root td {
   text-align: left;
   font-size: 12px !important; }
-
-.hidden {
+.ah__root .hidden {
   display: none !important; }
-
-.remove-fontsize {
+.ah__root .remove-fontsize {
   font-size: 0; }
-
-.set-fontsize {
+.ah__root .set-fontsize {
   font-size: 12px; }
-
-.align > div {
+.ah__root .align > div {
   vertical-align: top; }
-
-.configuration div, .configuration input, .configuration select, .dialog div, .dialog input, .dialog select, .popup div, .popup input, .popup select {
+.ah__root .configuration div, .ah__root .configuration input, .ah__root .configuration select, .ah__root .dialog div, .ah__root .dialog input, .ah__root .dialog select, .ah__root .popup div, .ah__root .popup input, .ah__root .popup select {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
-.configuration div, .dialog div, .popup div {
+.ah__root .configuration div, .ah__root .dialog div, .ah__root .popup div {
   display: inline-block;
   color: #555555; }
-.configuration table, .dialog table, .popup table {
+.ah__root .configuration table, .ah__root .dialog table, .ah__root .popup table {
   margin-top: 20px;
   color: #555555; }
-.configuration div.container, .dialog div.container, .popup div.container {
+.ah__root .configuration div.container, .ah__root .dialog div.container, .ah__root .popup div.container {
   padding-top: 15px; }
-
-.column {
+.ah__root .column {
   min-width: 400px;
   vertical-align: top;
   padding: 12px; }
-  .column .column__content {
+  .ah__root .column .column__content {
     border-radius: 8px;
     padding: 12px;
     background-color: #eee; }
-  .column .column__cell {
+  .ah__root .column .column__cell {
     margin-bottom: 5px; }
-
-input.invalid, select.invalid {
+.ah__root input.invalid, .ah__root select.invalid {
   outline-color: red;
   outline-offset: -2px;
   outline-style: auto;
   outline-width: 5px; }
-
-select.ui-widget.ui-dropdown {
+.ah__root select.ui-widget.ui-dropdown {
   background: white;
   padding: .4em 1em; }
-
-.ui-tabs, .ui-tabs-panel {
+.ah__root .ui-icon {
+  width: 16px; }
+.ah__root .ui-tabs, .ah__root .ui-tabs-panel {
   border-width: 0px !important;
   padding: 0px; }
-
-.ui-tabs > div {
+.ah__root .ui-tabs > div {
   padding-top: 0; }
-
-.wc-toolbar .wc-nav, .wc-time-header-cell, .ui-dialog .ui-dialog-titlebar, .ui-widget-header, .autowidth {
+.ah__root .wc-toolbar .wc-nav, .ah__root .wc-time-header-cell, .ah__root .ui-dialog .ui-dialog-titlebar, .ah__root .ui-widget-header, .ah__root .autowidth {
   width: auto; }
-
-.ui-dialog .dialog {
+.ah__root .ui-dialog .dialog {
   padding: 6.5px 5px 13px 4px;
   overflow: visible; }
-
-input.presetbutton {
+.ah__root input.presetbutton {
   width: auto; }
-
-.ui-dialog .ui-dialog-buttonpane {
+.ah__root .ui-dialog .ui-dialog-buttonpane {
   padding: 0; }
-  .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+  .ah__root .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
     text-align: right; }
-
-.popup {
+.ah__root.popup {
   height: 80px;
   width: 215px;
   padding: 10px; }
-  .popup body {
+  .ah__root.popup body {
     height: 80px;
     width: 215px; }
-  .popup input {
+  .ah__root.popup input {
     width: auto; }
-  .popup ul {
+  .ah__root.popup ul {
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
     -webkit-padding-start: 0; }
-  .popup li {
+  .ah__root.popup li {
     padding: 0 0 0 5px;
     text-indent: 16px !important;
     overflow: visible !important; }
-  .popup a {
+  .ah__root.popup a {
     text-decoration: none;
     color: #555555; }
-    .popup a:hover, .popup a:active {
+    .ah__root.popup a .ui-icon {
+      display: inline-block; }
+    .ah__root.popup a:hover, .ah__root.popup a:active {
       color: #999999; }
-      .popup a:hover .ui-icon, .popup a:active .ui-icon {
+      .ah__root.popup a:hover .ui-icon, .ah__root.popup a:active .ui-icon {
         background-image: url(lib/images/ui-icons_888888_256x240.png); }
 
 /*# sourceMappingURL=style.css.map */
