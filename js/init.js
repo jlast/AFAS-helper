@@ -1,5 +1,8 @@
 $(document).ready(function() {
     Configuration.Init();
-    $('.js--tabs').tabs();
     Calendar.Init();
+    $('.js--tabs').tabs();
+	if(Configuration.projecten.length === 0 && Configuration.articles.length === 0){
+		$('.js--tabs').tabs({ selected: 1 });
+	}
 });

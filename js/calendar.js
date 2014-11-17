@@ -14,7 +14,8 @@ var Calendar = {
             modal: true,
             width: 500,
             resizable: false,
-            autoOpen: false
+            autoOpen: false,
+			closeOnEscape: false
         });
     },
     InitWeekCalendar: function() {

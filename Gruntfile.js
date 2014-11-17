@@ -20,7 +20,7 @@ module.exports = function (grunt) {
         scss: 'sass',
         css: 'css',
         bowerComponents: 'bower_components',
-	build: '../build'
+		build: '../AFAShelper/'
     };
 
     // Define the configuration for all the tasks
