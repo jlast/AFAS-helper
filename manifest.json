@@ -29,6 +29,7 @@
 			"/js/calendar.js",
 			"/js/configuration.js",
 			"/js/functions.js",
+			"/js/analytics.js",
 			"/js/init.js"
 		],
 		"css": [

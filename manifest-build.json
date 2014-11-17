@@ -23,6 +23,7 @@
 	{
 		"js": [
 			"/js/default.js",
+			"/js/analytics.js",
 			"/js/default-popup.js"
 		],
 		"css": [
