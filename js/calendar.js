@@ -51,11 +51,10 @@ var Calendar = {
                 self.EditEvent(calEvent, $event);
             },
 			eventDrop: function(calEvent, oldcalEvent, $event) {
-				//self.FinalizeDialogEvent(null, calEvent, $event)
-				$('.calendar').weekCalendar('updateEvent', calEvent);
+				self.DeleteEvent(oldcalEvent, $event);
 			},
 			eventResize: function(calEvent, oldcalEvent, $event) {
-				//self.FinalizeDialogEvent(null, calEvent, $event);
+				self.DeleteEvent(oldcalEvent, $event);
 				$('.calendar').weekCalendar('updateEvent', calEvent);
 			},
         });
@@ -87,6 +86,7 @@ var Calendar = {
             }, {
                 text: 'Create',
                 click: function() {
+                    self.DeleteEvent(calEvent, $event);
 					self.AssignId(calEvent);
                     if (self.FinalizeDialogEvent($(this), calEvent, $event, true)) {
 						$('.calendar').weekCalendar('updateEvent', calEvent);
