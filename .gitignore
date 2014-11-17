@@ -1,2 +1,8 @@
 **/.sass-cache
 **/.sass-cache/*
+/build
+/build/*
+
+//Generated files
+js/default.js
+js/default-popup.js
