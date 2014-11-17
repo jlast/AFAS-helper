@@ -1672,6 +1672,14 @@
       _updateEventInCalendar: function(calEvent) {
           var self = this;
           self._cleanEvent(calEvent);
+		  
+		  var dataobject = self.options.data;
+		  for(var i = dataobject.length - 1; i >= 0 ; i--){
+			if(dataobject[i].id === calEvent.id)
+			{
+			  self.options.data[i] = calEvent;
+			}
+		  }
 
           if (calEvent.id) {
             self.element.find('.wc-cal-event').each(function() {

@@ -39,7 +39,8 @@ var Calendar = {
                 $event.data('start', calEvent.start);
                 $event.data('end', calEvent.end);
                 $(this).find('.beschrijving').focus();
-                self.FinalizeEvent($(this), calEvent, $event, false);
+				self.RenderEvent(calEvent, $event);
+                //self.FinalizeDialogEvent($(this), calEvent, $event, false);
             },
             eventNew: function(calEvent, $event) {
                 self.NewEvent(calEvent, $event);
@@ -48,10 +49,14 @@ var Calendar = {
                 self.EditEvent(calEvent, $event);
             },
 			eventDrop: function(calEvent, oldcalEvent, $event) {
-				self.FinalizeEvent(null, calEvent, $event, true)
+				$('.calendar').weekCalendar('updateEvent', calEvent);
+				self.FinalizeDialogEvent(null, calEvent, $event)
+				self.SerializeEvents();
 			},
 			eventResize: function(calEvent, oldcalEvent, $event) {
-				self.FinalizeEvent(null, calEvent, $event, true)
+				$('.calendar').weekCalendar('updateEvent', calEvent);
+				self.FinalizeDialogEvent(null, calEvent, $event, true);
+				self.SerializeEvents();
 			},
         });
     },
@@ -83,7 +88,9 @@ var Calendar = {
                 text: 'Create',
                 click: function() {
 					self.AssignId(calEvent);
-                    if (self.FinalizeEvent($(this), calEvent, $event, true)) {
+                    if (self.FinalizeDialogEvent($(this), calEvent, $event, true)) {
+						$('.calendar').weekCalendar('updateEvent', calEvent);
+						self.SerializeEvents();
                         $(this).dialog('close');
                     }
                 }
@@ -130,7 +137,9 @@ var Calendar = {
             }, {
                 text: 'Edit',
                 click: function() {
-                    if (self.FinalizeEvent($(this), calEvent, $event, true)) {
+                    if (self.FinalizeDialogEvent($(this), calEvent, $event, true)) {
+						$('.calendar').weekCalendar('updateEvent', calEvent);
+						self.SerializeEvents();
                         $(this).dialog('close');
                     }
                 }
@@ -165,7 +174,24 @@ var Calendar = {
         $('.js--fromtime').val(date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2));
         $('.js--totime').val(enddate.getHours() + ':' + ('0' + enddate.getMinutes()).slice(-2));
     },
-    FinalizeEvent: function($dialog, calEvent, $event, serialize) {
+	RenderEvent: function(calEvent, $event){
+        var self = this;
+		//update the hourstring
+		var hourstring = self.HourString;
+		hourstring = hourstring.replace("[timefrom]", formatDate(calEvent.start, 'h:i a'));
+		hourstring = hourstring.replace("[timeto]", formatDate(calEvent.end, 'h:i a'));
+		$event.find('.wc-time').text(hourstring);
+		
+		$event.data('start', calEvent.start);
+		$event.data('end', calEvent.end);
+
+		$event.find('.wc-title').text(calEvent.title);
+		$event.find('.wc-content').remove();
+		var content = $('<div class="wc-content" />');
+		content.html('project: <span class="wc-project">' + calEvent.project + '</span><br/>article: <span class="wc-article">' + calEvent.article + '</span>');
+		content.insertAfter($event.find('.wc-title'));
+	},
+    FinalizeDialogEvent: function($dialog, calEvent, $event) {
         var self = this;
 		if($dialog != null)
 		{
@@ -211,6 +237,7 @@ var Calendar = {
 			enddate.setHours(hourto);
 			enddate.setMinutes(minuteto);
 
+			calEvent.title = description;
 			calEvent.start = startdate;
 			calEvent.end = enddate;
 			calEvent.article = article;
@@ -219,29 +246,10 @@ var Calendar = {
 			$event.css('top', (hourfrom * 2 + minutefrom / 30) * self.TimeSlotHeight);
 			$event.css('height', ((hourto * 2 + minuteto / 30) - (hourfrom * 2 + minutefrom / 30)) * self.TimeSlotHeight);
 
-			//update the string
-			var hourstring = self.HourString;
-			hourstring = hourstring.replace("[timefrom]", formatDate(calEvent.start, 'h:i a'));
-			hourstring = hourstring.replace("[timeto]", formatDate(calEvent.end, 'h:i a'));
-			$event.find('.wc-time').text(hourstring);
-
-			$event.find('.wc-title').text(description);
-			$event.find('.wc-content').remove();
-			var content = $('<div class="wc-content" />');
-			content.html('project: <span class="wc-project">' + project + '</span><br/>article: <span class="wc-article">' + article + '</span>');
-			content.insertAfter($event.find('.wc-title'));
-
 			$dialog.find('.beschrijving').val('');
 			$dialog.find('.project').val('');
 			$dialog.find('.article').val('');
 		}
-		$event.data('start', calEvent.start);
-		$event.data('end', calEvent.end);
-		
-        if (serialize) {
-            self.SerializeEvents();
-        }
-
         return true;
     },
     ValidateEvent: function($dialog, description, project, article, fromtime, totime) {
