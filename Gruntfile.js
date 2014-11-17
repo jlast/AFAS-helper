@@ -19,7 +19,8 @@ module.exports = function (grunt) {
         source: '',
         scss: 'sass',
         css: 'css',
-        bowerComponents: 'bower_components'
+        bowerComponents: 'bower_components',
+	build: '../build'
     };
 
     // Define the configuration for all the tasks
@@ -43,8 +44,8 @@ module.exports = function (grunt) {
 		uglify: {
 			my_target: {
 				files: {
-					'build/js/default.js': ['js/libs/jquery-1.4.4.min.js', 'js/libs/jquery-ui-1.8.11.custom.min.js', 'js/libs/date.js', 'js/jquery.weekcalendar.js', 'js/functions.js', 'js/configuration.js', 'js/calendar.js', 'js/init.js'], 
-					'build/js/default-popup.js': ['js/libs/jquery-1.4.4.min.js', 'js/libs/jquery-ui-1.8.11.custom.min.js', 'js/jquery.weekcalendar.js', 'js/functions.js', 'js/calendar.js', 'js/popup.js']
+					'<%= config.build %>/js/default.js': ['js/libs/jquery-1.4.4.min.js', 'js/libs/jquery-ui-1.8.11.custom.min.js', 'js/libs/date.js', 'js/jquery.weekcalendar.js', 'js/functions.js', 'js/configuration.js', 'js/calendar.js', 'js/init.js'], 
+					'<%= config.build %>/js/default-popup.js': ['js/libs/jquery-1.4.4.min.js', 'js/libs/jquery-ui-1.8.11.custom.min.js', 'js/jquery.weekcalendar.js', 'js/functions.js', 'js/calendar.js', 'js/popup.js']
 				}
 			}
 		},
@@ -56,30 +57,20 @@ module.exports = function (grunt) {
 			},
 			dist: {
 				files: {
-					'build/index.html': ['index.html'],
-					'build/popup.html': ['popup.html']
+					'<%= config.build %>/index.html': ['index.html'],
+					'<%= config.build %>/popup.html': ['popup.html']
 				}
 			}
 		},
 		copy: {
 			main: {
 				files: [
-					{src: ['afas-helper.png'], dest: 'build/afas-helper.png'},
-					{src: ['manifest.json'], dest: 'build/manifest.json'},
-					{expand: true, src: ['css/**'], dest: 'build/'},
-
-					// includes files within path and its sub-directories
-					{expand: true, src: ['path/**'], dest: 'dest/'},
-
-					// makes all src relative to cwd
-					{expand: true, cwd: 'path/', src: ['**'], dest: 'dest/'},
-
-					// flattens results to a single level
-					{expand: true, flatten: true, src: ['path/**'], dest: 'dest/', filter: 'isFile'},
+					{src: ['afas-helper.png'], dest: '<%= config.build %>/afas-helper.png'},
+					{src: ['manifest-build.json'], dest: '<%= config.build %>/manifest.json'},
+					{expand: true, src: ['css/**'], dest: '<%= config.build %>/'},
 				],
 			},
 		},
-      
         // Compiles Sass to CSS and generate necessary files if requested
         sass: {
             options: {
@@ -98,10 +89,10 @@ module.exports = function (grunt) {
         },
 		remove: {
 			build: {
-				dirList: ['build']
+				dirList: ['<%= config.build %>']
 			},
 			exclude: {
-				fileList: ['build/css/style.css.map'],
+				fileList: ['<%= config.build %>/css/style.css.map'],
 			}
 		},
 
@@ -118,9 +109,9 @@ module.exports = function (grunt) {
     grunt.registerTask('build', 'compress the javascript and css', function () {
         grunt.task.run([
 			'remove:build',
-            'uglify',
-			'processhtml',
 			'copy',
+			'processhtml',
+            'uglify',
 			'remove:exclude'
         ]);
     });
