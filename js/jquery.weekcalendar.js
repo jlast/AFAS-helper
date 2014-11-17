@@ -1673,12 +1673,17 @@
           var self = this;
           self._cleanEvent(calEvent);
 		  
+		  var match = false;
 		  var dataobject = self.options.data;
 		  for(var i = dataobject.length - 1; i >= 0 ; i--){
 			if(dataobject[i].id === calEvent.id)
 			{
 			  self.options.data[i] = calEvent;
+			  match = true;
 			}
+		  }
+		  if(!match){
+			self.options.data.push(calEvent);
 		  }
 
           if (calEvent.id) {
@@ -1864,6 +1869,7 @@
 
                 var $newEvent = self._renderEvent(newCalEvent, self._findWeekDayForEvent(newCalEvent, $weekDayColumns));
                 $calEvent.hide();
+                options.eventDrop(null, null, null);
 
                 $calEvent.data('preventClick', true);
 
@@ -1873,11 +1879,6 @@
                   self._adjustOverlappingEvents($weekDayOld);
                 }
                 self._adjustOverlappingEvents($weekDay);
-
-                setTimeout(function() {
-                  $calEvent.remove();
-                }, 1000);
-
             }
           });
       },

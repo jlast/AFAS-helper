@@ -3,7 +3,7 @@ var Calendar = {
     TimeSlotHeight: 20,
     HourString: "[timefrom] to [timeto]",
 	Events: [],
-	Id: 0,
+	Id: 1, //index start at 1 since 0 is equal to empty string
     Init: function() {
         var self = this;
         self.InitDialogs();
@@ -41,9 +41,6 @@ var Calendar = {
                 $(this).find('.beschrijving').focus();
 				self.RenderEvent(calEvent, $event);
             },
-			eventAfterRender: function(calEvent, $event) {
-				self.SerializeEvents();
-			},
             eventNew: function(calEvent, $event) {
                 self.NewEvent(calEvent, $event);
             },
@@ -54,8 +51,9 @@ var Calendar = {
 				self.DeleteEvent(oldcalEvent, $event);
 			},
 			eventResize: function(calEvent, oldcalEvent, $event) {
-				self.DeleteEvent(oldcalEvent, $event);
+				self.DeleteEvent(oldcalEvent, $event);	
 				$('.calendar').weekCalendar('updateEvent', calEvent);
+				self.SerializeEvents();
 			},
         });
     },
@@ -90,6 +88,7 @@ var Calendar = {
 					self.AssignId(calEvent);
                     if (self.FinalizeDialogEvent($(this), calEvent, $event, true)) {
 						$('.calendar').weekCalendar('updateEvent', calEvent);
+						self.SerializeEvents();
                         $(this).dialog('close');
                     }
                 }
@@ -136,8 +135,10 @@ var Calendar = {
             }, {
                 text: 'Edit',
                 click: function() {
+                    self.DeleteEvent(calEvent, $event);
                     if (self.FinalizeDialogEvent($(this), calEvent, $event, true)) {
 						$('.calendar').weekCalendar('updateEvent', calEvent);
+						self.SerializeEvents();
                         $(this).dialog('close');
                     }
                 }
@@ -243,7 +244,8 @@ var Calendar = {
 			var enddate = new Date(Date.parse(calEvent.end));
 			enddate.setHours(hourto);
 			enddate.setMinutes(minuteto);
-
+			
+			self.AssignId(calEvent);
 			calEvent.title = description;
 			calEvent.start = startdate;
 			calEvent.end = enddate;
@@ -306,10 +308,12 @@ var Calendar = {
         }
         return "";
     },
-    DeleteEvent: function(calEvent, $event) {
+    DeleteEvent: function(calEvent) {
         var self = this;
-		$('.calendar').weekCalendar('removeEvent', calEvent.id);
-        //$event.remove();
+		if(calEvent !== null){
+			$('.calendar').weekCalendar('removeEvent', calEvent.id);
+		}
+		
         self.SerializeEvents();
     },
     DeserializeEvents: function() {
@@ -331,7 +335,7 @@ var Calendar = {
                 self.AssignId(dataobject);
                 dataobject.start = event.start;
                 dataobject.end = event.end;
-                dataobject.title = event.description;
+                dataobject.title = event.title;
                 dataobject.project = event.project;
                 dataobject.article = event.article;
                 data.push(dataobject);
@@ -360,7 +364,7 @@ var Calendar = {
             var $day = $(this).closest('.wc-day-column');
             event.start = $(this).data('start');
             event.end = $(this).data('end');
-            event.description = $(this).find('.wc-title').text();
+            event.title = $(this).find('.wc-title').text();
             event.project = $(this).find('.wc-project').text();
             event.article = $(this).find('.wc-article').text();
             events.push(event);
