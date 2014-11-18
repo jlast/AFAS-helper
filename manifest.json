@@ -18,25 +18,5 @@
 	"background": {
 		"page": "/index.html",
 		"persistent": true
-	},
-	"content_scripts": [ 
-	{
-		"js": [
-			"/js/libs/date.js", 
-			"/js/libs/jquery-1.4.4.min.js", 
-			"/js/libs/jquery-ui-1.8.11.custom.min.js", 
-			"/js/jquery.weekcalendar.js", 
-			"/js/calendar.js",
-			"/js/configuration.js",
-			"/js/functions.js",
-			"/js/analytics.js",
-			"/js/init.js"
-		],
-		"css": [
-			"/css/lib/jquery-ui-1.8.11.custom.css", 
-			"/css/jquery.weekcalendar.css", 
-			"/css/style.css"
-		],
-		"matches": [ "http://*/*", "https://*/*"]
-	}]
+	}
 }
