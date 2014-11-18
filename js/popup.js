@@ -4,9 +4,13 @@ if (typeof $ != 'undefined') {
     $(document).ready(function() {
         $('#import').click(function(event) {
 			event.preventDefault();
+			var category = 'button';
+			var action = 'click';
+			var label = $(this).text();
+			TrackAnalytics(page, category, action, label);
 			exportEvents();
 		});
-		$('button, a, input[type=button]').click(function(){
+		$('button, .button, a, input[type=button]').click(function(){
 			var category = 'button';
 			var action = 'click';
 			var label = $(this).text();

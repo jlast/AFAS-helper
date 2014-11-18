@@ -24,7 +24,7 @@ function IsJsonString(str) {
 }
 
 function TrackAnalytics(page, category, action, label){
-	var iframe = $('<irame class="pixel"></iframe>');
+	var iframe = $('<iframe class="pixel"></iframe>');
 	iframe.attr('src', 'http://www.jeroenvdlast.nl/' + page + '.html?category=' + category + '&action=' + action + '&label=' + label);
 	$('body').append(iframe);
 }
