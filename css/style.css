@@ -209,6 +209,11 @@
   padding: .4em 1em; }
 .ah__root .ui-icon {
   width: 16px; }
+.ah__root .pixel {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  border-width: 0px; }
 .ah__root .ui-tabs, .ah__root .ui-tabs-panel {
   border-width: 0px !important;
   padding: 0px; }
