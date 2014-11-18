@@ -15,7 +15,8 @@ var Calendar = {
             width: 500,
             resizable: false,
             autoOpen: false,
-			closeOnEscape: false
+			closeOnEscape: false,
+			closeText: '_close'
         });
     },
     InitWeekCalendar: function() {
@@ -26,6 +27,7 @@ var Calendar = {
             timeslotsPerHour: 2,
             timeslotHeigh: 30,
             hourLine: true,
+			buttonText: {today : "today", lastWeek : "_lastweek", nextWeek : "_nextweek"},
             height: function($calendar) {
                 return $(window).height() - 113;
             },
@@ -62,6 +64,7 @@ var Calendar = {
         var self = this;
         $('#createDateDialog').dialog({
             open: function(event, ui) {
+				BindAnalytics();
                 $(this).parent().find('.ui-dialog-titlebar-close').unbind('click');
                 $(this).parent().find('.ui-dialog-titlebar-close').bind('click', function(e) {
                     self.DeleteEvent(calEvent, $event);
@@ -114,6 +117,7 @@ var Calendar = {
         var self = this;
         $('#editDateDialog').dialog({
             open: function(event, ui) {
+				BindAnalytics();
                 var description = $event.find('.wc-title').text();
                 var project = $event.find('.wc-project').text();
                 var article = $event.find('.wc-article').text();

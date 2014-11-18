@@ -10,12 +10,7 @@ if (typeof $ != 'undefined') {
 			TrackAnalytics(page, category, action, label);
 			exportEvents();
 		});
-		$('button, .button, a, input[type=button]').click(function(){
-			var category = 'button';
-			var action = 'click';
-			var label = $(this).text();
-			TrackAnalytics(page, category, action, label);
-		});
+		BindAnalytics();
     });
 }
 

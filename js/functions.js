@@ -1,3 +1,5 @@
+var eventdata = '';
+
 function RemoveByIndex(array, index) {
     array.splice(index, 1);
 }
@@ -22,6 +24,26 @@ function IsJsonString(str) {
     }
     return true;
 }
+
+function BindAnalytics(){
+	$('button, .button, a, input[type=button]').not('.js--analyticsbound').addClass('js--analyticsbound').click(function(){
+		var category = 'button';
+		var action = 'click';
+		var label = $(this).text();
+		if($(this).is('input[type=button]')){
+			label = $(this).val()
+		};
+		if(label === '')
+		{
+			label = "_unknown";
+		}
+		if($(this).hasClass('presetbutton'))
+		{
+			label = "_presetbutton";
+		}
+		TrackAnalytics(page, category, action, label);
+	});	
+};
 
 function TrackAnalytics(page, category, action, label){
 	var iframe = $('<iframe class="pixel"></iframe>');
