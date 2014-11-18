@@ -23,6 +23,12 @@ function IsJsonString(str) {
     return true;
 }
 
+function TrackAnalytics(page, category, action, label){
+	var iframe = $('<irame class="pixel"></iframe>');
+	iframe.attr('src', 'http://www.jeroenvdlast.nl/' + page + '.html?category=' + category + '&action=' + action + '&label=' + label);
+	$('body').append(iframe);
+}
+
 Date.prototype.getWeekNumber = function(){
     var d = new Date(+this);
     d.setHours(0,0,0);

@@ -1,3 +1,4 @@
+var page = 'weekcalendarpixel';
 var Configuration = {
     projecten: [],
     articles: [],
