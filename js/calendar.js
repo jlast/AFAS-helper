@@ -18,6 +18,9 @@ var Calendar = {
 			closeOnEscape: false,
 			closeText: '_close'
         });
+		$('.dropdowninput').next('.ui-icon').click(function(){
+			$(this).prev('.dropdowninput').focus();
+		});
     },
     InitWeekCalendar: function() {
         var self = this;
@@ -71,8 +74,8 @@ var Calendar = {
                     $('#createDateDialog').dialog('close');
                 })
 				$(this).find('.js--beschrijving').val('');
-				$(this).find('.js--projectselect').val('');
-				$(this).find('.js--articleselect').val('');
+				$(this).find('.js--projectinput').val('');
+				$(this).find('.js--articleinput').val('');
 				
                 self.SetTime(calEvent);
                 self.SetStyling($(this));
@@ -122,8 +125,8 @@ var Calendar = {
                 var project = $event.find('.wc-project').text();
                 var article = $event.find('.wc-article').text();
                 $('#editDateDialog .js--beschrijving').val(description);
-                $('#editDateDialog .js--projectselect').val(project);
-                $('#editDateDialog .js--articleselect').val(article);
+                $('#editDateDialog .js--projectinput').val(project);
+                $('#editDateDialog .js--articleinput').val(article);
                 $(this).find('.js--beschrijving').focus();
 
                 self.SetTime(calEvent);
@@ -133,11 +136,6 @@ var Calendar = {
                 self.AddButtonIcon($(this).parent(), 'Remove', 'ui-icon-close');
             },
             buttons: [{
-                text: 'Cancel',
-                click: function() {
-                    $(this).dialog('close');
-                }
-            }, {
                 text: 'Edit',
                 click: function() {
                     self.DeleteEvent(calEvent, $event);
@@ -151,6 +149,11 @@ var Calendar = {
                 text: 'Remove',
                 click: function() {
                     self.DeleteEvent(calEvent, $event);
+                    $(this).dialog('close');
+                }
+            }, {
+                text: 'Cancel',
+                click: function() {
                     $(this).dialog('close');
                 }
             }]
@@ -209,8 +212,8 @@ var Calendar = {
 		if($dialog != null)
 		{
 			var description = $dialog.find('.js--beschrijving').val();
-			var project = $dialog.find('.js--projectselect').val();
-			var article = $dialog.find('.js--articleselect').val();
+			var project = $dialog.find('.js--projectinput').val();
+			var article = $dialog.find('.js--articleinput').val();
 
 			var fromtime = $dialog.find('.js--fromtime').val();
 			var totime = $dialog.find('.js--totime').val();
@@ -280,11 +283,11 @@ var Calendar = {
             valid = false;
         }
         if (project == '') {
-            $dialog.find('.js--projectselect').addClass(invalidclass);
+            $dialog.find('.js--projectinput').addClass(invalidclass);
             valid = false;
         }
         if (article == '') {
-            $dialog.find('.js--articleselect').addClass(invalidclass);
+            $dialog.find('.js--articleinput').addClass(invalidclass);
             valid = false;
         }
         if (hourfrom === '' || minutefrom === '' || hourfrom * 60 + minutefrom >= hourto * 60 + minuteto) {

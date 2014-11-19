@@ -200,13 +200,19 @@
   .ah__root .column .column__cell {
     margin-bottom: 5px; }
 .ah__root input.invalid, .ah__root select.invalid {
-  outline-color: red;
-  outline-offset: -2px;
-  outline-style: auto;
-  outline-width: 5px; }
+  outline-color: red !important;
+  outline-offset: -2px !important;
+  outline-style: auto !important;
+  outline-width: 5px !important; }
 .ah__root select.ui-widget.ui-dropdown {
   background: white;
   padding: .4em 1em; }
+.ah__root .relative {
+  position: relative; }
+.ah__root input[type=text].dropdowninput + .ui-icon {
+  position: absolute;
+  right: 4px;
+  top: 6px; }
 .ah__root .ui-icon {
   width: 16px; }
 .ah__root .pixel {

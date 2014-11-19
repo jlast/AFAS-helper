@@ -87,15 +87,23 @@ th, td{
 
 input.invalid, select.invalid
 {
-	outline-color: red;
-	outline-offset: -2px;
-	outline-style: auto;
-	outline-width: 5px;
+	outline-color: red !important;
+	outline-offset: -2px !important;
+	outline-style: auto !important;
+	outline-width: 5px !important;
 }
 select.ui-widget.ui-dropdown
 {
 	background : white;
 	padding: .4em 1em;
+}
+.relative {
+	position: relative;
+}
+input[type=text].dropdowninput + .ui-icon{
+	position: absolute;
+	right: 4px;
+	top: 6px;
 }
 .ui-icon{
 	width: 16px;

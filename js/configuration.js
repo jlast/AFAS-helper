@@ -6,8 +6,10 @@ var Configuration = {
     projectColumn: '.js--project',
     articleColumn: '.js--article',
     presetColumn: '.js--preset',
-    projectDropdowns: ".js--projectselect",
-    articleDropdowns: ".js--articleselect",
+    projectDropdowns: '.js--projectselect',
+    articleDropdowns: '.js--articleselect',
+	projectInput: '.js--projectinput',
+	articleInput: '.js--articleinput',
 
     Init: function() {
         var self = this;
@@ -124,15 +126,44 @@ var Configuration = {
         $('.js--projectselect, .js--articleselect').each(function() {
             $(this).find('option:gt(0)').remove();
         });
-        self.UpdateDropdown(self.projectDropdowns, self.projecten);
-        self.UpdateDropdown(self.articleDropdowns, self.articles);
+        self.UpdateInput(self.projectDropdowns, self.projectInput, self.projecten);
+        self.UpdateInput(self.articleDropdowns, self.articleInput, self.articles);
     },
-    UpdateDropdown: function(dropdown, array) {
+    UpdateInput: function(dropdown, textinput, array) {
+		var availableTags = [];
         for (var i = 0; i < array.length; i++) {
             var object = array[i];
             var option = '<option value="' + object.Id + '">' + object.Name + '</option>';
             $(dropdown).append(option);
+			availableTags.push({key: object.Id, value: object.Name});
         }
+		var closing = false;
+		$(textinput).autocomplete({
+			delay: 0,
+			minLength: 0,
+			source: availableTags,
+			focus: function( event, ui){
+				$(this).val( ui.item.value );
+				return false;
+			},
+			select: function( event, ui ) {
+				$(this).val( ui.item.value );
+				$(this).val( ui.item.key );
+		 
+				return false;
+			},
+			close: function()
+			{
+				// avoid double-pop-up issue
+				closing = true;
+				setTimeout(function() { closing = false; }, 300);
+			}
+		})
+		.focus(function() {
+			if (!closing){
+				$(this).autocomplete("search", "");
+			}
+		});
     },
     UpdatePresets: function() {
         var self = this;
@@ -156,11 +187,12 @@ var Configuration = {
                 $('.js--dialog input[type=button], .js--dialog a, .js--dialog button').button();
                 presetButton.click(function() {
                     var pre = pr;
-                    $(this).closest('.js--dialog').find(self.projectDropdowns).val(pr.Project);
-                    $(this).closest('.js--dialog').find(self.articleDropdowns).val(pr.Article);
+                    $(this).closest('.js--dialog').find(self.projectInput).val(pr.Project);
+                    $(this).closest('.js--dialog').find(self.articleInput).val(pr.Article);
                 });
             });
         }
+		$('.js--presetheader').toggle(self.presets.length > 0);
         $(self.presetColumn).find('.js--remove').click(function() {
             self.RemoveObject(self.presets, $(this).data('id'));
         });
