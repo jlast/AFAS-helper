@@ -49,6 +49,9 @@ function TrackAnalytics(page, category, action, label){
 	var iframe = $('<iframe class="pixel"></iframe>');
 	iframe.attr('src', 'http://www.jeroenvdlast.nl/' + page + '.html?category=' + category + '&action=' + action + '&label=' + label);
 	$('body').append(iframe);
+	iframe.load(function() {
+		$(this).remove(); 
+    });
 }
 
 Date.prototype.getWeekNumber = function(){
