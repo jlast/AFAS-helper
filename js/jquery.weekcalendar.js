@@ -1650,7 +1650,7 @@
           }
 
           $weekDayColumns.each(function(index, curDay) {
-            if ($(this).data('startDate').getTime() <= calEvent.start.getTime() &&
+            if (typeof calEvent !== 'undefined' && $(this).data('startDate').getTime() <= calEvent.start.getTime() &&
                   $(this).data('endDate').getTime() >= calEvent.end.getTime() &&
                   (!showAsSeparatedUser || $.inArray($(this).data('wcUserId'), user_ids) !== -1)
             ) {
@@ -1874,7 +1874,7 @@
 
                 var $weekDayOld = self._findWeekDayForEvent($calEvent.data('calEvent'), self.element.find('.wc-time-slots .wc-day-column-inner'));
 
-                if ($weekDayOld.data('startDate') != $weekDay.data('startDate')) {
+                if (typeof $weekDayOld !== 'undefined' && $weekDayOld.data('startDate') != $weekDay.data('startDate')) {
                   self._adjustOverlappingEvents($weekDayOld);
                 }
                 self._adjustOverlappingEvents($weekDay);
