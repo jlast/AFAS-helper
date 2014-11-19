@@ -55,6 +55,7 @@ var Calendar = {
             },
 			eventDrop: function(calEvent, oldcalEvent, $event) {
 				self.DeleteEvent(oldcalEvent, $event);
+				$('.calendar').weekCalendar('updateEvent', calEvent);
 			},
 			eventResize: function(calEvent, oldcalEvent, $event) {
 				self.DeleteEvent(oldcalEvent, $event);	
