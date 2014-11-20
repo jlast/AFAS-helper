@@ -3,7 +3,7 @@
 
 	"name": "AFAS helper",
 	"description": "This extension allows hours to be written easy in Colours' AFAS.",
-	"version": "1.0",
+	"version": "1.0.2",
 	"icons": { "16": "afas-helper16x16.png",
 			   "48": "afas-helper48x48.png",
 			  "128": "afas-helper128x128.png" },
