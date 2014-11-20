@@ -80,7 +80,7 @@ module.exports = function (grunt) {
                 precision: 8,
                 loadPath: '<%= config.bowerComponents %>'
             },
-            server: {
+            build: {
                 files: [{
                     expand: true,
                     cwd: '<%= config.scss %>',
@@ -104,7 +104,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', 'start the server and preview your app', function () {
         grunt.task.run([
-            'sass:server',
+            'sass:build',
             'watch'
         ]);
     });
@@ -112,6 +112,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', 'compress the javascript and css', function () {
         grunt.task.run([
 			'remove:build',
+			'sass:build',
 			'copy',
 			'processhtml',
             'uglify',
