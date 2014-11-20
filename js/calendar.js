@@ -34,6 +34,9 @@ var Calendar = {
             height: function($calendar) {
                 return $(window).height() - 113;
             },
+			eventSerialize: function(){
+				self.SerializeEvents();
+			},
             eventRender: function(calEvent, $event) {
                 if (calEvent.end.getTime() < new Date().getTime()) {
                     $event.css('backgroundColor', '#aaa');
@@ -319,9 +322,7 @@ var Calendar = {
     },
     DeleteEvent: function(calEvent) {
         var self = this;
-		if(calEvent !== null){
-			$('.calendar').weekCalendar('removeEvent', calEvent.id);
-		}
+		$('.calendar').weekCalendar('removeEvent', calEvent.id);
 		
         self.SerializeEvents();
     },

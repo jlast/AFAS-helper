@@ -97,6 +97,8 @@
         },
         eventDrop: function(calEvent, element) {
         },
+		eventSerialize: function(){
+		},
         eventResize: function(calEvent, element) {
         },
         eventNew: function(calEvent, element, dayFreeBusyManager, 
@@ -1866,9 +1868,8 @@
                 //trigger drop callback
                 options.eventDrop(newCalEvent, calEvent, $calEvent);
 
-                var $newEvent = self._renderEvent(newCalEvent, self._findWeekDayForEvent(newCalEvent, $weekDayColumns));
                 $calEvent.hide();
-                options.eventDrop(null, null, null);
+                options.eventSerialize();
 
                 $calEvent.data('preventClick', true);
 
