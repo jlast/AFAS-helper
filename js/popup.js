@@ -19,7 +19,7 @@ function exportEvents() {
     var events = Calendar.DeserializeEvents();
 
     code += "$('#P_C_W_Entry_Selection_E7_ButtonEntryWebPart_Select_E7').click(); " + 
-    "var $wc_entry; " + 
+    "var $wc_entry = $('#P_C_W_Entry_Detail_EditGrid_EditRow');" + 
     "var $wc_date; " + 
     "var $wc_start; " + 
     "var $wc_end; " + 
