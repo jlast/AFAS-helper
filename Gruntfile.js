@@ -20,7 +20,7 @@ module.exports = function (grunt) {
         scss: 'sass',
         css: 'css',
         bowerComponents: 'bower_components',
-		build: '../AFAShelper/'
+		build: 'build/'
     };
 
     // Define the configuration for all the tasks
@@ -33,7 +33,7 @@ module.exports = function (grunt) {
         watch: {           
             sass: {
                 files: ['<%= config.scss %>/{,*/}*.{scss,sass}'],
-                tasks: ['sass:server'],
+                tasks: ['sass:build'],
                 options: {
                     spawn: false,
                     livereload: true
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
                 precision: 8,
                 loadPath: '<%= config.bowerComponents %>'
             },
-            server: {
+            build: {
                 files: [{
                     expand: true,
                     cwd: '<%= config.scss %>',
@@ -104,7 +104,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', 'start the server and preview your app', function () {
         grunt.task.run([
-            'sass:server',
+            'sass:build',
             'watch'
         ]);
     });
@@ -112,6 +112,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', 'compress the javascript and css', function () {
         grunt.task.run([
 			'remove:build',
+			'sass:build',
 			'copy',
 			'processhtml',
             'uglify',

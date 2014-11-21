@@ -227,6 +227,15 @@
   padding-top: 0; }
 .ah__root .wc-toolbar .wc-nav, .ah__root .wc-time-header-cell, .ah__root .ui-dialog .ui-dialog-titlebar, .ah__root .ui-widget-header, .ah__root .autowidth {
   width: auto; }
+.ah__root .wc-timerow {
+  width: 100%; }
+.ah__root .wc-grandtotal-row {
+  width: 100%; }
+  .ah__root .wc-grandtotal-row td {
+    width: 100%;
+    text-align: right;
+    font-size: 16px !important;
+    font-weight: bold; }
 .ah__root .ui-dialog .dialog {
   padding: 6.5px 5px 13px 4px;
   overflow: visible; }

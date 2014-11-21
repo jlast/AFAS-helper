@@ -8,6 +8,7 @@ var Calendar = {
         var self = this;
         self.InitDialogs();
         self.InitWeekCalendar();
+		self.SetTotalValues();
     },
     InitDialogs: function() {
         $('.js--dialog').dialog({
@@ -32,7 +33,7 @@ var Calendar = {
             hourLine: true,
 			buttonText: {today : "today", lastWeek : "_lastweek", nextWeek : "_nextweek"},
             height: function($calendar) {
-                return $(window).height() - 113;
+                return $(window).height() - 153;
             },
 			eventSerialize: function(){
 				self.SerializeEvents();
@@ -65,8 +66,23 @@ var Calendar = {
 				$('.calendar').weekCalendar('updateEvent', calEvent);
 				self.SerializeEvents();
 			},
+			calendarAfterLoad: function(calendar){
+				self.CreateTimeRows(calendar);
+			},
         });
     },
+	CreateTimeRows: function(calendar){
+        var self = this;
+		var timerow = $('<tr class="timerows"><td class="wc-time-column-header"></td></tr>');
+		for(var i = 0; i < 7; i++)
+		{
+			timerow.append('<td class="wc-day-column-header wc-day-total"></td>');
+		}
+		timerow.append('<td class="wc-scrollbar-shim"></td>');
+		var table = $('<table class="wc-timerow"></table>').append(timerow).append('<tr class="wc-grandtotal-row"><td class="wc-grandtotal" colspan="8"></td></tr>');
+		var div = $('<div class="wc-header"></div>').append(table);
+		calendar.find('.wc-container').append(div);
+	},
     NewEvent: function(calEvent, $event) {
         var self = this;
         $('#createDateDialog').dialog({
@@ -326,6 +342,43 @@ var Calendar = {
 		
         self.SerializeEvents();
     },
+	SetTotalValues: function(){
+		var self = this;
+		events = self.DeserializeEvents();
+		var startdate = $('.calendar').data('startDate');
+		var shownweek = startdate.getWeekNumber();
+		events = $.grep(events, function(el, i){
+			var arr = el.start.split(/-|T|:/i);
+			var date = new Date(arr[0], arr[1] -1, arr[2], arr[3], arr[4]);
+			if(shownweek == date.getWeekNumber())
+			{
+				return true;
+			}
+			return false;
+		});
+		var totals = [0,0,0,0,0,0,0];
+        for(var i = 0; i < events.length; i++){
+			var event = events[i];
+			var arrstart = events[i].start.split(/-|T|:/i);
+			var eventdatestart = new Date(arrstart[0], arrstart[1] -1, arrstart[2], arrstart[3], arrstart[4]);
+			var arrend = events[i].end.split(/-|T|:/i);
+			var eventdateend = new Date(arrend[0], arrend[1] -1, arrend[2], arrend[3], arrend[4]);
+			
+			var diff = new Date(eventdatestart - startdate);
+			var days = Math.floor(diff/1000/60/60/24);
+			
+			var duration = new Date(eventdateend - eventdatestart);
+			totals[days] += duration.getHours() * 60 + duration.getMinutes();
+		};
+		var grandtotal = 0;
+		for(var day = 0; day < totals.length; day++){
+			grandtotal += totals[day];
+			var time = Math.floor(totals[day] / 60) + ":" + ("0" + totals[day] % 60).slice(-2);
+			$('.wc-day-total:eq(' + day + ')').text(time);
+		};
+		var time = Math.floor(grandtotal / 60) + ":" + ("0" + grandtotal % 60).slice(-2);
+		$('.wc-grandtotal').text(time);
+	},
     DeserializeEvents: function() {
 		var self = this;
         var events = [];
@@ -380,5 +433,6 @@ var Calendar = {
             events.push(event);
         });
         localStorage['events'] = JSON.stringify(events);
+		self.SetTotalValues();
     }
 };
