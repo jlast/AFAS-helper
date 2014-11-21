@@ -8,7 +8,6 @@ var Calendar = {
         var self = this;
         self.InitDialogs();
         self.InitWeekCalendar();
-		self.SetTotalValues();
     },
     InitDialogs: function() {
         $('.js--dialog').dialog({
@@ -68,19 +67,21 @@ var Calendar = {
 			},
 			calendarAfterLoad: function(calendar){
 				self.CreateTimeRows(calendar);
+				self.SetTotalValues();
 			},
         });
     },
 	CreateTimeRows: function(calendar){
         var self = this;
-		var timerow = $('<tr class="timerows"><td class="wc-time-column-header"></td></tr>');
+		calendar.find('.wc-bottomheader').remove();
+		var timerow = $('<tr class="timerows"><td class="wc-time-column-bottomheader"></td></tr>');
 		for(var i = 0; i < 7; i++)
 		{
-			timerow.append('<td class="wc-day-column-header wc-day-total"></td>');
+			timerow.append('<td class="wc-day-column-bottomheader wc-day-total"></td>');
 		}
 		timerow.append('<td class="wc-scrollbar-shim"></td>');
 		var table = $('<table class="wc-timerow"></table>').append(timerow).append('<tr class="wc-grandtotal-row"><td class="wc-grandtotal" colspan="8"></td></tr>');
-		var div = $('<div class="wc-header"></div>').append(table);
+		var div = $('<div class="wc-bottomheader"></div>').append(table);
 		calendar.find('.wc-container').append(div);
 	},
     NewEvent: function(calEvent, $event) {
@@ -365,10 +366,10 @@ var Calendar = {
 			var eventdateend = new Date(arrend[0], arrend[1] -1, arrend[2], arrend[3], arrend[4]);
 			
 			var diff = new Date(eventdatestart - startdate);
-			var days = Math.floor(diff/1000/60/60/24);
+			var days = diff.getDate() - 1;
 			
 			var duration = new Date(eventdateend - eventdatestart);
-			totals[days] += duration.getHours() * 60 + duration.getMinutes();
+			totals[days] += duration.getUTCHours() * 60 + duration.getUTCMinutes();
 		};
 		var grandtotal = 0;
 		for(var day = 0; day < totals.length; day++){
