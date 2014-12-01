@@ -69,6 +69,9 @@ var Calendar = {
 				self.CreateTimeRows(calendar);
 				self.SetTotalValues();
 			},
+			eventHeader: function(calEvent, calendar) {
+				return calEvent.project + ": " + calEvent.title;
+			},
         });
     },
 	CreateTimeRows: function(calendar){
