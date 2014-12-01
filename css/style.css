@@ -220,11 +220,30 @@
   height: 1px;
   position: absolute;
   border-width: 0px; }
+.ah__root .text--left {
+  text-align: left; }
+.ah__root .text--center {
+  text-align: center; }
+.ah__root .text--right {
+  text-align: right; }
 .ah__root .ui-tabs, .ah__root .ui-tabs-panel {
   border-width: 0px !important;
   padding: 0px; }
 .ah__root .ui-tabs > div {
   padding-top: 0; }
+.ah__root .calendar {
+  padding-top: 20px; }
+  .ah__root .calendar .wc-zoom-bottomheader {
+    position: absolute;
+    right: 25px;
+    margin-top: -20px; }
+    .ah__root .calendar .wc-zoom-bottomheader button {
+      background: none;
+      border: 0px solid;
+      color: #CCC; }
+    .ah__root .calendar .wc-zoom-bottomheader button:hover {
+      cursor: pointer;
+      color: #555; }
 .ah__root .wc-toolbar .wc-nav, .ah__root .wc-time-header-cell, .ah__root .ui-dialog .ui-dialog-titlebar, .ah__root .ui-widget-header, .ah__root .autowidth {
   width: auto; }
 .ah__root .wc-timerow {

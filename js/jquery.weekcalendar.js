@@ -97,8 +97,8 @@
         },
         eventDrop: function(calEvent, element) {
         },
-		eventSerialize: function(){
-		},
+    		eventSerialize: function(){
+    		},
         eventResize: function(calEvent, element) {
         },
         eventNew: function(calEvent, element, dayFreeBusyManager, 
@@ -294,7 +294,7 @@
         self._renderCalendar();
         self._loadCalEvents();
         self._resizeCalendar();
-        self._scrollToHour(self.options.date.getHours(), true);
+        self._scrollToHour(self.options.date.getHours(), false);
 
         if (this.options.resizeEvent) {
           $(window).unbind(this.options.resizeEvent);

@@ -1,3 +1,20 @@
+.calendar{
+	padding-top: 20px;
+	.wc-zoom-bottomheader{
+		position: absolute;
+		right: 25px;
+		margin-top: -20px;
+		button{
+			background: none;
+			border: 0px solid;
+			color: #CCC;
+		}
+		button:hover{
+			cursor: pointer;
+			color: #555;
+		}
+	}
+}
 .wc-toolbar .wc-nav, .wc-time-header-cell, .ui-dialog .ui-dialog-titlebar, .ui-widget-header, .autowidth
 {
 	width: auto;

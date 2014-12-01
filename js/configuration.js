@@ -144,11 +144,12 @@ var Configuration = {
 			source: availableTags,
 			focus: function( event, ui){
 				$(this).val( ui.item.value );
+                $(this).data('value', ui.item.key );
 				return false;
 			},
 			select: function( event, ui ) {
 				$(this).val( ui.item.value );
-				$(this).val( ui.item.key );
+                $(this).data('value', ui.item.key );
 		 
 				return false;
 			},
@@ -159,6 +160,9 @@ var Configuration = {
 				setTimeout(function() { closing = false; }, 300);
 			}
 		})
+        .keydown(function(){
+            $(this).data('value', '');            
+        })
 		.focus(function() {
 			if (!closing){
 				$(this).autocomplete("search", "");
@@ -187,8 +191,13 @@ var Configuration = {
                 $('.js--dialog input[type=button], .js--dialog a, .js--dialog button').button();
                 presetButton.click(function() {
                     var pre = pr;
-                    $(this).closest('.js--dialog').find(self.projectInput).val(pr.Project);
-                    $(this).closest('.js--dialog').find(self.articleInput).val(pr.Article);
+                    var project = self.FindEntryById(self.projecten, pr.Project);
+                    var article = self.FindEntryById(self.articles, pr.Article);
+                    $(this).closest('.js--dialog').find(self.projectInput).val(project.Name);
+                    $(this).closest('.js--dialog').find(self.projectInput).data('value', project.Id);
+                    $(this).closest('.js--dialog').find(self.articleInput).val(article.Name);
+                    $(this).closest('.js--dialog').find(self.articleInput).data('value', article.Id);
+                    $(this).closest('.js--dialog').data('preset', pre.Name);
                 });
             });
         }

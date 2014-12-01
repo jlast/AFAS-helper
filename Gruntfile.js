@@ -71,6 +71,7 @@ module.exports = function (grunt) {
 					{src: ['afas-helper128x128.png'], dest: '<%= config.build %>/afas-helper128x128.png'},
 					{src: ['manifest.json'], dest: '<%= config.build %>/manifest.json'},
 					{expand: true, src: ['css/**'], dest: '<%= config.build %>/'},
+					{expand: true, src: ['fonts/**'], dest: '<%= config.build %>/'},
 				],
 			},
 		},

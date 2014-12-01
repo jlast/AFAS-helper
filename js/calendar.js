@@ -6,6 +6,7 @@ var Calendar = {
 	Id: 1, //index start at 1 since 0 is equal to empty string
     Init: function() {
         var self = this;
+        self.TimeSlotHeight = self.DeserializeZoom();
         self.InitDialogs();
         self.InitWeekCalendar();
     },
@@ -24,15 +25,18 @@ var Calendar = {
     },
     InitWeekCalendar: function() {
         var self = this;
+        $('.calendar').empty().removeData();
         $('.calendar').weekCalendar({
             firstDayOfWeek: 1,
             data: self.DeserializeEvents(),
             timeslotsPerHour: 2,
-            timeslotHeigh: 30,
+            timeslotHeight: self.TimeSlotHeight,
             hourLine: true,
+            date: new Date(new Date(new Date().setHours(9)).setMinutes(0)),
+            newEventText: '',
 			buttonText: {today : "today", lastWeek : "_lastweek", nextWeek : "_nextweek"},
             height: function($calendar) {
-                return $(window).height() - 153;
+                return $(window).height() - 100;
             },
 			eventSerialize: function(){
 				self.SerializeEvents();
@@ -66,12 +70,65 @@ var Calendar = {
 				self.SerializeEvents();
 			},
 			calendarAfterLoad: function(calendar){
+                self.CreateTools(calendar);
 				self.CreateTimeRows(calendar);
 				self.SetTotalValues();
 			},
 			eventHeader: function(calEvent, calendar) {
-				return calEvent.project + ": " + calEvent.title;
+                var preset = '(' + calEvent.preset + ')';
+                if(typeof calEvent.preset === "undefined" || calEvent.preset === '')
+                {
+                    preset = '';
+                }
+				return calEvent.title + ' ' + preset;
 			},
+            eventBody: function(calEvent, calendar){
+                var projectcontent = calEvent.projectname + ' (' + calEvent.project + ')';
+                var articlecontent = calEvent.articlename + ' (' + calEvent.article + ')';
+                if(typeof calEvent.projectname === "undefined" || calEvent.projectname === '')
+                {
+                    projectcontent = calEvent.project;
+                    if(typeof calEvent.project === "undefined" || calEvent.project === '')
+                    {
+                        projectcontent = "";
+                    }
+                }
+                if(typeof calEvent.articlename === "undefined" || calEvent.articlename === '')
+                {
+                    articlecontent = calEvent.article;
+                    if(typeof calEvent.article === "undefined" || calEvent.article === '')
+                    {
+                        articlecontent = "";
+                    }
+                }
+
+                return projectcontent + '<br/>' + articlecontent;
+            }
+        });
+    },
+    CreateTools: function(calendar){
+        var self = this;
+        var zoomin = $('<button class="fa fa-search-plus" />');
+        var zoomout = $('<button class="fa fa-search-minus" />');
+        var div = $('<div class="wc-zoom-bottomheader  text--right"></div>').append(zoomin).append(zoomout);
+        calendar.find('.wc-container').append(div);
+        zoomin.click(function(e){
+            e.preventDefault();
+            if(self.TimeSlotHeight * 1.5 < 45)
+            {
+                self.TimeSlotHeight = self.TimeSlotHeight * 1.5;
+                self.InitWeekCalendar();
+                self.SerializeZoom();
+            }
+        });
+        zoomout.click(function(e){
+            e.preventDefault();
+            if(self.TimeSlotHeight / 1.5 > 10)
+            {
+                self.TimeSlotHeight = self.TimeSlotHeight / 1.5;
+                self.InitWeekCalendar();
+                self.SerializeZoom();
+            }
         });
     },
 	CreateTimeRows: function(calendar){
@@ -91,6 +148,7 @@ var Calendar = {
         var self = this;
         $('#createDateDialog').dialog({
             open: function(event, ui) {
+                $(this).data('preset', '');
 				BindAnalytics();
                 $(this).parent().find('.ui-dialog-titlebar-close').unbind('click');
                 $(this).parent().find('.ui-dialog-titlebar-close').bind('click', function(e) {
@@ -144,13 +202,27 @@ var Calendar = {
         var self = this;
         $('#editDateDialog').dialog({
             open: function(event, ui) {
+                $(this).data('preset', calEvent.preset);
 				BindAnalytics();
-                var description = $event.find('.wc-title').text();
-                var project = $event.find('.wc-project').text();
-                var article = $event.find('.wc-article').text();
-                $('#editDateDialog .js--beschrijving').val(description);
-                $('#editDateDialog .js--projectinput').val(project);
-                $('#editDateDialog .js--articleinput').val(article);
+                $('#editDateDialog .js--beschrijving').val(calEvent.title);
+                if(typeof calEvent.articlename !== "undefined")
+                {
+                    $('#editDateDialog .js--projectinput').val(calEvent.projectname);
+                    $('#editDateDialog .js--projectinput').data('value', calEvent.project);
+                }
+                else
+                {
+                    $('#editDateDialog .js--projectinput').val(calEvent.project);
+                }
+                if(typeof calEvent.articlename !== "undefined")
+                {
+                    $('#editDateDialog .js--articleinput').val(calEvent.articlename);
+                    $('#editDateDialog .js--articleinput').data('value', calEvent.article);
+                }
+                else
+                {
+                    $('#editDateDialog .js--articleinput').val(calEvent.article);
+                }
                 $(this).find('.js--beschrijving').focus();
 
                 self.SetTime(calEvent);
@@ -211,7 +283,6 @@ var Calendar = {
 		var hourstring = self.HourString;
 		hourstring = hourstring.replace("[timefrom]", formatDate(calEvent.start, 'h:i a'));
 		hourstring = hourstring.replace("[timeto]", formatDate(calEvent.end, 'h:i a'));
-		$event.find('.wc-time').text(hourstring);
 		
 		$event.data('start', calEvent.start);
 		$event.data('end', calEvent.end);
@@ -223,21 +294,33 @@ var Calendar = {
 
 		$event.css('top', (hourfrom * 2 + minutefrom / 30) * self.TimeSlotHeight);
 		$event.css('height', ((hourto * 2 + minuteto / 30) - (hourfrom * 2 + minutefrom / 30)) * self.TimeSlotHeight);
-
-		$event.find('.wc-title').text(calEvent.title);
-		$event.find('.wc-content').remove();
-		
-		var content = $('<div class="wc-content" />');
-		content.html('project: <span class="wc-project">' + calEvent.project + '</span><br/>article: <span class="wc-article">' + calEvent.article + '</span>');
-		content.insertAfter($event.find('.wc-title'));
 	},
     FinalizeDialogEvent: function($dialog, calEvent, $event) {
         var self = this;
 		if($dialog != null)
 		{
 			var description = $dialog.find('.js--beschrijving').val();
-			var project = $dialog.find('.js--projectinput').val();
-			var article = $dialog.find('.js--articleinput').val();
+            var project = $dialog.find('.js--projectinput').data('value');
+            var projectname;
+            if(typeof project === 'undefined' || project === '')
+            {
+                project = $dialog.find('.js--projectinput').val();
+            }
+            else
+            {
+                projectname = $dialog.find('.js--projectinput').val();
+            }
+            var article = $dialog.find('.js--articleinput').data('value');
+            var articlename;
+            if(typeof article === 'undefined' || article === '')
+            {
+                article = $dialog.find('.js--articleinput').val();
+            }
+            else
+            {
+                articlename = $dialog.find('.js--articleinput').val();
+            }
+            var preset = $dialog.data('preset');
 
 			var fromtime = $dialog.find('.js--fromtime').val();
 			var totime = $dialog.find('.js--totime').val();
@@ -281,12 +364,17 @@ var Calendar = {
 			calEvent.title = description;
 			calEvent.start = startdate;
 			calEvent.end = enddate;
+            calEvent.project = project;
+            calEvent.projectname = projectname;
 			calEvent.article = article;
-			calEvent.project = project;
+            calEvent.articlename = articlename;
+            calEvent.preset = preset;
 
 			$dialog.find('.beschrijving').val('');
 			$dialog.find('.project').val('');
+            $dialog.find('.project').data('value', '');
 			$dialog.find('.article').val('');
+            $dialog.find('.article').data('value', '');
 		}
         return true;
     },
@@ -397,15 +485,9 @@ var Calendar = {
 
         for (var i = 0; i < events.length; i++) {
             var event = events[i];
-            var dataobject = {};
             if (typeof event.start != 'undefined' && typeof event.end != 'undefined') {
-                self.AssignId(dataobject);
-                dataobject.start = event.start;
-                dataobject.end = event.end;
-                dataobject.title = event.title;
-                dataobject.project = event.project;
-                dataobject.article = event.article;
-                data.push(dataobject);
+                self.AssignId(event);
+                data.push(event);
             }
         }
         return data;
@@ -427,16 +509,23 @@ var Calendar = {
 			return true;
 		});
         $events.each(function() {
-            var event = {};
-            var $day = $(this).closest('.wc-day-column');
-            event.start = $(this).data('start');
-            event.end = $(this).data('end');
-            event.title = $(this).find('.wc-title').text();
-            event.project = $(this).find('.wc-project').text();
-            event.article = $(this).find('.wc-article').text();
+            var event = $(this).data('calEvent');
             events.push(event);
         });
         localStorage['events'] = JSON.stringify(events);
 		self.SetTotalValues();
+    },
+    DeserializeZoom: function(){
+        var self = this;
+        var zoom = localStorage['zoomlevel'];
+        if(isNaN(zoom))
+        {
+            zoom = 20;
+        }
+        return zoom;
+    },
+    SerializeZoom: function(){
+        var self = this;
+        localStorage['zoomlevel'] = self.TimeSlotHeight;
     }
 };
