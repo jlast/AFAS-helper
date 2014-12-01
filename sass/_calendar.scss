@@ -41,6 +41,7 @@
 		text-align: right;
 		font-size: 16px !important;
 		font-weight: bold;
+		padding-right: 20px;
 	}
 }
 .wc-bottomheader .wc-day-column-bottomheader {
@@ -59,5 +60,8 @@
 	margin-left: 5px;
 }
 .ui-buttonset .ui-button{
-	margin-right: -1px;
+	margin-right: 0px;
+}
+.ui-widget-header button:focus {
+	outline-width: 0px;
 }
