@@ -1502,6 +1502,7 @@
         }
 
         !nbRenderedEvents && options.noEvents();
+        self._resizeCalendar();
       },
 
       /*
