@@ -2,8 +2,17 @@
 	padding-top: 20px;
 	.wc-zoom-bottomheader{
 		position: absolute;
-		right: 25px;
-		margin-top: -20px;
+		right: 31px;
+		margin-top: -30px;
+		.wc-tools{
+			width: auto;
+			display: inline-block;
+			border: 1px solid #CCC;
+			background-color: white;
+			padding: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+		}
 		button{
 			background: none;
 			border: 0px solid;
@@ -12,6 +21,9 @@
 		button:hover{
 			cursor: pointer;
 			color: #555;
+		}
+		button:focus{
+			outline-width: 0px;
 		}
 	}
 }
@@ -42,4 +54,10 @@
 }
 .wc-header .wc-time-column-bottomheader {
 	width: 45px;
+}
+.wc-today .ui-button-text{
+	margin-left: 5px;
+}
+.ui-buttonset .ui-button{
+	margin-right: -1px;
 }

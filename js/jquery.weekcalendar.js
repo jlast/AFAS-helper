@@ -720,7 +720,7 @@
 
             $calendarContainer.find('.wc-nav .wc-today')
               .button({
-                icons: {primary: 'ui-icon-home'}})
+                icons: {primary: 'fa fa-home'}})
               .click(function() {
                     self.today();
                     return false;
@@ -729,7 +729,7 @@
             $calendarContainer.find('.wc-nav .wc-prev')
               .button({
                 text: false,
-                icons: {primary: 'ui-icon-seek-prev'}})
+                icons: {primary: 'fa fa-backward'}})
               .click(function() {
                   self.element.weekCalendar('prev');
                   return false;
@@ -738,7 +738,7 @@
             $calendarContainer.find('.wc-nav .wc-next')
               .button({
                 text: false,
-                icons: {primary: 'ui-icon-seek-next'}})
+                icons: {primary: 'fa fa-forward'}})
               .click(function() {
                   self.element.weekCalendar('next');
                   return false;
@@ -1080,6 +1080,10 @@
           var self = this;
           var options = this.options;
           $weekDay.mousedown(function(event) {
+            if(event.which === 2)
+            {
+              return;
+            }
             var $target = $(event.target);
             if ($target.hasClass('wc-day-column-inner')) {
 
@@ -1115,6 +1119,10 @@
             }
 
           }).mouseup(function(event) {
+            if(event.which === 2)
+            {
+              return;
+            }
             var $target = $(event.target);
 
             var $weekDay = $target.closest('.wc-day-column-inner');
@@ -1260,7 +1268,7 @@
                 self._renderEvents(options.data, $weekDayColumns);
             }
 
-          self._disableTextSelect($weekDayColumns);
+          //self._disableTextSelect($weekDayColumns);
       },
 
       /**

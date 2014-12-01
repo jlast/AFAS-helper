@@ -25,7 +25,7 @@ var Configuration = {
                 'background': 'white'
             });
         $('.js--create').button('option', 'icons', {
-            primary: 'ui-icon-arrowthickstop-1-s'
+            primary: 'fa fa-level-down'
         });
         self.DeserializeConfiguration();
         self.InitColumns();
@@ -222,7 +222,7 @@ var Configuration = {
         return $('<td>' + object.Name + '</td><td>' + object.Id + '</td>');
     },
     CreateDeleteTD: function(index) {
-        return $('<td><a class="ui-icon ui-icon-closethick js--remove" href="#" data-id="' + index + '" ></a></td>');
+        return $('<td><a class="remove fa fa-remove js--remove" href="#" data-id="' + index + '" ></a></td>');
     },
     RemoveObject: function(array, index) {
         var self = this;

@@ -110,8 +110,9 @@ var Calendar = {
         var self = this;
         var zoomin = $('<button class="fa fa-search-plus" />');
         var zoomout = $('<button class="fa fa-search-minus" />');
-        var div = $('<div class="wc-zoom-bottomheader  text--right"></div>').append(zoomin).append(zoomout);
-        calendar.find('.wc-container').append(div);
+        var div = $('<div class="wc-tools"></div>').append(zoomin).append(zoomout);
+        var container = $('<div class="wc-zoom-bottomheader text--right" />').append(div);
+        calendar.find('.wc-container').append(container);
         zoomin.click(function(e){
             e.preventDefault();
             if(self.TimeSlotHeight * 1.5 < 45)
@@ -161,16 +162,10 @@ var Calendar = {
 				
                 self.SetTime(calEvent);
                 self.SetStyling($(this));
-                self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
-                self.AddButtonIcon($(this).parent(), 'Create', 'ui-icon-plus');
+                self.AddButtonIcon($(this).parent(), 'Cancel', 'fa-ban');
+                self.AddButtonIcon($(this).parent(), 'Create', 'fa-plus');
             },
             buttons: [{
-                text: 'Cancel',
-                click: function() {
-                    self.DeleteEvent(calEvent, $event);
-                    $(this).dialog('close');
-                }
-            }, {
                 text: 'Create',
                 click: function() {
                     self.DeleteEvent(calEvent, $event);
@@ -180,6 +175,12 @@ var Calendar = {
 						self.SerializeEvents();
                         $(this).dialog('close');
                     }
+                }
+            },{
+                text: 'Cancel',
+                click: function() {
+                    self.DeleteEvent(calEvent, $event);
+                    $(this).dialog('close');
                 }
             }]
         });
@@ -194,7 +195,7 @@ var Calendar = {
         $dialog.find('.ui-dialog-buttonpane').
         find('button:contains("' + text + '")').button({
             icons: {
-                primary: icon
+                primary: "fa " + icon
             }
         });
     },
@@ -227,9 +228,9 @@ var Calendar = {
 
                 self.SetTime(calEvent);
                 self.SetStyling($(this));
-                self.AddButtonIcon($(this).parent(), 'Cancel', 'ui-icon-cancel');
-                self.AddButtonIcon($(this).parent(), 'Edit', 'ui-icon-gear');
-                self.AddButtonIcon($(this).parent(), 'Remove', 'ui-icon-close');
+                self.AddButtonIcon($(this).parent(), 'Cancel', 'fa-ban');
+                self.AddButtonIcon($(this).parent(), 'Edit', 'fa-cog');
+                self.AddButtonIcon($(this).parent(), 'Remove', 'fa-remove');
             },
             buttons: [{
                 text: 'Edit',

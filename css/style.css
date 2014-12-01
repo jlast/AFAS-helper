@@ -1,305 +1,336 @@
-.ah__root .grid-1-1 {
-  width: 100%; }
-.ah__root .grid-1-2 {
-  width: 50%; }
-.ah__root .grid-2-2 {
-  width: 100%; }
-.ah__root .grid-1-3 {
-  width: 33.33333333%; }
-.ah__root .grid-2-3 {
-  width: 66.66666667%; }
-.ah__root .grid-3-3 {
-  width: 100%; }
-.ah__root .grid-1-4 {
-  width: 25%; }
-.ah__root .grid-2-4 {
-  width: 50%; }
-.ah__root .grid-3-4 {
-  width: 75%; }
-.ah__root .grid-4-4 {
-  width: 100%; }
-.ah__root .grid-1-5 {
-  width: 20%; }
-.ah__root .grid-2-5 {
-  width: 40%; }
-.ah__root .grid-3-5 {
-  width: 60%; }
-.ah__root .grid-4-5 {
-  width: 80%; }
-.ah__root .grid-5-5 {
-  width: 100%; }
-.ah__root .grid-1-6 {
-  width: 16.66666667%; }
-.ah__root .grid-2-6 {
-  width: 33.33333333%; }
-.ah__root .grid-3-6 {
-  width: 50%; }
-.ah__root .grid-4-6 {
-  width: 66.66666667%; }
-.ah__root .grid-5-6 {
-  width: 83.33333333%; }
-.ah__root .grid-6-6 {
-  width: 100%; }
-.ah__root .grid-1-7 {
-  width: 14.28571429%; }
-.ah__root .grid-2-7 {
-  width: 28.57142857%; }
-.ah__root .grid-3-7 {
-  width: 42.85714286%; }
-.ah__root .grid-4-7 {
-  width: 57.14285714%; }
-.ah__root .grid-5-7 {
-  width: 71.42857143%; }
-.ah__root .grid-6-7 {
-  width: 85.71428571%; }
-.ah__root .grid-7-7 {
-  width: 100%; }
-.ah__root .grid-1-8 {
-  width: 12.5%; }
-.ah__root .grid-2-8 {
-  width: 25%; }
-.ah__root .grid-3-8 {
-  width: 37.5%; }
-.ah__root .grid-4-8 {
-  width: 50%; }
-.ah__root .grid-5-8 {
-  width: 62.5%; }
-.ah__root .grid-6-8 {
-  width: 75%; }
-.ah__root .grid-7-8 {
-  width: 87.5%; }
-.ah__root .grid-8-8 {
-  width: 100%; }
-.ah__root .grid-1-9 {
-  width: 11.11111111%; }
-.ah__root .grid-2-9 {
-  width: 22.22222222%; }
-.ah__root .grid-3-9 {
-  width: 33.33333333%; }
-.ah__root .grid-4-9 {
-  width: 44.44444444%; }
-.ah__root .grid-5-9 {
-  width: 55.55555556%; }
-.ah__root .grid-6-9 {
-  width: 66.66666667%; }
-.ah__root .grid-7-9 {
-  width: 77.77777778%; }
-.ah__root .grid-8-9 {
-  width: 88.88888889%; }
-.ah__root .grid-9-9 {
-  width: 100%; }
-.ah__root .grid-1-10 {
-  width: 10%; }
-.ah__root .grid-2-10 {
-  width: 20%; }
-.ah__root .grid-3-10 {
-  width: 30%; }
-.ah__root .grid-4-10 {
-  width: 40%; }
-.ah__root .grid-5-10 {
-  width: 50%; }
-.ah__root .grid-6-10 {
-  width: 60%; }
-.ah__root .grid-7-10 {
-  width: 70%; }
-.ah__root .grid-8-10 {
-  width: 80%; }
-.ah__root .grid-9-10 {
-  width: 90%; }
-.ah__root .grid-10-10 {
-  width: 100%; }
-.ah__root .grid-1-11 {
-  width: 9.09090909%; }
-.ah__root .grid-2-11 {
-  width: 18.18181818%; }
-.ah__root .grid-3-11 {
-  width: 27.27272727%; }
-.ah__root .grid-4-11 {
-  width: 36.36363636%; }
-.ah__root .grid-5-11 {
-  width: 45.45454545%; }
-.ah__root .grid-6-11 {
-  width: 54.54545455%; }
-.ah__root .grid-7-11 {
-  width: 63.63636364%; }
-.ah__root .grid-8-11 {
-  width: 72.72727273%; }
-.ah__root .grid-9-11 {
-  width: 81.81818182%; }
-.ah__root .grid-10-11 {
-  width: 90.90909091%; }
-.ah__root .grid-11-11 {
-  width: 100%; }
-.ah__root .grid-1-12 {
-  width: 8.33333333%; }
-.ah__root .grid-2-12 {
-  width: 16.66666667%; }
-.ah__root .grid-3-12 {
-  width: 25%; }
-.ah__root .grid-4-12 {
-  width: 33.33333333%; }
-.ah__root .grid-5-12 {
-  width: 41.66666667%; }
-.ah__root .grid-6-12 {
-  width: 50%; }
-.ah__root .grid-7-12 {
-  width: 58.33333333%; }
-.ah__root .grid-8-12 {
-  width: 66.66666667%; }
-.ah__root .grid-9-12 {
-  width: 75%; }
-.ah__root .grid-10-12 {
-  width: 83.33333333%; }
-.ah__root .grid-11-12 {
-  width: 91.66666667%; }
-.ah__root .grid-12-12 {
-  width: 100%; }
-.ah__root body {
-  margin: 0; }
-.ah__root h1 {
-  margin: 0 0 1em;
-  padding: 0.5em;
-  color: #555555; }
-.ah__root h2 {
-  margin-top: 0; }
-.ah__root div, .ah__root input, .ah__root select {
-  width: 100%; }
-.ah__root table {
-  margin-bottom: 0; }
-.ah__root th, .ah__root td {
-  text-align: left;
-  font-size: 12px !important; }
-.ah__root .hidden {
-  display: none !important; }
-.ah__root .remove-fontsize {
-  font-size: 0; }
-.ah__root .set-fontsize {
-  font-size: 12px; }
-.ah__root .align > div {
-  vertical-align: top; }
-.ah__root .configuration div, .ah__root .configuration input, .ah__root .configuration select, .ah__root .dialog div, .ah__root .dialog input, .ah__root .dialog select, .ah__root .popup div, .ah__root .popup input, .ah__root .popup select {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-.ah__root .configuration div, .ah__root .dialog div, .ah__root .popup div {
-  display: inline-block;
-  color: #555555; }
-.ah__root .configuration table, .ah__root .dialog table, .ah__root .popup table {
-  margin-top: 20px;
-  color: #555555; }
-.ah__root .configuration div.container, .ah__root .dialog div.container, .ah__root .popup div.container {
-  padding-top: 15px; }
-.ah__root .column {
-  min-width: 400px;
-  vertical-align: top;
-  padding: 12px; }
-  .ah__root .column .column__content {
-    border-radius: 8px;
-    padding: 12px;
-    background-color: #eee; }
-  .ah__root .column .column__cell {
-    margin-bottom: 5px; }
-.ah__root input.invalid, .ah__root select.invalid {
-  outline-color: red !important;
-  outline-offset: -2px !important;
-  outline-style: auto !important;
-  outline-width: 5px !important; }
-.ah__root select.ui-widget.ui-dropdown {
-  background: white;
-  padding: .4em 1em; }
-.ah__root .relative {
-  position: relative; }
-.ah__root input[type=text].dropdowninput + .ui-icon {
-  position: absolute;
-  right: 4px;
-  top: 6px; }
-.ah__root .ui-icon {
-  width: 16px; }
-.ah__root .pixel {
-  width: 1px;
-  height: 1px;
-  position: absolute;
-  border-width: 0px; }
-.ah__root .text--left {
-  text-align: left; }
-.ah__root .text--center {
-  text-align: center; }
-.ah__root .text--right {
-  text-align: right; }
-.ah__root .ui-tabs, .ah__root .ui-tabs-panel {
-  border-width: 0px !important;
-  padding: 0px; }
-.ah__root .ui-tabs > div {
-  padding-top: 0; }
-.ah__root .calendar {
-  padding-top: 20px; }
-  .ah__root .calendar .wc-zoom-bottomheader {
-    position: absolute;
-    right: 25px;
-    margin-top: -20px; }
-    .ah__root .calendar .wc-zoom-bottomheader button {
-      background: none;
-      border: 0px solid;
-      color: #CCC; }
-    .ah__root .calendar .wc-zoom-bottomheader button:hover {
-      cursor: pointer;
-      color: #555; }
-.ah__root .wc-toolbar .wc-nav, .ah__root .wc-time-header-cell, .ah__root .ui-dialog .ui-dialog-titlebar, .ah__root .ui-widget-header, .ah__root .autowidth {
-  width: auto; }
-.ah__root .wc-timerow {
-  width: 100%; }
-.ah__root .wc-grandtotal-row {
-  width: 100%; }
-  .ah__root .wc-grandtotal-row td {
-    width: 100%;
-    text-align: right;
-    font-size: 16px !important;
-    font-weight: bold; }
-.ah__root .wc-bottomheader .wc-day-column-bottomheader {
-  text-align: center;
-  padding: 0.4em; }
-.ah__root .wc-bottomheader {
-  background: #eee;
-  border-width: 1px 0;
-  border-style: solid; }
-.ah__root .wc-header .wc-time-column-bottomheader {
-  width: 45px; }
-.ah__root .ui-dialog .dialog {
-  padding: 6.5px 5px 13px 4px;
-  overflow: visible; }
-.ah__root input.presetbutton {
-  width: auto; }
-.ah__root .ui-dialog .ui-dialog-buttonpane {
-  padding: 0; }
-  .ah__root .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-    text-align: right; }
-.ah__root.popup {
-  height: 80px;
-  width: 215px;
-  padding: 10px; }
-  .ah__root.popup body {
-    height: 80px;
-    width: 215px; }
-  .ah__root.popup input {
-    width: auto; }
-  .ah__root.popup ul {
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    -webkit-padding-start: 0; }
-  .ah__root.popup li {
-    padding: 0 0 0 5px;
-    text-indent: 16px !important;
-    overflow: visible !important; }
-  .ah__root.popup a {
-    text-decoration: none;
+.ah__root {
+  /* Allow Font Awesome Icons in lieu of jQuery UI and only apply when using a FA icon */
+  /* Allow use of icon-large to be properly aligned */ }
+  .ah__root .grid-1-1 {
+    width: 100%; }
+  .ah__root .grid-1-2 {
+    width: 50%; }
+  .ah__root .grid-2-2 {
+    width: 100%; }
+  .ah__root .grid-1-3 {
+    width: 33.33333333%; }
+  .ah__root .grid-2-3 {
+    width: 66.66666667%; }
+  .ah__root .grid-3-3 {
+    width: 100%; }
+  .ah__root .grid-1-4 {
+    width: 25%; }
+  .ah__root .grid-2-4 {
+    width: 50%; }
+  .ah__root .grid-3-4 {
+    width: 75%; }
+  .ah__root .grid-4-4 {
+    width: 100%; }
+  .ah__root .grid-1-5 {
+    width: 20%; }
+  .ah__root .grid-2-5 {
+    width: 40%; }
+  .ah__root .grid-3-5 {
+    width: 60%; }
+  .ah__root .grid-4-5 {
+    width: 80%; }
+  .ah__root .grid-5-5 {
+    width: 100%; }
+  .ah__root .grid-1-6 {
+    width: 16.66666667%; }
+  .ah__root .grid-2-6 {
+    width: 33.33333333%; }
+  .ah__root .grid-3-6 {
+    width: 50%; }
+  .ah__root .grid-4-6 {
+    width: 66.66666667%; }
+  .ah__root .grid-5-6 {
+    width: 83.33333333%; }
+  .ah__root .grid-6-6 {
+    width: 100%; }
+  .ah__root .grid-1-7 {
+    width: 14.28571429%; }
+  .ah__root .grid-2-7 {
+    width: 28.57142857%; }
+  .ah__root .grid-3-7 {
+    width: 42.85714286%; }
+  .ah__root .grid-4-7 {
+    width: 57.14285714%; }
+  .ah__root .grid-5-7 {
+    width: 71.42857143%; }
+  .ah__root .grid-6-7 {
+    width: 85.71428571%; }
+  .ah__root .grid-7-7 {
+    width: 100%; }
+  .ah__root .grid-1-8 {
+    width: 12.5%; }
+  .ah__root .grid-2-8 {
+    width: 25%; }
+  .ah__root .grid-3-8 {
+    width: 37.5%; }
+  .ah__root .grid-4-8 {
+    width: 50%; }
+  .ah__root .grid-5-8 {
+    width: 62.5%; }
+  .ah__root .grid-6-8 {
+    width: 75%; }
+  .ah__root .grid-7-8 {
+    width: 87.5%; }
+  .ah__root .grid-8-8 {
+    width: 100%; }
+  .ah__root .grid-1-9 {
+    width: 11.11111111%; }
+  .ah__root .grid-2-9 {
+    width: 22.22222222%; }
+  .ah__root .grid-3-9 {
+    width: 33.33333333%; }
+  .ah__root .grid-4-9 {
+    width: 44.44444444%; }
+  .ah__root .grid-5-9 {
+    width: 55.55555556%; }
+  .ah__root .grid-6-9 {
+    width: 66.66666667%; }
+  .ah__root .grid-7-9 {
+    width: 77.77777778%; }
+  .ah__root .grid-8-9 {
+    width: 88.88888889%; }
+  .ah__root .grid-9-9 {
+    width: 100%; }
+  .ah__root .grid-1-10 {
+    width: 10%; }
+  .ah__root .grid-2-10 {
+    width: 20%; }
+  .ah__root .grid-3-10 {
+    width: 30%; }
+  .ah__root .grid-4-10 {
+    width: 40%; }
+  .ah__root .grid-5-10 {
+    width: 50%; }
+  .ah__root .grid-6-10 {
+    width: 60%; }
+  .ah__root .grid-7-10 {
+    width: 70%; }
+  .ah__root .grid-8-10 {
+    width: 80%; }
+  .ah__root .grid-9-10 {
+    width: 90%; }
+  .ah__root .grid-10-10 {
+    width: 100%; }
+  .ah__root .grid-1-11 {
+    width: 9.09090909%; }
+  .ah__root .grid-2-11 {
+    width: 18.18181818%; }
+  .ah__root .grid-3-11 {
+    width: 27.27272727%; }
+  .ah__root .grid-4-11 {
+    width: 36.36363636%; }
+  .ah__root .grid-5-11 {
+    width: 45.45454545%; }
+  .ah__root .grid-6-11 {
+    width: 54.54545455%; }
+  .ah__root .grid-7-11 {
+    width: 63.63636364%; }
+  .ah__root .grid-8-11 {
+    width: 72.72727273%; }
+  .ah__root .grid-9-11 {
+    width: 81.81818182%; }
+  .ah__root .grid-10-11 {
+    width: 90.90909091%; }
+  .ah__root .grid-11-11 {
+    width: 100%; }
+  .ah__root .grid-1-12 {
+    width: 8.33333333%; }
+  .ah__root .grid-2-12 {
+    width: 16.66666667%; }
+  .ah__root .grid-3-12 {
+    width: 25%; }
+  .ah__root .grid-4-12 {
+    width: 33.33333333%; }
+  .ah__root .grid-5-12 {
+    width: 41.66666667%; }
+  .ah__root .grid-6-12 {
+    width: 50%; }
+  .ah__root .grid-7-12 {
+    width: 58.33333333%; }
+  .ah__root .grid-8-12 {
+    width: 66.66666667%; }
+  .ah__root .grid-9-12 {
+    width: 75%; }
+  .ah__root .grid-10-12 {
+    width: 83.33333333%; }
+  .ah__root .grid-11-12 {
+    width: 91.66666667%; }
+  .ah__root .grid-12-12 {
+    width: 100%; }
+  .ah__root body {
+    margin: 0; }
+  .ah__root h1 {
+    margin: 0 0 1em;
+    padding: 0.5em;
     color: #555555; }
-    .ah__root.popup a .ui-icon {
-      display: inline-block; }
-    .ah__root.popup a:hover, .ah__root.popup a:active {
-      color: #999999; }
-      .ah__root.popup a:hover .ui-icon, .ah__root.popup a:active .ui-icon {
-        background-image: url(lib/images/ui-icons_888888_256x240.png); }
+  .ah__root h2 {
+    margin-top: 20px; }
+  .ah__root div, .ah__root input, .ah__root select {
+    width: 100%; }
+  .ah__root table {
+    margin-bottom: 0; }
+  .ah__root th, .ah__root td {
+    text-align: left;
+    font-size: 12px !important; }
+  .ah__root .hidden {
+    display: none !important; }
+  .ah__root .remove-fontsize {
+    font-size: 0; }
+  .ah__root .set-fontsize {
+    font-size: 12px; }
+  .ah__root .align > div {
+    vertical-align: top; }
+  .ah__root .configuration div, .ah__root .configuration input, .ah__root .configuration select, .ah__root .dialog div, .ah__root .dialog input, .ah__root .dialog select, .ah__root .popup div, .ah__root .popup input, .ah__root .popup select {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+  .ah__root .configuration div, .ah__root .dialog div, .ah__root .popup div {
+    display: inline-block;
+    color: #555555; }
+  .ah__root .configuration table, .ah__root .dialog table, .ah__root .popup table {
+    margin-top: 20px;
+    color: #555555; }
+  .ah__root .configuration div.container, .ah__root .dialog div.container, .ah__root .popup div.container {
+    padding-top: 15px; }
+  .ah__root .column {
+    min-width: 400px;
+    vertical-align: top;
+    padding: 12px; }
+    .ah__root .column .column__content {
+      border-radius: 8px;
+      padding: 12px;
+      background-color: #eee; }
+    .ah__root .column .column__cell {
+      margin-bottom: 5px; }
+  .ah__root input.invalid, .ah__root select.invalid {
+    outline-color: red !important;
+    outline-offset: -2px !important;
+    outline-style: auto !important;
+    outline-width: 5px !important; }
+  .ah__root select.ui-widget.ui-dropdown {
+    background: white;
+    padding: .4em 1em; }
+  .ah__root .relative {
+    position: relative; }
+  .ah__root input[type=text].dropdowninput + .ui-icon {
+    position: absolute;
+    right: 4px;
+    top: 6px; }
+  .ah__root .ui-icon {
+    width: 16px; }
+  .ah__root .pixel {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    border-width: 0px; }
+  .ah__root .text--left {
+    text-align: left; }
+  .ah__root .text--center {
+    text-align: center; }
+  .ah__root .text--right {
+    text-align: right; }
+  .ah__root .ui-icon[class*=" fa-"] {
+    /* Remove the jQuery UI Icon */
+    background: none repeat scroll 0 0 transparent;
+    /* Remove the jQuery UI Text Indent */
+    text-indent: 0;
+    /* Bump it up - jQuery UI is -8px */
+    margin-top: -0.5em; }
+  .ah__root .ui-icon.icon-large {
+    margin-top: -0.75em; }
+  .ah__root .ui-button-icon-only .ui-icon[class*=" fa-"] {
+    /* Bump it - jQuery UI is -8px */
+    margin-left: -7px; }
+  .ah__root .ui-tabs, .ah__root .ui-tabs-panel {
+    border-width: 0px !important;
+    padding: 0px; }
+  .ah__root .ui-tabs > div {
+    padding-top: 0; }
+  .ah__root .calendar {
+    padding-top: 20px; }
+    .ah__root .calendar .wc-zoom-bottomheader {
+      position: absolute;
+      right: 31px;
+      margin-top: -30px; }
+      .ah__root .calendar .wc-zoom-bottomheader .wc-tools {
+        width: auto;
+        display: inline-block;
+        border: 1px solid #CCC;
+        background-color: white;
+        padding: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px; }
+      .ah__root .calendar .wc-zoom-bottomheader button {
+        background: none;
+        border: 0px solid;
+        color: #CCC; }
+      .ah__root .calendar .wc-zoom-bottomheader button:hover {
+        cursor: pointer;
+        color: #555; }
+      .ah__root .calendar .wc-zoom-bottomheader button:focus {
+        outline-width: 0px; }
+  .ah__root .wc-toolbar .wc-nav, .ah__root .wc-time-header-cell, .ah__root .ui-dialog .ui-dialog-titlebar, .ah__root .ui-widget-header, .ah__root .autowidth {
+    width: auto; }
+  .ah__root .wc-timerow {
+    width: 100%; }
+  .ah__root .wc-grandtotal-row {
+    width: 100%; }
+    .ah__root .wc-grandtotal-row td {
+      width: 100%;
+      text-align: right;
+      font-size: 16px !important;
+      font-weight: bold; }
+  .ah__root .wc-bottomheader .wc-day-column-bottomheader {
+    text-align: center;
+    padding: 0.4em; }
+  .ah__root .wc-bottomheader {
+    background: #eee;
+    border-width: 1px 0;
+    border-style: solid; }
+  .ah__root .wc-header .wc-time-column-bottomheader {
+    width: 45px; }
+  .ah__root .wc-today .ui-button-text {
+    margin-left: 5px; }
+  .ah__root .ui-buttonset .ui-button {
+    margin-right: -1px; }
+  .ah__root .ui-dialog .dialog {
+    padding: 6.5px 5px 13px 4px;
+    overflow: visible; }
+  .ah__root input.presetbutton {
+    width: auto; }
+  .ah__root .ui-dialog .ui-dialog-buttonpane {
+    padding: 0; }
+    .ah__root .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+      text-align: right; }
+  .ah__root .remove {
+    text-decoration: none; }
+  .ah__root.popup {
+    height: 80px;
+    width: 215px;
+    padding: 10px; }
+    .ah__root.popup body {
+      height: 80px;
+      width: 215px; }
+    .ah__root.popup input {
+      width: auto; }
+    .ah__root.popup ul {
+      -webkit-margin-before: 0;
+      -webkit-margin-after: 0;
+      -webkit-margin-start: 0;
+      -webkit-margin-end: 0;
+      -webkit-padding-start: 0; }
+    .ah__root.popup li {
+      padding: 0 0 0 5px;
+      text-indent: 16px !important;
+      overflow: visible !important; }
+    .ah__root.popup a {
+      text-decoration: none;
+      color: #555555; }
+      .ah__root.popup a .ui-icon {
+        display: inline-block; }
+      .ah__root.popup a:hover, .ah__root.popup a:active {
+        color: #999999; }
+        .ah__root.popup a:hover .ui-icon, .ah__root.popup a:active .ui-icon {
+          background-image: url(lib/images/ui-icons_888888_256x240.png); }
 
 /*# sourceMappingURL=style.css.map */
