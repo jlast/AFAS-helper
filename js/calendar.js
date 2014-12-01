@@ -115,22 +115,30 @@ var Calendar = {
         calendar.find('.wc-container').append(container);
         zoomin.click(function(e){
             e.preventDefault();
-            if(self.TimeSlotHeight * 1.5 < 45)
-            {
-                self.TimeSlotHeight = self.TimeSlotHeight * 1.5;
-                self.InitWeekCalendar();
-                self.SerializeZoom();
-            }
+            self.ZoomIn();
         });
         zoomout.click(function(e){
             e.preventDefault();
-            if(self.TimeSlotHeight / 1.5 > 10)
-            {
-                self.TimeSlotHeight = self.TimeSlotHeight / 1.5;
-                self.InitWeekCalendar();
-                self.SerializeZoom();
-            }
+            self.ZoomOut();
         });
+    },
+    ZoomIn: function(){
+        var self = this;
+        if(self.TimeSlotHeight * 1.5 < 45)
+        {
+            self.TimeSlotHeight = self.TimeSlotHeight * 1.5;
+            self.InitWeekCalendar();
+            self.SerializeZoom();
+        }
+    },
+    ZoomOut: function(){
+        var self = this;
+        if(self.TimeSlotHeight / 1.5 > 10)
+        {
+            self.TimeSlotHeight = self.TimeSlotHeight / 1.5;
+            self.InitWeekCalendar();
+            self.SerializeZoom();
+        }
     },
 	CreateTimeRows: function(calendar){
         var self = this;
