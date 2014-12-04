@@ -32,6 +32,7 @@ var Calendar = {
             timeslotsPerHour: 2,
             timeslotHeight: self.TimeSlotHeight,
             hourLine: true,
+			defaultEventLength: 1,
             date: new Date(new Date(new Date().setHours(9)).setMinutes(0)),
             newEventText: '',
 			buttonText: {today : "today", lastWeek : "_lastweek", nextWeek : "_nextweek"},
@@ -124,7 +125,7 @@ var Calendar = {
     },
     ZoomIn: function(){
         var self = this;
-        if(self.TimeSlotHeight * 1.5 < 45)
+        if(!(self.TimeSlotHeight * 1.5 > 45))
         {
             self.TimeSlotHeight = self.TimeSlotHeight * 1.5;
             self.InitWeekCalendar();
@@ -133,7 +134,7 @@ var Calendar = {
     },
     ZoomOut: function(){
         var self = this;
-        if(self.TimeSlotHeight / 1.5 > 10)
+        if(!(self.TimeSlotHeight / 1.5 < 13))
         {
             self.TimeSlotHeight = self.TimeSlotHeight / 1.5;
             self.InitWeekCalendar();
