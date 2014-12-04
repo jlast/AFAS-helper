@@ -10,6 +10,7 @@ var Configuration = {
     articleDropdowns: '.js--articleselect',
 	projectInput: '.js--projectinput',
 	articleInput: '.js--articleinput',
+	descriptionInput: '.js--beschrijving',
 
     Init: function() {
         var self = this;
@@ -197,6 +198,11 @@ var Configuration = {
                     $(this).closest('.js--dialog').find(self.projectInput).data('value', project.Id);
                     $(this).closest('.js--dialog').find(self.articleInput).val(article.Name);
                     $(this).closest('.js--dialog').find(self.articleInput).data('value', article.Id);
+					var $description = $(this).closest('.js--dialog').find(self.descriptionInput);
+                    if($description.val() === '')
+					{
+						$description.val(pre.Name);
+					}
                     $(this).closest('.js--dialog').data('preset', pre.Name);
                 });
             });
