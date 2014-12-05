@@ -36,6 +36,11 @@ function exportEvents() {
 	"var weeknumberafas = $('#P_C_W_Entry_Selection_PeId_MainControl').val(); " + 
     "var actions = [";
     for (var i = 0; i < events.length; i++) {
+    	if(events[i].isregistered)
+    	{
+    		continue;
+    	}
+
 		var date = new Date(Date.parse(events[i].start));
 		var enddate = new Date(Date.parse(events[i].end));
 		var weeknumber = date.getWeekNumber();
@@ -43,6 +48,8 @@ function exportEvents() {
 		 "if('" + weeknumber + "' === weeknumberafas){ " + 
 			"if($wc_projectEdit.val() !== '' && $wc_articleEdit !== ''){ $newrowbutton.click(); }" + 
 			"datestring = '" + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "'; " + 
+			"startdate = '" + date.getHours() + ":" + date.getMinutes() + "';" +
+			"enddate = '" + enddate.getHours() + ":" + enddate.getMinutes() + "';" +
 			"$wc_entry = $('#P_C_W_Entry_Detail_EditGrid_EditRow'); " + 
 			"$wc_date = $wc_entry.find('#P_C_W_Entry_Detail_EditGrid_re_DaTi input'); " + 
 			"$wc_start = $wc_entry.find('#P_C_W_Entry_Detail_EditGrid_re_StTi input'); " + 
@@ -56,13 +63,13 @@ function exportEvents() {
 			"$wc_date.keyup(); " + 
 			"$wc_date.change(); " + 
 			"$wc_date.blur(); " + 
-			"$wc_start.val('" + date.getHours() + ":" + date.getMinutes() + "'); " + 
+			"$wc_start.val(startdate); " + 
 			"$wc_start.focus(); " + 
 			"$wc_start.keydown(); " + 
 			"$wc_start.keyup(); " + 
 			"$wc_start.change(); " + 
 			"$wc_start.blur(); " + 
-			"$wc_end.val('" + enddate.getHours() + ":" + enddate.getMinutes() + "'); " + 
+			"$wc_end.val(enddate); " + 
 			"$wc_end.focus(); " + 
 			"$wc_end.keydown(); " + 
 			"$wc_end.keyup(); " + 
@@ -123,7 +130,8 @@ function exportEvents() {
 			"advance(); " + 
 		"} " + 
 		"else { advance() }" +
-		"},"
+		"},";
+		events[i].isregistered = true;
     }
     code += "]; " + 
     "function advance() { " + 
@@ -150,6 +158,8 @@ function exportEvents() {
     	"} " + 
     "} " + 
     "actions[0]();"
+
+    Calendar.SerializeEvents(events);
 
     var script = "";
     script += "var s = document.createElement('script');";

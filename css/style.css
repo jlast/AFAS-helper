@@ -296,6 +296,9 @@
     margin-right: 0px; }
   .ah__root .ui-widget-header button:focus {
     outline-width: 0px; }
+  .ah__root .wc-registered .wc-time {
+    background-color: green;
+    border-color: darkgreen; }
   .ah__root .ui-dialog .dialog {
     padding: 6.5px 5px 13px 4px;
     overflow: visible; }

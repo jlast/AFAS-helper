@@ -234,6 +234,15 @@ var Calendar = {
                     $('#editDateDialog .js--articleinput').val(calEvent.article);
                 }
                 $(this).find('.js--beschrijving').focus();
+                //calEvent.isregistered can be undefined
+                if(calEvent.isregistered)
+                {
+                    $(this).find('.js--ignore').attr('checked', true);
+                }
+                else
+                {
+                    $(this).find('.js--ignore').attr('checked', false);
+                }
 
                 self.SetTime(calEvent);
                 self.SetStyling($(this));
@@ -304,6 +313,10 @@ var Calendar = {
 
 		$event.css('top', (hourfrom * 2 + minutefrom / 30) * self.TimeSlotHeight);
 		$event.css('height', ((hourto * 2 + minuteto / 30) - (hourfrom * 2 + minutefrom / 30)) * self.TimeSlotHeight);
+        if(calEvent.isregistered)
+        {
+            $event.addClass("wc-registered");
+        }
 	},
     FinalizeDialogEvent: function($dialog, calEvent, $event) {
         var self = this;
@@ -334,6 +347,7 @@ var Calendar = {
 
 			var fromtime = $dialog.find('.js--fromtime').val();
 			var totime = $dialog.find('.js--totime').val();
+            var ignore = $dialog.find('.js--ignore').attr('checked');
 
 			if (typeof description == 'undefined' && typeof project == 'undefined' && typeof article == 'undefined' && typeof fromtime == 'undefined' && typeof totime == 'undefined') {
 				if (typeof calEvent.description != 'undefined') {
@@ -379,6 +393,7 @@ var Calendar = {
 			calEvent.article = article;
             calEvent.articlename = articlename;
             calEvent.preset = preset;
+            calEvent.isregistered = ignore;
 
 			$dialog.find('.beschrijving').val('');
 			$dialog.find('.project').val('');
@@ -502,7 +517,12 @@ var Calendar = {
         }
         return data;
     },
-    SerializeEvents: function() {
+    SerializeEvents: function(events) {
+        if(events !== undefined && typeof events === "object")
+        {
+            localStorage['events'] = JSON.stringify(events);
+            return;
+        }
 		var self = this;
         var $events = $('.wc-cal-event');
         var events = self.DeserializeEvents();
