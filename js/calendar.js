@@ -276,6 +276,7 @@ var Calendar = {
         $('#editDateDialog').dialog("open");
     },
     SetStyling: function($dialog) {
+        $dialog.find('input').removeClass('invalid');
         $dialog.find('input[type=button], a, button').button();
         $dialog.find('input:text, input:password')
             .button()
