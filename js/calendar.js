@@ -510,7 +510,7 @@ var Calendar = {
 
         for (var i = 0; i < events.length; i++) {
             var event = events[i];
-            if (typeof event.start != 'undefined' && typeof event.end != 'undefined') {
+            if (event !== null && typeof event !== 'undefined' && typeof event.start != 'undefined' && typeof event.end != 'undefined') {
                 self.AssignId(event);
                 data.push(event);
             }
