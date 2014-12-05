@@ -167,6 +167,10 @@
     margin-top: 20px; }
   .ah__root div, .ah__root input, .ah__root select {
     width: 100%; }
+  .ah__root input[type=checkbox] {
+    width: auto;
+    position: relative;
+    top: 2px; }
   .ah__root table {
     margin-bottom: 0; }
   .ah__root th, .ah__root td {

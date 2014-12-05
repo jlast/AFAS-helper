@@ -23,6 +23,11 @@ h2 {
 div, input, select{
 	width: 100%;
 }
+input[type=checkbox]{
+	width: auto;
+	position: relative;
+	top: 2px;
+}
 table{
 	margin-bottom: 0;
 }
