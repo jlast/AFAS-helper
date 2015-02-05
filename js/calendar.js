@@ -86,6 +86,8 @@ var Calendar = {
             eventBody: function(calEvent, calendar){
                 var projectcontent = calEvent.projectname + ' (' + calEvent.project + ')';
                 var articlecontent = calEvent.articlename + ' (' + calEvent.article + ')';
+                var duration = new Date(calEvent.end.getTime() - calEvent.start.getTime());
+                var durationtext = formatDate(duration, 'J:i')
                 if(typeof calEvent.projectname === "undefined" || calEvent.projectname === '')
                 {
                     projectcontent = calEvent.project;
@@ -103,7 +105,7 @@ var Calendar = {
                     }
                 }
 
-                return projectcontent + '<br/>' + articlecontent;
+                return projectcontent + '<br/>' + articlecontent + '<br/>' + durationtext + ' hour(s)';
             }
         });
     },

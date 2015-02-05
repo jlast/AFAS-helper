@@ -165,6 +165,12 @@ _replaceChars = {
     },
     i: function(date) {
         return (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+    }, 
+    j: function(date) {
+        return date.getUTCHours() % 12 || 12;
+    },
+    J: function(date) {
+        return date.getUTCHours();
     },
     s: function(date) {
         return (date.getSeconds() < 10 ? '0' : '') + date.getSeconds();
