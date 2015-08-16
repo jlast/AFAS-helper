@@ -27,6 +27,7 @@ function exportEvents() {
     "var $wc_articleEdit = $wc_entry.find('#P_C_W_Entry_Detail_EditGrid_re_BiId input'); " + 
     "var $wc_descriptionEdit; " + 
     "var $newrowbutton = $('#P_C_W_Entry_Detail_E3_ImageEntryWebPart_AddRow_E3'); " + 
+	"var $deleterowbutton = $('#P_C_W_Entry_Detail_E5_ButtonEntryWebPart_DeleteRow_E5'); " +
     "var $projectdescription; " + 
     "var $articledescription; " + 
     "var intimeout = false; " + 
@@ -91,6 +92,7 @@ function exportEvents() {
 			"descriptiontobe='" + events[i].title + "'; " + 
 			"$projectdescription = $wc_entry.find('#P_C_W_Entry_Detail_EditGrid_re_LAY_PtPrj_Ds input'); " + 
 			"$articledescription = $wc_entry.find('#P_C_W_Entry_Detail_EditGrid_re_LAY_FbBit_Ds input'); " + 
+			"waitForNewLine = false; " +
 			"intimeout = false; " + 
 			"advance(); " + 
 		"} " + 
@@ -105,7 +107,7 @@ function exportEvents() {
 		"}, " + 
 		"function(){ " + 
 		 "if('" + weeknumber + "'  === weeknumberafas){ " + 
-			"descriptionedit = false; " + 
+			"descriptionedit = true; " + 
 			"$wc_descriptionEdit.val(descriptiontobe); " + 
 			"$wc_descriptionEdit.focus(); " + 
 			"$wc_descriptionEdit.keydown(); " + 
@@ -141,8 +143,10 @@ function exportEvents() {
 		"} " + 
 		"else { advance() }" +
 		"},";
-		events[i].isregistered = true;
+		//events[i].isregistered = true;
     }
+	//remove the last row, else you can't save
+	code += "function(){$deleterowbutton.click(); }"
     code += "]; " + 
     "function advance() { " + 
     	"if(intimeout){ " + 
