@@ -31,6 +31,7 @@ function exportEvents() {
     "var $articledescription; " + 
     "var intimeout = false; " + 
     "var descriptionedit = false; " + 
+	"var waitForNewLine = false; " +
     "var descriptiontobe=''; " + 
     "var datestring=''; " + 
 	"var weeknumberafas = $('#P_C_W_Entry_Selection_PeId_MainControl').val(); " + 
@@ -127,7 +128,16 @@ function exportEvents() {
 			"descriptiontobe=''; " + 
 			"descriptionedit = false; " + 
 			"intimeout = false; " + 
+			"waitForNewLine = true; " + 
+			"$newrowbutton.click();" +
 			"advance(); " + 
+		"} " + 
+		"else { advance() }" +
+		"}," +
+		"function(){ " + 
+		 "if('" + weeknumber + "'  === weeknumberafas){ " + 
+			"intimeout = true; " +
+			"setTimeout(advance, 250); " + 
 		"} " + 
 		"else { advance() }" +
 		"},";
@@ -144,7 +154,15 @@ function exportEvents() {
     				"actions.shift(); " + 
     				"if(actions.length > 0){actions[0]();} " + 
     			"} " + 
-    		"}else{ " + 
+    		"}else if(waitForNewLine){" +
+				"if($projectdescription.val() != '' || $articledescription.val() != ''){" +
+					"if(actions.length > 0){actions[0]();} " + 
+				"}" +
+    			"else{ " + 
+    				"actions.shift(); " + 
+    				"if(actions.length > 0){actions[0]();} " + 
+    			"} " + 
+			"}else{ " + 
     			"if($projectdescription.val() == '' || $articledescription.val() == ''){ " + 
     				"if(actions.length > 0){actions[0]();} " + 
     			"}else{ " + 
