@@ -143,7 +143,7 @@ function exportEvents() {
 		"} " + 
 		"else { advance() }" +
 		"},";
-		//events[i].isregistered = true;
+		events[i].isregistered = true;
     }
 	//remove the last row, else you can't save
 	code += "function(){$deleterowbutton.click(); }"
